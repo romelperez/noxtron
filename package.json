@@ -1,0 +1,20 @@
+{
+  "name": "noxtron",
+  "version": "0.0.1",
+  "description": "Noxtron project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/romelperez/noxtron.git"
+  },
+  "keywords": [],
+  "author": "Romel Pérez (romelperez.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/romelperez/noxtron/issues"
+  },
+  "homepage": "https://github.com/romelperez/noxtron#readme"
+}

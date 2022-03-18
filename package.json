@@ -1,17 +1,69 @@
 {
-  "name": "noxtron",
-  "version": "0.0.1",
-  "description": "Noxtron project",
-  "main": "index.js",
+  "name": "typescript",
+  "version": "0.1.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Real-Time JavaScript/TypeScript UI playground application",
+  "keywords": [
+    "typescript",
+    "ui",
+    "sandbox",
+    "playground",
+    "application"
+  ],
+  "homepage": "https://github.com/romelperez/noxtron",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/romelperez/noxtron.git"
+    "url": "https://github.com/romelperez/noxtron.git"
   },
-  "keywords": [],
-  "author": "Romel Pérez (romelperez.com)",
+  "funding": "https://github.com/sponsors/romelperez",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/romelperez/noxtron/issues"
+  "engines": {
+    "node": "^16.14",
+    "npm": "^8.3"
   },
-  "homepage": "https://github.com/romelperez/noxtron#readme"
+  "files": [
+    "build"
+  ],
+  "types": "./build/index.d.ts",
+  "main": "./build/index.js",
+  "bin": {
+    "noxtron": "./build/cli.js"
+  },
+  "peerDependencies": {
+    "typescript": "4.x.x"
+  },
+  "dependencies": {
+    "@types/react": "^17.0.40",
+    "@types/react-dom": "^17.0.13",
+    "@types/react-router-dom": "^5.3.3",
+    "cross-env": "^7.0.3",
+    "empanada": "^0.1.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^6.2.2",
+    "ts-jest": "^27.1.3",
+    "ts-loader": "^9.2.8",
+    "tslib": "^2.3.1",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.1",
+    "jest": "^27.5.1",
+    "prettier": "^2.6.0",
+    "typescript": "^4.6.2"
+  },
+  "scripts": {
+    "lint": "prettier --check .",
+    "lint-fix": "prettier --write .",
+    "test": "jest",
+    "test-watch": "jest --watch",
+    "clean": "sh ./scripts/clean.sh",
+    "build": "sh ./scripts/build.sh",
+    "dev": "exit 1",
+    "prepublishOnly": "npm run clean && npm run build && npm run lint && npm run test"
+  }
 }

@@ -3,8 +3,5 @@ module.exports = {
   testEnvironment: 'jsdom',
   verbose: true,
   testURL: 'http://localhost/',
-  testMatch: [
-    './src/**/*.test.ts',
-    './src/**/*.test.tsx'
-  ]
+  testMatch: ['./src/**/*.test.ts', './src/**/*.test.tsx']
 };

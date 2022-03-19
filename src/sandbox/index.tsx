@@ -1,20 +1,19 @@
 import React, { ReactElement } from 'react';
 import ReactDOM from 'react-dom';
 import { transform } from '@babel/standalone';
+import escape from 'lodash/escape';
+import * as empanada from 'empanada';
 
 import { convertLocationSearchToObject } from '../utils/convertLocationSearchToObject';
 
-const parameters = convertLocationSearchToObject(window.location.search);
 const root = document.querySelector('#root') as HTMLDivElement;
-const render = (element: ReactElement): void => {
-  ReactDOM.render(element, root);
-};
 
 try {
+  const parameters = convertLocationSearchToObject(window.location.search);
   const codeRaw = window.atob(window.decodeURI(parameters.code || ''));
 
   if (!codeRaw) {
-    throw new Error('No source code provided.')
+    throw new Error('No source code provided.');
   }
 
   const transformation = transform(codeRaw, {
@@ -22,22 +21,29 @@ try {
     presets: ['env', 'react', 'typescript']
   });
 
-  const codeTransformed = transformation.code || '';
+  if (transformation.code) {
+    const code = `(function () { ${transformation.code}; })();`;
+    const fn = new Function('React', 'render', 'empanada', code);
 
-  if (codeTransformed) {
-    const fn = new Function('React', 'render', `(function () { ${codeTransformed} })();`);
-    fn(React, render);
-  }
-  else {
-    throw new Error('Invalid source code provided.')
+    const render = (element: ReactElement): void => {
+      ReactDOM.render(element, root);
+    };
+
+    fn(React, render, empanada);
+  } else {
+    throw new Error('Invalid source code provided.');
   }
 } catch (error: unknown) {
   Object.assign(document.body.style, {
     margin: '20px',
     fontFamily: 'monospace',
-    fontSize: '21px',
-    color: '#f22',
-    backgroundColor: '#171717'
+    fontSize: '16px',
+    color: '#f44',
+    backgroundColor: '#151515'
   });
-  root.innerHTML = error instanceof Error ? String(error) : 'Source code processing error.';
+  const errorMessage =
+    error instanceof Error
+      ? escape(String(error))
+      : 'ERROR: Source code processing error.';
+  root.innerHTML = `<pre>${errorMessage}</pre>`;
 }

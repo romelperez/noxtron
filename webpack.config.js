@@ -56,7 +56,10 @@ module.exports = {
       new TsconfigPathsPlugin({
         configFile: TSCONFIG_FILE_PATH
       })
-    ]
+    ],
+    alias: {
+      '@src': SRC_PATH
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({

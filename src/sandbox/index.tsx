@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import ReactDOM from 'react-dom';
-import { transform } from '@babel/standalone';
 import escape from 'lodash/escape';
 import * as empanada from 'empanada';
 
@@ -16,23 +15,14 @@ try {
     throw new Error('No source code provided.');
   }
 
-  const transformation = transform(codeRaw, {
-    filename: 'sandbox.tsx',
-    presets: ['env', 'react', 'typescript']
-  });
+  const codeWrap = `(function () { ${codeRaw}; })();`;
+  const fn = new Function('React', 'render', 'empanada', codeWrap);
 
-  if (transformation.code) {
-    const code = `(function () { ${transformation.code}; })();`;
-    const fn = new Function('React', 'render', 'empanada', code);
+  const render = (element: ReactElement): void => {
+    ReactDOM.render(element, root);
+  };
 
-    const render = (element: ReactElement): void => {
-      ReactDOM.render(element, root);
-    };
-
-    fn(React, render, empanada);
-  } else {
-    throw new Error('Invalid source code provided.');
-  }
+  fn(React, render, empanada);
 } catch (error: unknown) {
   Object.assign(document.body.style, {
     margin: '20px',

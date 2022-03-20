@@ -12,7 +12,7 @@
     "baseUrl": ".",
     "rootDir": "src",
     "paths": {
-      "@src": ["./src/*"]
+      "@src/*": ["./src/*"]
     }
   },
   "exclude": ["node_modules", "build"]

@@ -1,4 +1,4 @@
-import type { Theme, CSSObject } from '@emotion/react';
+import type { Theme, Styles } from '@src/types';
 
 interface StyleProps {
   color?: keyof Theme['colors']
@@ -6,21 +6,27 @@ interface StyleProps {
   disabled?: boolean
 }
 
-const createStyles = (theme: Theme, props: StyleProps): Record<string, CSSObject> => {
+const createStyles = (theme: Theme, props: StyleProps): Styles => {
   const { color, disabled, size = 'default' } = props;
+
   const palette = theme.colors[color || 'primary'];
+  const isDark = theme.colorScheme === 'dark';
   const isSmall = size === 'small';
 
   return {
     root: {
       display: 'inline-block',
       outline: 'none',
-      border: 'none',
-      padding: `${theme.space(isSmall ? 1 : 2)}px ${theme.space(isSmall ? 2 : 4)}px`,
+      border: isDark
+        ? `1px solid ${palette.levelHigh(2)}`
+        : `1px solid ${palette.decoHigh(8)}`,
+      padding: `${theme.space(isSmall ? 1 : 2)}px ${theme.space(isSmall ? 3 : 4)}px`,
       verticalAlign: 'middle',
       ...theme.typography.cta(isSmall ? 1 : 0),
       lineHeight: 1,
-      color: palette.textHigh(14),
+      color: isDark
+        ? palette.textHigh(14)
+        : palette.textHigh(18),
       backgroundColor: palette.levelHigh(1),
       cursor: disabled ? 'not-allowed' : 'pointer',
       userSelect: 'none',

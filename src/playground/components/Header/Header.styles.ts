@@ -1,6 +1,6 @@
-import type { CSSObject, Theme } from '@emotion/react';
+import type { Theme, Styles } from '@src/types';
 
-const createStyles = (theme: Theme): Record<string, CSSObject> => {
+const createStyles = (theme: Theme): Styles => {
   return {
     root: {
       display: 'flex',
@@ -15,7 +15,8 @@ const createStyles = (theme: Theme): Record<string, CSSObject> => {
       }
     },
     logo: {
-      display: 'block'
+      display: 'block',
+      ...theme.typography.heading(0)
     }
   };
 };

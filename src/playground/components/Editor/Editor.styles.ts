@@ -1,6 +1,6 @@
-import type { CSSObject, Theme } from '@emotion/react';
+import type { Theme, Styles } from '@src/types';
 
-const createStyles = (theme: Theme): Record<string, CSSObject> => {
+const createStyles = (theme: Theme): Styles => {
   return {
     root: {
       padding: theme.space(4)

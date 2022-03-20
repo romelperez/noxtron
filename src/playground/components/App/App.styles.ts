@@ -1,6 +1,6 @@
-import type { CSSObject, Theme } from '@emotion/react';
+import type { Theme, Styles } from '@src/types';
 
-const createStyles = (theme: Theme): Record<string, CSSObject> => {
+const createStyles = (theme: Theme): Styles => {
   const bgNeutral = theme.colors.primary.bg(3);
   const bgFocus = theme.colors.primary.bg(2);
   const line = `1px solid ${theme.colors.primary.deco(8)}`;

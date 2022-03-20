@@ -6,7 +6,7 @@ import { App } from '../App';
 import { createStyles } from './Scaffold.styles';
 
 const Scaffold = (): ReactElement => {
-  const theme: Theme = useMemo(() => createTheme(), []);
+  const theme: Theme = useMemo(() => createTheme('dark'), []);
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   return (

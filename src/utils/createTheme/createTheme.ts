@@ -6,6 +6,8 @@ import type {
   ThemeStyle,
   ThemeStyleValue,
   ThemeColor,
+  ThemePalette,
+  ThemeColorScheme,
   Theme
 } from '../../types';
 
@@ -45,17 +47,36 @@ const createThemeColor = (createColor: ThemeSettingsColor): ThemeColor => {
   };
 };
 
-const createTheme = (): Theme => {
+const createThemeColorPalette = (hue: number, colorScheme: ThemeColorScheme): ThemePalette => {
+  if (colorScheme === 'dark') {
+    return {
+      text: createThemeColor((i) => [hue, 50, i * 5, 1]),
+      textHigh: createThemeColor((i) => [hue, 90, i * 5, 1]),
+      deco: createThemeColor((i) => [hue, 30, i * 5, 1]),
+      decoHigh: createThemeColor((i) => [hue, 70, i * 5, 1]),
+      level: createThemeColor((i) => [hue, 30, 75, 0.04 * i]),
+      levelHigh: createThemeColor((i) => [hue, 80, 75, 0.04 * i]),
+      bg: createThemeColor((i) => [hue, 5, i * 2, 1]),
+      overlay: createThemeColor((i) => [hue, 10, i * 5, 0.65])
+    };
+  }
+  return {
+    text: createThemeColor((i) => [hue, 50, 100 - i * 5, 1]),
+    textHigh: createThemeColor((i) => [hue, 90, 100 - i * 5, 1]),
+    deco: createThemeColor((i) => [hue, 30, 100 - i * 5, 1]),
+    decoHigh: createThemeColor((i) => [hue, 70, 100 - i * 5, 1]),
+    level: createThemeColor((i) => [hue, 30, 75, 0.1 * i]),
+    levelHigh: createThemeColor((i) => [hue, 80, 75, 0.1 * i]),
+    bg: createThemeColor((i) => [hue, 5, 100 - i * 2, 1]),
+    overlay: createThemeColor((i) => [hue, 10, 100 - i * 5, 0.65])
+  };
+}
+
+const createTheme = (colorScheme: ThemeColorScheme): Theme => {
   return {
     space: createThemeMultiplier(4),
     typography: {
       heading: createThemeStyle([
-        {
-          fontSize: 28,
-          fontFamily: '"Titillium Web", sans-serif',
-          fontWeight: '600',
-          textTransform: 'uppercase'
-        },
         {
           fontSize: 24,
           fontFamily: '"Titillium Web", sans-serif',
@@ -64,6 +85,18 @@ const createTheme = (): Theme => {
         },
         {
           fontSize: 21,
+          fontFamily: '"Titillium Web", sans-serif',
+          fontWeight: '600',
+          textTransform: 'uppercase'
+        },
+        {
+          fontSize: 18,
+          fontFamily: '"Titillium Web", sans-serif',
+          fontWeight: '600',
+          textTransform: 'uppercase'
+        },
+        {
+          fontSize: 16,
           fontFamily: '"Titillium Web", sans-serif',
           fontWeight: '600',
           textTransform: 'uppercase'
@@ -113,36 +146,19 @@ const createTheme = (): Theme => {
         }
       ])
     },
+    colorScheme,
     colors: {
-      primary: {
-        text: createThemeColor((i) => [180, 50, i * 5, 1]),
-        textHigh: createThemeColor((i) => [180, 90, i * 5, 1]),
-        deco: createThemeColor((i) => [180, 30, i * 5, 1]),
-        decoHigh: createThemeColor((i) => [180, 70, i * 5, 1]),
-        level: createThemeColor((i) => [180, 30, 75, 0.04 * i]),
-        levelHigh: createThemeColor((i) => [180, 80, 75, 0.04 * i]),
-        bg: createThemeColor((i) => [180, 5, i * 2, 1]),
-        overlay: createThemeColor((i) => [180, 10, i * 5, 0.65])
-      },
-      secondary: {
-        text: createThemeColor((i) => [60, 50, i * 5, 1]),
-        textHigh: createThemeColor((i) => [60, 90, i * 5, 1]),
-        deco: createThemeColor((i) => [60, 30, i * 5, 1]),
-        decoHigh: createThemeColor((i) => [60, 70, i * 5, 1]),
-        level: createThemeColor((i) => [60, 30, 75, 0.04 * i]),
-        levelHigh: createThemeColor((i) => [60, 80, 75, 0.04 * i]),
-        bg: createThemeColor((i) => [60, 5, i * 2, 1]),
-        overlay: createThemeColor((i) => [60, 10, i * 5, 0.65])
-      }
+      primary: createThemeColorPalette(180, colorScheme),
+      secondary: createThemeColorPalette(60, colorScheme)
     },
     breakpoints: {
       medium: {
-        up: '@media (min-width: 768px)',
-        down: '@media (max-width: 767px)'
+        down: '@media (max-width: 767px)',
+        up: '@media (min-width: 768px)'
       },
       large: {
-        up: '@media (min-width: 1280px)',
-        down: '@media (max-width: 1279px)'
+        down: '@media (max-width: 1023px)',
+        up: '@media (min-width: 1024px)'
       }
     }
   };

@@ -1,6 +1,6 @@
-import type { CSSObject, Theme } from '@emotion/react';
+import type { Theme, Styles } from '@src/types';
 
-const createStyles = (theme: Theme): Record<string, CSSObject> => {
+const createStyles = (theme: Theme): Styles => {
   return {
     root: {
       display: 'block',
@@ -22,7 +22,8 @@ const createStyles = (theme: Theme): Record<string, CSSObject> => {
       }
     },
     location: {
-      ...theme.typography.code(1)
+      ...theme.typography.code(1),
+      letterSpacing: '-1px'
     }
   };
 };

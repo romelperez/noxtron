@@ -7,7 +7,7 @@ import { cx } from '@src/utils/cx';
 import { createStyles } from './Preview.styles';
 
 const codeRaw = `render(
-  <h1 style={{ margin: "20px", color: "cyan", background: "black" }}>
+  <h1 style={{ margin: "20px", padding: "20px", color: "cyan", background: "black" }}>
     Noxtron Sandbox!
   </h1>
 );

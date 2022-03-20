@@ -15,12 +15,11 @@ interface EditorProps {
 const Editor = (props: EditorProps): ReactElement => {
   const { className } = props;
 
+  const routerState = useRouterState();
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   const editorElementRef = useRef<HTMLDivElement>(null);
-
-  const sourceCode = ['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n');
 
 	let editor: monaco.editor.IStandaloneCodeEditor;
 
@@ -29,7 +28,7 @@ const Editor = (props: EditorProps): ReactElement => {
     const { fontFamily, fontSize, fontWeight } = theme.typography.code(1);
 
     editor = monaco.editor.create(editorElement, {
-      value: sourceCode,
+      value: '',
       language: 'typescript',
       tabSize: 2,
       showDeprecated: true,
@@ -58,6 +57,18 @@ const Editor = (props: EditorProps): ReactElement => {
       editor.dispose();
 		};
 	}, [theme]);
+
+  useEffect(() => {
+    const codeProvided = routerState.options.code;
+    if (editor && codeProvided) {
+      try {
+        const codeProcessed = window.atob(window.decodeURI(codeProvided));
+        editor.setValue(codeProcessed);
+      } catch (error: unknown) {
+        console.error(error);
+      }
+    }
+  }, [routerState]);
 
   return (
     <div

@@ -17,6 +17,7 @@ export interface Theme {
     heading: ThemeStyle;
     body: ThemeStyle;
     cta: ThemeStyle;
+    code: ThemeStyle;
   };
   colors: {
     primary: {

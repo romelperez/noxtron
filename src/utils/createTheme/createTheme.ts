@@ -99,6 +99,18 @@ const createTheme = (): Theme => {
           fontWeight: '400',
           textTransform: 'uppercase'
         }
+      ]),
+      code: createThemeStyle([
+        {
+          fontSize: 16,
+          fontFamily: '"Source Code Pro", monospace',
+          fontWeight: '400'
+        },
+        {
+          fontSize: 14,
+          fontFamily: '"Source Code Pro", monospace',
+          fontWeight: '400'
+        }
       ])
     },
     colors: {

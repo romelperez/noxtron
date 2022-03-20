@@ -2,6 +2,12 @@
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 
+import { Header } from '../Header';
+import { Explorer } from '../Explorer';
+import { Toolbar } from '../Toolbar';
+import { Editor } from '../Editor';
+import { Preview } from '../Preview';
+import { Footer } from '../Footer';
 import { createStyles } from './App.styles';
 
 const App = (): ReactElement => {
@@ -10,23 +16,18 @@ const App = (): ReactElement => {
 
   return (
     <div css={styles.root}>
-      <header css={styles.header}>header</header>
+      <Header css={styles.header} />
       <main css={styles.main}>
-        <aside css={styles.explorer}>explorer</aside>
+        <Explorer css={styles.explorer} />
         <div css={styles.workspace}>
-          <nav css={styles.toolbar}>toolbar</nav>
+          <Toolbar css={styles.toolbar} />
           <div css={styles.panels}>
-            <div css={[styles.panel, styles.panelEditor]}>editor</div>
-            <div css={[styles.panel, styles.panelPreview]}>
-              <iframe
-                css={styles.sandbox}
-                src="/play/sandbox/?code=cmVuZGVyKDxoMSBzdHlsZT17eyBtYXJnaW46ICIyMHB4IiwgY29sb3I6ICJjeWFuIiwgYmFja2dyb3VuZDogImJsYWNrIiB9fT5IZWxsbyBOb3h0cm9uITwvaDE+KTs="
-              />
-            </div>
+            <Editor css={[styles.panel, styles.panelEditor]} />
+            <Preview css={[styles.panel, styles.panelPreview]} />
           </div>
         </div>
       </main>
-      <footer css={styles.footer}>footer</footer>
+      <Footer css={styles.footer} />
     </div>
   );
 };

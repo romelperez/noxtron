@@ -1,8 +1,8 @@
 import type { CSSObject, Theme } from '@emotion/react';
 
 const createStyles = (theme: Theme): Record<string, CSSObject> => {
-  const bgNeutral = theme.colors.primary.bg(4);
-  const bgFocus = theme.colors.primary.bg(3);
+  const bgNeutral = theme.colors.primary.bg(3);
+  const bgFocus = theme.colors.primary.bg(2);
   const line = `1px solid ${theme.colors.primary.deco(8)}`;
 
   return {
@@ -17,12 +17,10 @@ const createStyles = (theme: Theme): Record<string, CSSObject> => {
     },
     header: {
       borderBottom: line,
-      padding: theme.space(4),
       backgroundColor: bgNeutral
     },
     footer: {
       borderTop: line,
-      padding: theme.space(4),
       backgroundColor: bgNeutral
     },
     main: {
@@ -33,12 +31,12 @@ const createStyles = (theme: Theme): Record<string, CSSObject> => {
     },
     explorer: {
       flex: 1,
-      padding: theme.space(4),
       minHeight: 0, // Height overflow issue.
       backgroundColor: bgNeutral,
 
       [theme.breakpoints.medium.up]: {
-        flex: '280px',
+        flex: 'none',
+        width: 300,
         borderRight: line
       }
     },
@@ -51,11 +49,10 @@ const createStyles = (theme: Theme): Record<string, CSSObject> => {
     toolbar: {
       display: 'none', // Hidden on mobile.
       borderBottom: line,
-      padding: theme.space(4),
       backgroundColor: bgNeutral,
 
       [theme.breakpoints.medium.up]: {
-        display: 'block'
+        display: 'flex'
       }
     },
     panels: {
@@ -75,16 +72,7 @@ const createStyles = (theme: Theme): Record<string, CSSObject> => {
       }
     },
     panelPreview: {
-      display: 'flex'
-    },
-    sandbox: {
-      flex: 1,
-      display: 'block',
-      margin: 0,
-      outline: 'none',
-      border: 'none',
-      padding: 0,
-      background: 'transparent'
+      //
     }
   };
 };

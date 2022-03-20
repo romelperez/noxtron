@@ -47,6 +47,9 @@ const createStyles = (theme: Theme): Record<string, CSSObject> => ({
       '&:hover': {
         color: theme.colors.primary.textHigh(12)
       }
+    },
+    'code, pre': {
+      ...theme.typography.code(0)
     }
   }
 });

@@ -67,6 +67,7 @@ const createStyles = (theme: Theme): Styles => {
       flex: '1 1 50%',
       minWidth: 0, // Width overflow issue.
       position: 'relative',
+      overflow: 'hidden',
       backgroundColor: bgFocus,
       transition: 'width 200ms ease-out'
     },

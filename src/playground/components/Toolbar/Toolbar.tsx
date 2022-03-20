@@ -2,6 +2,7 @@
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 
+import { cx } from '@src/utils/cx';
 import { Button } from '../Button';
 import { createStyles } from './Toolbar.styles';
 
@@ -17,7 +18,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
 
   return (
     <nav
-      className={className}
+      className={cx('toolbar', className)}
       css={styles.root}
     >
       <div css={styles.options}>

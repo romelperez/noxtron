@@ -15,7 +15,7 @@ const App = (): ReactElement => {
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   return (
-    <div css={styles.root}>
+    <div className='app' css={styles.root}>
       <Header css={styles.header} />
       <main css={styles.main}>
         <Explorer css={styles.explorer} />

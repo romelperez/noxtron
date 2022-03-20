@@ -12,7 +12,12 @@ module.exports = {
   mode: NODE_ENV || 'development',
   entry: {
     playground: path.join(SRC_PATH, 'playground/index.tsx'),
-    sandbox: path.join(SRC_PATH, 'sandbox/index.tsx')
+    sandbox: path.join(SRC_PATH, 'sandbox/index.tsx'),
+    'monaco.editor.worker': 'monaco-editor/esm/vs/editor/editor.worker.js',
+		'monaco.json.worker': 'monaco-editor/esm/vs/language/json/json.worker',
+		'monaco.css.worker': 'monaco-editor/esm/vs/language/css/css.worker',
+		'monaco.html.worker': 'monaco-editor/esm/vs/language/html/html.worker',
+		'monaco.ts.worker': 'monaco-editor/esm/vs/language/typescript/ts.worker'
   },
   output: {
     path: path.join(BUILD_PATH, 'play'),
@@ -44,6 +49,14 @@ module.exports = {
           }
         ]
       },
+      {
+				test: /\.css$/,
+				use: ['style-loader', 'css-loader']
+			},
+			{
+				test: /\.ttf$/,
+				use: ['file-loader']
+			},
       {
         test: /\.md$/i,
         use: 'raw-loader'

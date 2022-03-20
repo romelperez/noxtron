@@ -136,12 +136,12 @@ const createTheme = (colorScheme: ThemeColorScheme): Theme => {
       code: createThemeStyle([
         {
           fontSize: 16,
-          fontFamily: '"Source Code Pro", monospace',
+          fontFamily: '"Source Code Pro", Menlo, Monaco, "Courier New", monospace',
           fontWeight: '400'
         },
         {
           fontSize: 14,
-          fontFamily: '"Source Code Pro", monospace',
+          fontFamily: '"Source Code Pro", Menlo, Monaco, "Courier New", monospace',
           fontWeight: '400'
         }
       ])

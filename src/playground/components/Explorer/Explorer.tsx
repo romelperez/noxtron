@@ -3,6 +3,7 @@ import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 
 import type { Styles } from '@src/types';
+import { cx } from '@src/utils/cx';
 import { Button } from '../Button';
 import { createStyles } from './Explorer.styles';
 
@@ -104,7 +105,7 @@ const Explorer = (props: ExplorerProps): ReactElement => {
 
   return (
     <aside
-      className={className}
+      className={cx('explorer', className)}
       css={styles.root}
     >
       <nav css={styles.nav}>

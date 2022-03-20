@@ -1,13 +1,14 @@
+import type { CSSProperties } from 'react';
 import type { CSSObject } from '@emotion/react';
 
 export type ThemeSettingsMultiplier = number;
-export type ThemeSettingsStyle = CSSObject[];
+export type ThemeSettingsStyle = CSSProperties[];
 export type ThemeSettingsColor = (
   index: number
 ) => [number, number, number, number?];
 
 export type ThemeMultiplier = (index: number) => number;
-export type ThemeStyleValue = CSSObject;
+export type ThemeStyleValue = CSSProperties;
 export type ThemeStyle = (index: number) => ThemeStyleValue;
 export type ThemeColor = (index: number) => string;
 export type ThemeColorScheme = 'dark' | 'light';
@@ -49,3 +50,12 @@ export interface Theme {
 
 export type Style = CSSObject;
 export type Styles = Record<string, Style>;
+
+export interface RouterOptions {
+  type: 'p' | 'c'
+  explorer: 'true' | 'false' | ''
+  editor: 'true' | 'false' | ''
+  preview: 'true' | 'false' | ''
+  theme: ThemeColorScheme | ''
+  code: string
+}

@@ -3,6 +3,7 @@ import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 import { transform } from '@babel/standalone';
 
+import { cx } from '@src/utils/cx';
 import { createStyles } from './Preview.styles';
 
 const codeRaw = `render(
@@ -29,7 +30,7 @@ const Preview = (props: PreviewProps): ReactElement => {
 
   return (
     <div
-      className={className}
+      className={cx('preview', className)}
       css={styles.root}
     >
       <iframe

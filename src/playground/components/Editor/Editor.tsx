@@ -5,6 +5,7 @@ import debounce from 'lodash/debounce';
 import * as monaco from 'monaco-editor';
 
 import { cx } from '@src/utils/cx';
+import { useRouterState } from '@src/utils/useRouterState';
 import { createStyles } from './Editor.styles';
 
 interface EditorProps {
@@ -56,7 +57,7 @@ const Editor = (props: EditorProps): ReactElement => {
       window.removeEventListener('resize', onResize);
       editor.dispose();
 		};
-	}, []);
+	}, [theme]);
 
   return (
     <div

@@ -51,11 +51,16 @@ export interface Theme {
 export type Style = CSSObject;
 export type Styles = Record<string, Style>;
 
-export interface RouterOptions {
-  type: 'p' | 'c'
-  explorer: 'true' | 'false' | ''
-  editor: 'true' | 'false' | ''
-  preview: 'true' | 'false' | ''
-  theme: ThemeColorScheme | ''
-  code: string
+export type RouterURLType = 'p' | 'c'; // "p" for predefined. "c" for custom.
+export type RouterURLRoute = string[];
+export type RouterURLOptionsTexts = 'code';
+export type RouterURLOptionsBooleans = 'explorer' | 'editor' | 'preview' | 'dark';
+export type RouterURLOptions = RouterURLOptionsTexts | RouterURLOptionsBooleans;
+export interface RouterState {
+  isReady: boolean
+  type: RouterURLType
+  route: RouterURLRoute
+  options: Record<RouterURLOptions, string | undefined>
+  optionsBooleans: Record<RouterURLOptionsBooleans, boolean>
+  setOptionValue: (option: RouterURLOptions, value: string) => void
 }

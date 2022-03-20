@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
-import { ReactElement, useMemo } from 'react';
+import { Fragment, ReactElement, useMemo } from 'react';
 
+import { useRouterState } from '@src/utils/useRouterState';
 import { Header } from '../Header';
 import { Explorer } from '../Explorer';
 import { Toolbar } from '../Toolbar';
@@ -13,18 +14,23 @@ import { createStyles } from './App.styles';
 const App = (): ReactElement => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const { optionsBooleans } = useRouterState();
 
   return (
     <div className='app' css={styles.root}>
       <Header css={styles.header} />
       <main css={styles.main}>
-        <Explorer css={styles.explorer} />
+        {optionsBooleans.explorer && <Explorer css={styles.explorer} />}
         <div css={styles.workspace}>
-          <Toolbar css={styles.toolbar} />
-          <div css={styles.panels}>
-            <Editor css={[styles.panel, styles.panelEditor]} />
-            <Preview css={[styles.panel, styles.panelPreview]} />
-          </div>
+          {(optionsBooleans.editor || optionsBooleans.preview) && (
+            <Fragment>
+              <Toolbar css={styles.toolbar} />
+              <div css={styles.panels}>
+                {optionsBooleans.editor && <Editor css={[styles.panel, styles.panelEditor]} />}
+                {optionsBooleans.preview && <Preview css={[styles.panel, styles.panelPreview]} />}
+              </div>
+            </Fragment>
+          )}
         </div>
       </main>
       <Footer css={styles.footer} />

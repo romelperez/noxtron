@@ -1,7 +1,9 @@
 import React, { ReactElement, useMemo } from 'react';
 import { ThemeProvider, Theme, Global } from '@emotion/react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { createTheme } from '@src/utils/createTheme';
+import { useRouterState } from '@src/utils/useRouterState';
 import { App } from '../App';
 import { createStyles } from './Scaffold.styles';
 
@@ -21,8 +23,14 @@ window.MonacoEnvironment = {
 	}
 };
 
-const Scaffold = (): ReactElement => {
-  const theme: Theme = useMemo(() => createTheme('dark'), []);
+const ScaffoldRouted = (): ReactElement => {
+  const routerState = useRouterState();
+
+  const theme: Theme = useMemo(() => {
+    const colorScheme = routerState.optionsBooleans.dark ? 'dark' : 'light';
+    return createTheme(colorScheme);
+  }, [routerState]);
+
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   return (
@@ -30,6 +38,19 @@ const Scaffold = (): ReactElement => {
       <Global styles={styles.global} />
       <App />
     </ThemeProvider>
+  );
+};
+
+const Scaffold = (): ReactElement => {
+  return (
+    <BrowserRouter basename='/play'>
+      <Routes>
+        <Route
+          path='*'
+          element={<ScaffoldRouted />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

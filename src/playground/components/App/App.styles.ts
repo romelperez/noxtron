@@ -44,6 +44,7 @@ const createStyles = (theme: Theme): Styles => {
       flex: 1,
       display: 'flex',
       flexDirection: 'column',
+      minWidth: 0, // Width overflow issue.
       minHeight: 0 // Height overflow issue.
     },
     toolbar: {
@@ -58,21 +59,26 @@ const createStyles = (theme: Theme): Styles => {
     panels: {
       flex: 1,
       display: 'flex',
-      flexDirection: 'row'
+      flexDirection: 'row',
+      minWidth: 0, // Width overflow issue.
+      minHeight: 0 // Height overflow issue.
     },
     panel: {
-      flex: 1,
+      flex: '1 1 50%',
+      minWidth: 0, // Width overflow issue.
       position: 'relative',
-      overflow: 'auto',
-      backgroundColor: bgFocus
+      backgroundColor: bgFocus,
+      transition: 'width 200ms ease-out'
     },
     panelEditor: {
-      [theme.breakpoints.medium.up]: {
-        borderRight: line
-      }
+      //
     },
     panelPreview: {
-      //
+      [theme.breakpoints.medium.up]: {
+        '* + &': {
+          borderLeft: line
+        }
+      }
     }
   };
 };

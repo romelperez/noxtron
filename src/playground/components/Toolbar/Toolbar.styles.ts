@@ -22,7 +22,11 @@ const createStyles = (theme: Theme): Styles => {
       }
     },
     location: {
+      flex: 1,
       ...theme.typography.code(1),
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
+      textOverflow: 'ellipsis',
       letterSpacing: '-1px'
     }
   };

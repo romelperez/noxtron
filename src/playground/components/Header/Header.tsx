@@ -15,7 +15,7 @@ const Header = (props: HeaderProps): ReactElement => {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const { optionsBooleans, setOptionValue } = useRouterState();
+  const { optionsBooleans, setOptions } = useRouterState();
 
   return (
     <header
@@ -25,31 +25,34 @@ const Header = (props: HeaderProps): ReactElement => {
       <nav css={styles.options}>
           <Button
             color={optionsBooleans.explorer ? 'secondary' : 'primary'}
-            onClick={() => setOptionValue('explorer', String(!optionsBooleans.explorer))}
+            onClick={() => setOptions({ explorer: !optionsBooleans.explorer })}
           >
             Explorer
           </Button>
           <Button
             color={optionsBooleans.editor ? 'secondary' : 'primary'}
-            onClick={() => setOptionValue('editor', String(!optionsBooleans.editor))}
+            onClick={() => setOptions({ editor: !optionsBooleans.editor })}
           >
             Editor
           </Button>
           <Button
             color={optionsBooleans.preview ? 'secondary' : 'primary'}
-            onClick={() => setOptionValue('preview', String(!optionsBooleans.preview))}
+            onClick={() => setOptions({ preview: !optionsBooleans.preview })}
           >
             Preview
           </Button>
           <Button
-            onClick={() => setOptionValue('dark', String(!optionsBooleans.dark))}
+            onClick={() => setOptions({ dark: !optionsBooleans.dark })}
           >
             Color: {optionsBooleans.dark ? 'Dark' : 'Light'}
+          </Button>
+          <Button>
+            Create Sandbox
           </Button>
         </nav>
         <div css={styles.logo}>
           <a href='/play'>
-            <b>ARWES PLAYGROUND</b>
+            <b>Noxtron</b>
           </a>
         </div>
     </header>

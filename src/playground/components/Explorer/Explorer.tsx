@@ -4,7 +4,6 @@ import { ReactElement, useMemo } from 'react';
 
 import type { Styles } from '@src/types';
 import { cx } from '@src/utils/cx';
-import { Button } from '../Button';
 import { createStyles } from './Explorer.styles';
 
 interface ExplorerDataItem {
@@ -111,9 +110,6 @@ const Explorer = (props: ExplorerProps): ReactElement => {
       <nav css={styles.nav}>
         {createExplorerItems(styles, items)}
       </nav>
-      <Button css={styles.button}>
-        Create Sandbox
-      </Button>
     </aside>
   );
 };

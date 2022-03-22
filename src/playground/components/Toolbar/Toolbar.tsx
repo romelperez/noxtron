@@ -14,13 +14,11 @@ interface ToolbarProps {
 const Toolbar = (props: ToolbarProps): ReactElement => {
   const { className } = props;
 
-  const routerState = useRouterState();
+  const { optionsControls } = useRouterState();
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
 
-  const location = routerState.type === 'p'
-    ? routerState.route.map(window.decodeURIComponent).join(' / ')
-    : '';
+  const location = optionsControls.type === 'predefined' ? optionsControls.sandbox.join(' / ') : '';
 
   return (
     <nav

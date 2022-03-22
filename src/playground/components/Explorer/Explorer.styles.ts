@@ -5,12 +5,11 @@ const createStyles = (theme: Theme): Styles => {
     root: {
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'space-between',
+      overflowY: 'auto',
       padding: theme.space(4)
     },
     nav: {
-      overflowY: 'auto',
-      marginBottom: theme.space(4),
+      flex: 1,
 
       ul: {
         display: 'block',
@@ -47,9 +46,6 @@ const createStyles = (theme: Theme): Styles => {
       '&:hover, &:focus': {
         color: theme.colors.secondary.textHigh(14)
       }
-    },
-    button: {
-      width: '100%'
     }
   };
 };

@@ -1,7 +1,6 @@
-import { useTheme } from '@emotion/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import type { RouterState } from '@src/types';
+import type { RouterURLOption, RouterState } from '@src/types';
 import { ROUTER_URL_OPTIONS_BOOLEANS, ROUTER_URL_OPTIONS } from '@src/constants';
 import { convertLocationSearchToString } from '../convertLocationSearchToString';
 import { convertLocationSearchToObject } from '../convertLocationSearchToObject';
@@ -12,17 +11,22 @@ const useRouterState = (): RouterState => {
   const navigate = useNavigate();
 
   return useMemo(() => {
-    const locationPath = location.pathname.split('/').slice(1); // Remove "/play" in path.
     const locationOptions: Record<string, string | undefined> = convertLocationSearchToObject(location.search);
-
-    const [locationType, ...route] = locationPath;
-    const type = (locationType as RouterState['type']) === 'p' ? 'p' : 'c';
 
     const options: RouterState['options'] = Object
       .keys(locationOptions)
       .filter(key => (ROUTER_URL_OPTIONS as string[]).includes(key))
-      .map(key => ({ [key]: locationOptions[key] }))
+      .map(key => ({ [key]: locationOptions[key] || '' }))
       .reduce((all, item) => ({ ...all, ...item }), {}) as RouterState['options'];
+
+    const optionsControls: RouterState['optionsControls'] = {
+      type: options.type === 'predefined' ? 'predefined' : 'custom',
+      sandbox: (options.sandbox || '').split('|')
+    };
+
+    if (!options.type) {
+      options.type = optionsControls.type;
+    }
 
     const optionsBooleans: RouterState['optionsBooleans'] = Object
       .keys(locationOptions)
@@ -30,27 +34,23 @@ const useRouterState = (): RouterState => {
       .map(key => ({ [key]: locationOptions[key]?.toLowerCase() === 'true' }))
       .reduce((all, item) => ({ ...all, ...item }), {}) as RouterState['optionsBooleans'];
 
-    // TODO: Implement default values.
-
-    const currentLocationSearch = convertLocationSearchToString(locationOptions);
-    const isReady = `${location.pathname}${location.search}` === `${location.pathname}?${currentLocationSearch}`;
-
-    const setOptionValue: RouterState['setOptionValue'] = (option, value) => {
+    const setOptions: RouterState['setOptions'] = newOptions => {
       const newLocationSearch = convertLocationSearchToString({
         ...options,
-        [option]: value
+        ...Object
+          .keys(newOptions)
+          .map(name => ({ [name]: String(newOptions[name as RouterURLOption] ?? '') }))
+          .reduce((all, item) => ({ ...all, ...item }), {})
       });
 
       navigate(`${location.pathname}?${newLocationSearch}`);
     };
 
     const routerState: RouterState = Object.freeze({
-      isReady,
-      type,
-      route,
       options,
+      optionsControls,
       optionsBooleans,
-      setOptionValue
+      setOptions
     });
 
     return routerState;

@@ -102,12 +102,6 @@ module.exports = {
       directory: BUILD_PATH,
       watch: true
     },
-    historyApiFallback: {
-      rewrites: [
-        { from: /^\/play\/p\//, to: '/play' },
-        { from: /^\/play\/c\//, to: '/play' }
-      ]
-    },
     allowedHosts: 'all',
     compress: true,
     host: '127.0.0.1',

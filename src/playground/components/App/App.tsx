@@ -1,8 +1,9 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
-import { Fragment, ReactElement, useMemo } from 'react';
+import { Fragment, ReactElement, useEffect, useMemo, useRef } from 'react';
 
 import { useRouterState } from '@src/utils/useRouterState';
+import { useMediaQuery } from '@src/utils/useMediaQuery';
 import { Header } from '../Header';
 import { Explorer } from '../Explorer';
 import { Toolbar } from '../Toolbar';
@@ -14,7 +15,24 @@ import { createStyles } from './App.styles';
 const App = (): ReactElement => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const { optionsBooleans } = useRouterState();
+  const { options, optionsBooleans, setOptions } = useRouterState();
+  const isMQMediumUp = useMediaQuery(theme.breakpoints.medium.up);
+
+  const isFirstRenderRef = useRef<boolean | null>(true);
+
+  useEffect(() => {
+    if (!isFirstRenderRef.current) {
+      isFirstRenderRef.current = false;
+      return;
+    }
+
+    setOptions({
+      explorer: isMQMediumUp ? optionsBooleans.explorer || true : false,
+      editor: isMQMediumUp ? optionsBooleans.editor || true : false,
+      preview: !options.preview ? true : optionsBooleans.preview,
+      dark: !options.dark ? true : optionsBooleans.dark
+    });
+  }, []);
 
   return (
     <div className='app' css={styles.root}>

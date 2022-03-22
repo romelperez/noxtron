@@ -21,14 +21,14 @@ const Footer = (props: FooterProps): ReactElement => {
     >
       <div css={styles.section}>
         <a href='#' target='_blank'>v1.2.3 22-06-27</a>
-        <a href='#' target='_blank'>Website</a>
-        <a href='#' target='_blank'>Perf</a>
-        <a href='#' target='_blank'>Previous Versions</a>
+        <a href='#' target='_blank'>Link1</a>
+        <a href='#' target='_blank'>Link2</a>
+        <a href='#' target='_blank'>Link3</a>
       </div>
       <div css={styles.section}>
-        <a href='#' target='_blank'>GitHub</a>
-        <a href='#' target='_blank'>Discord</a>
-        <a href='#' target='_blank'>Twitter</a>
+        <a href='#' target='_blank'>Link1</a>
+        <a href='#' target='_blank'>Link2</a>
+        <a href='#' target='_blank'>Link3</a>
       </div>
     </footer>
   );

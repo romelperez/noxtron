@@ -63,7 +63,15 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
   }, [routerState, sandboxes, sandboxSelected]);
 
   const store = useMemo(() => {
+    const config = (window as any).noxtronConfig || {};
+
     const store: Store = {
+      config: {
+        basePath: '/',
+        playgroundPath: '/',
+        sandboxPath: '/sandbox/',
+        ...config
+      },
       sandboxes,
       sandboxSelected,
       sandboxCode,

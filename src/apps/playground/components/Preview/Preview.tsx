@@ -46,7 +46,7 @@ const Preview = (props: PreviewProps): ReactElement => {
 
   useEffect(() => {
     const onOpenIsolated = (): void => {
-      window.open(`${window.location.origin}/play/sandbox/?code=${codeTranspiledEncoded}`, 'sandbox');
+      window.open(`${window.location.origin}${store.config.sandboxPath}?code=${codeTranspiledEncoded}`, 'sandbox');
     };
 
     store.subscribe('openIsolated', onOpenIsolated);
@@ -64,7 +64,7 @@ const Preview = (props: PreviewProps): ReactElement => {
       <iframe
         ref={iframeRef}
         css={styles.sandbox}
-        src={`/play/sandbox/?code=${codeTranspiledEncoded}`}
+        src={`${store.config.sandboxPath}?code=${codeTranspiledEncoded}`}
       />
     </div>
   );

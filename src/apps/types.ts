@@ -70,6 +70,12 @@ export interface RouterState {
   setOptions: (newOptions: RouterStateSetOptionsUpdate) => void
 }
 
+export interface Config {
+  basePath: string
+  playgroundPath: string
+  sandboxPath: string
+}
+
 export interface StoreSandbox {
   name: string
   language?: string
@@ -84,6 +90,7 @@ export type StoreEvent =
   | 'openIsolated';
 export type StoreSubscriber = () => void;
 export interface Store {
+  config: Config
   sandboxes: StoreSandbox[]
   sandboxSelected: StoreSandbox | null
   sandboxCode: string

@@ -74,6 +74,7 @@ export interface Config {
   basePath: string
   playgroundPath: string
   sandboxPath: string
+  title?: string
 }
 
 export interface StoreSandbox {

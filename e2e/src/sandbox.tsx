@@ -1,3 +1,3 @@
-import { setupSandbox } from '../../build/cjs/apps';
+import { setupSandbox } from '../../build/cjs/apps/sandbox';
 
 setupSandbox();

@@ -1,5 +1,4 @@
 const path = require('path');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -19,15 +18,7 @@ module.exports = {
   mode: NODE_ENV || 'development',
   entry: {
     playground: path.join(SRC_PATH, 'playground.tsx'),
-    sandbox: path.join(SRC_PATH, 'sandbox.tsx'),
-    // TODO: Remove workers dependency.
-    /**/
-    'monaco.editor.worker': 'monaco-editor/esm/vs/editor/editor.worker.js',
-		'monaco.json.worker': 'monaco-editor/esm/vs/language/json/json.worker',
-		'monaco.css.worker': 'monaco-editor/esm/vs/language/css/css.worker',
-		'monaco.html.worker': 'monaco-editor/esm/vs/language/html/html.worker',
-		'monaco.ts.worker': 'monaco-editor/esm/vs/language/typescript/ts.worker'
-    /**/
+    sandbox: path.join(SRC_PATH, 'sandbox.tsx')
   },
   output: {
     path: path.join(BUILD_PATH, BASE_PATH),
@@ -39,13 +30,6 @@ module.exports = {
     // Allow dependencies as expressions. Required for @babel/standalone.
     exprContextCritical: false,
     rules: [
-      // Remove the need for Strict ESModules fully specified paths.
-      {
-        test: /\.m?js/,
-        resolve: {
-          fullySpecified: false
-        }
-      },
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
@@ -58,28 +42,7 @@ module.exports = {
             }
           }
         ]
-      },
-      // TODO: Remove building loader dependencies.
-      {
-				test: /\.css$/,
-				use: ['style-loader', 'css-loader']
-			},
-			{
-				test: /\.ttf$/,
-				use: ['file-loader']
-			},
-      {
-        test: /\.md$/i,
-        use: 'raw-loader'
       }
-    ]
-  },
-  resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    plugins: [
-      new TsconfigPathsPlugin({
-        configFile: TSCONFIG_FILE_PATH
-      })
     ]
   },
   plugins: [

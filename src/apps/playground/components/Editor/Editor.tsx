@@ -1,9 +1,11 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
-import { ReactElement, useEffect, useMemo, useRef } from 'react';
+import { ReactElement, useEffect, useMemo, useRef, useCallback } from 'react';
 import debounce from 'lodash/debounce';
 import * as monaco from 'monaco-editor';
+import MonacoEditor from '@monaco-editor/react';
 
+import type { Store } from '../../../types';
 import { cx } from '../../../utils/cx';
 import { useRouterState } from '../../../utils/useRouterState';
 import { useStore } from '../../../utils/useStore';
@@ -26,23 +28,23 @@ const Editor = (props: EditorProps): ReactElement => {
   const store = useStore();
   const isBreakpointMediumUp = useMediaQuery(theme.breakpoints.medium.up);
 
-  const editorElementRef = useRef<HTMLDivElement>(null);
 	const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+  const storeRef = useRef<Store>(store);
 
-	useEffect(() => {
-    const editorElement = editorElementRef.current as HTMLDivElement;
+  storeRef.current = store;
+
+  const onEditorMount = useCallback((newEditorRef: monaco.editor.IStandaloneCodeEditor) => {
+    editorRef.current = newEditorRef;
+
     const { fontFamily, fontSize, fontWeight } = theme.typography.code(1);
 
-    editorRef.current = monaco.editor.create(editorElement, {
+    newEditorRef.updateOptions({
       readOnly: !isBreakpointMediumUp,
       domReadOnly: !isBreakpointMediumUp,
-      value: '',
-      language: 'javascript',
       tabSize: 2,
       showDeprecated: true,
       showUnused: true,
       scrollBeyondLastLine: false,
-      theme: theme.colorScheme === 'dark' ? 'vs-dark' : 'vs',
       autoDetectHighContrast: false,
       padding: {
         top: theme.space(4),
@@ -54,17 +56,17 @@ const Editor = (props: EditorProps): ReactElement => {
       fontWeight: fontWeight ? String(fontWeight) : undefined
     });
 
-    const onResize = debounce((): void => {
-      editorRef.current?.layout();
-    }, 100);
+    const initialCode = storeRef.current.sandboxSelected?.code || '';
+    newEditorRef.setValue(initialCode);
+  }, []);
 
-    window.addEventListener('resize', onResize);
-
-		return () => {
-      window.removeEventListener('resize', onResize);
-      editorRef.current?.dispose();
-		};
-	}, []);
+  useEffect(() => {
+    // TODO: Update editor with new sandbox language.
+    if (store?.sandboxSelected && editorRef.current) {
+      const { code = '' } = store.sandboxSelected;
+      editorRef.current.setValue(code);
+    }
+  }, [store?.sandboxSelected]);
 
   useEffect(() => {
     editorRef.current?.updateOptions({
@@ -97,22 +99,19 @@ const Editor = (props: EditorProps): ReactElement => {
     };
   }, [routerState, store]);
 
-  useEffect(() => {
-    // TODO: Update editor with new sandbox language.
-    if (store?.sandboxSelected && editorRef.current) {
-      const { code = '' } = store.sandboxSelected;
-      editorRef.current.setValue(code);
-    }
-  }, [store?.sandboxSelected]);
-
   return (
     <div
       className={cx('editor', className)}
       css={styles.root}
     >
-      <div
-        ref={editorElementRef}
+      <MonacoEditor
+        className='editor__monaco-editor'
         css={styles.editor}
+        width='100%'
+        height='100%'
+        theme='vs-dark'
+        defaultLanguage='typescript'
+        onMount={onEditorMount}
       />
     </div>
   );

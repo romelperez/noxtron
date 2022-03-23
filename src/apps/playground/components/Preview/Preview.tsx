@@ -6,6 +6,7 @@ import { transform } from '@babel/standalone';
 import { cx } from '../../../utils/cx';
 import { useStore } from '../../../utils/useStore';
 import { encodeSourceCode } from '../../../utils/encodeSourceCode';
+import { getUserGlobalConfig } from '../../../utils/getUserGlobalConfig';
 import { createStyles } from './Preview.styles';
 
 interface PreviewProps {
@@ -20,6 +21,8 @@ const Preview = (props: PreviewProps): ReactElement => {
   const store = useStore();
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  const config = getUserGlobalConfig();
 
   const codeTranspiledEncoded = useMemo(() => {
     const code = store?.sandboxCode || '';
@@ -46,7 +49,7 @@ const Preview = (props: PreviewProps): ReactElement => {
 
   useEffect(() => {
     const onOpenIsolated = (): void => {
-      window.open(`${window.location.origin}${store.config.sandboxPath}?code=${codeTranspiledEncoded}`, 'sandbox');
+      window.open(`${window.location.origin}${config.sandboxPath}?code=${codeTranspiledEncoded}`, 'sandbox');
     };
 
     store.subscribe('openIsolated', onOpenIsolated);
@@ -64,7 +67,7 @@ const Preview = (props: PreviewProps): ReactElement => {
       <iframe
         ref={iframeRef}
         css={styles.sandbox}
-        src={`${store.config.sandboxPath}?code=${codeTranspiledEncoded}`}
+        src={`${config.sandboxPath}?code=${codeTranspiledEncoded}`}
       />
     </div>
   );

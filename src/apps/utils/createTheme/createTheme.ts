@@ -10,6 +10,7 @@ import type {
   ThemeColorScheme,
   Theme
 } from '../../types';
+import { getUserGlobalConfig } from '../getUserGlobalConfig';
 
 // TODO: Polish light theme color scheme.
 
@@ -75,76 +76,67 @@ const createThemeColorPalette = (hue: number, colorScheme: ThemeColorScheme): Th
 }
 
 const createTheme = (colorScheme: ThemeColorScheme): Theme => {
+  const { theme: userTheme } = getUserGlobalConfig();
+
   return {
     space: createThemeMultiplier(4),
     typography: {
       heading: createThemeStyle([
         {
-          fontSize: 24,
-          fontFamily: '"Titillium Web", sans-serif',
-          fontWeight: '600',
-          textTransform: 'uppercase'
+          textTransform: 'uppercase',
+          ...userTheme?.typography?.heading,
+          fontSize: 24
         },
         {
-          fontSize: 21,
-          fontFamily: '"Titillium Web", sans-serif',
-          fontWeight: '600',
-          textTransform: 'uppercase'
+          textTransform: 'uppercase',
+          ...userTheme?.typography?.heading,
+          fontSize: 21
         },
         {
-          fontSize: 18,
-          fontFamily: '"Titillium Web", sans-serif',
-          fontWeight: '600',
-          textTransform: 'uppercase'
+          textTransform: 'uppercase',
+          ...userTheme?.typography?.heading,
+          fontSize: 18
         },
         {
-          fontSize: 16,
-          fontFamily: '"Titillium Web", sans-serif',
-          fontWeight: '600',
-          textTransform: 'uppercase'
+          textTransform: 'uppercase',
+          ...userTheme?.typography?.heading,
+          fontSize: 16
         }
       ]),
       body: createThemeStyle([
         {
-          fontSize: 18,
-          fontFamily: '"Titillium Web", sans-serif',
-          fontWeight: '400'
+          ...userTheme?.typography?.body,
+          fontSize: 18
         },
         {
-          fontSize: 16,
-          fontFamily: '"Titillium Web", sans-serif',
-          fontWeight: '400'
+          ...userTheme?.typography?.body,
+          fontSize: 16
         },
         {
-          fontSize: 14,
-          fontFamily: '"Titillium Web", sans-serif',
-          fontWeight: '400'
+          ...userTheme?.typography?.body,
+          fontSize: 14
         }
       ]),
       cta: createThemeStyle([
         {
-          fontSize: 16,
-          fontFamily: '"Titillium Web", sans-serif',
-          fontWeight: '400',
-          textTransform: 'uppercase'
+          textTransform: 'uppercase',
+          ...userTheme?.typography?.cta,
+          fontSize: 16
         },
         {
-          fontSize: 14,
-          fontFamily: '"Titillium Web", sans-serif',
-          fontWeight: '400',
-          textTransform: 'uppercase'
+          textTransform: 'uppercase',
+          ...userTheme?.typography?.cta,
+          fontSize: 14
         }
       ]),
       code: createThemeStyle([
         {
-          fontSize: 16,
-          fontFamily: '"Source Code Pro", Menlo, Monaco, "Courier New", monospace',
-          fontWeight: '400'
+          ...userTheme?.typography?.code,
+          fontSize: 16
         },
         {
-          fontSize: 14,
-          fontFamily: '"Source Code Pro", Menlo, Monaco, "Courier New", monospace',
-          fontWeight: '400'
+          ...userTheme?.typography?.code,
+          fontSize: 14
         }
       ])
     },

@@ -13,10 +13,10 @@ const createStyles = (theme: Theme): Styles => {
     section: {
       display: 'flex',
       flexDirection: 'row',
-      a: {
-        display: 'inline-block',
-      },
-      'a + a': {
+    },
+    item: {
+      display: 'inline-block',
+      '& + &': {
         marginLeft: theme.space(4)
       }
     }

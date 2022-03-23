@@ -3,7 +3,7 @@ import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 
 import { useRouterState } from '../../../utils/useRouterState';
-import { useStore } from '../../../utils/useStore';
+import { getUserGlobalConfig } from '../../../utils/getUserGlobalConfig';
 import { Button } from '../Button';
 import { createStyles } from './Header.styles';
 
@@ -17,7 +17,8 @@ const Header = (props: HeaderProps): ReactElement => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { optionsBooleans, setOptions } = useRouterState();
-  const store = useStore();
+
+  const config = getUserGlobalConfig();
 
   return (
     <header
@@ -54,8 +55,8 @@ const Header = (props: HeaderProps): ReactElement => {
           </Button>
         </nav>
         <div css={styles.logo}>
-          <a href='/play'>
-            <b>{store.config.title || 'Noxtron'}</b>
+          <a href={config.playgroundPath}>
+            <b>{config.title || 'Noxtron'}</b>
           </a>
         </div>
     </header>

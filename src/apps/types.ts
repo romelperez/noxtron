@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import type { CSSProperties, HTMLProps } from 'react';
 import type { CSSObject } from '@emotion/react';
 
 export type ThemeSettingsMultiplier = number;
@@ -75,6 +75,18 @@ export interface Config {
   playgroundPath: string
   sandboxPath: string
   title?: string
+  theme?: {
+    typography?: {
+      heading?: CSSProperties
+      body?: CSSProperties
+      cta?: CSSProperties
+      code?: CSSProperties
+    }
+  }
+  links?: {
+    mobile?: Array<HTMLProps<HTMLElement> & { as: keyof HTMLElementTagNameMap }>
+    desktop?: Array<Array<HTMLProps<HTMLElement> & { as: keyof HTMLElementTagNameMap }>>
+  }
 }
 
 export interface StoreSandbox {
@@ -91,7 +103,6 @@ export type StoreEvent =
   | 'openIsolated';
 export type StoreSubscriber = () => void;
 export interface Store {
-  config: Config
   sandboxes: StoreSandbox[]
   sandboxSelected: StoreSandbox | null
   sandboxCode: string

@@ -4,6 +4,7 @@ import ky from 'ky';
 import type { StoreSandbox, StoreEvent, StoreSubscriber, Store } from '../../../types';
 import { StoreContext } from '../../../utils/StoreContext';
 import { useRouterState } from '../../../utils/useRouterState';
+import { getUserGlobalConfig } from '../../../utils/getUserGlobalConfig';
 import { findSandboxByPath } from '../../../utils/findSandboxByPath';
 
 type StoreSubscriptions = {
@@ -25,9 +26,11 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
 
   const subscriptionsRef = useRef<StoreSubscriptions>({});
 
+  const config = getUserGlobalConfig();
+
   useEffect(() => {
     ky
-      .get('/play/sandboxes.json')
+      .get(`${config.basePath}/sandboxes.json`)
       .then<StoreSandbox[]>(response => response.json())
       .then(sandboxes => {
         setSandboxes(sandboxes);
@@ -63,15 +66,7 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
   }, [routerState, sandboxes, sandboxSelected]);
 
   const store = useMemo(() => {
-    const config = (window as any).noxtronConfig || {};
-
     const store: Store = {
-      config: {
-        basePath: '/',
-        playgroundPath: '/',
-        sandboxPath: '/sandbox/',
-        ...config
-      },
       sandboxes,
       sandboxSelected,
       sandboxCode,

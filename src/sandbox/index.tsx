@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom';
 import escape from 'lodash/escape';
 import * as empanada from 'empanada';
 
-import { convertLocationSearchToObject } from '../utils/convertLocationSearchToObject';
+import { decodeSourceCode } from '@src/utils/decodeSourceCode';
+import { convertLocationSearchToObject } from '@src/utils/convertLocationSearchToObject';
 
 const root = document.querySelector('#root') as HTMLDivElement;
 
 try {
   const parameters = convertLocationSearchToObject(window.location.search);
-  const codeRaw = window.atob(window.decodeURI(parameters.code || ''));
+  const codeRaw = decodeSourceCode(parameters.code);
 
   if (!codeRaw) {
     throw new Error('No source code provided.');

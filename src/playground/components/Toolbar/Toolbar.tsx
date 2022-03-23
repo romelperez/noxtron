@@ -30,19 +30,34 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
       <div css={styles.options}>
         <Button
           size='small'
-          title='Run source code in preview'
-          disabled={!optionsBooleans.preview}
-          onClick={() => store?.trigger('run')}
-        >
-          Run
-        </Button>
-        <Button
-          size='small'
           title='Reload preview'
           disabled={!optionsBooleans.preview}
           onClick={() => store?.trigger('reload')}
         >
           Reload
+        </Button>
+        <Button
+          size='small'
+          title='Reset predefined sandbox source code'
+          disabled={optionsControls.type === 'custom'}
+          onClick={() => store?.trigger('resetPredefinedSandboxCode')}
+        >
+          Reset
+        </Button>
+        <Button
+          size='small'
+          disabled={optionsControls.type === 'custom'}
+          title='Make custom sandbox from current source code'
+          onClick={() => store?.trigger('customSandbox')}
+        >
+          Custom Sandbox
+        </Button>
+        <Button
+          size='small'
+          title='Open preview in an independent isolated window'
+          onClick={() => store?.trigger('openIsolated')}
+        >
+          Open Isolated
         </Button>
         <Button
           size='small'
@@ -59,21 +74,6 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           }}
         >
           Copy URL
-        </Button>
-        <Button
-          size='small'
-          disabled={optionsControls.type === 'custom'}
-          title='Make custom sandbox from current source code'
-          onClick={() => store?.trigger('customSandbox')}
-        >
-          Custom Sandbox
-        </Button>
-        <Button
-          size='small'
-          title='Open preview in an independent isolated window'
-          onClick={() => store?.trigger('openIsolated')}
-        >
-          Open Isolated
         </Button>
       </div>
       {!!location && (

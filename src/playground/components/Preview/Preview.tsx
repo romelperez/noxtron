@@ -28,6 +28,7 @@ const Preview = (props: PreviewProps): ReactElement => {
       presets: ['env', 'react', 'typescript']
     });
     const codeProcessed = transformation?.code || '';
+
     return encodeSourceCode(codeProcessed);
   }, [store?.sandboxCode]);
 
@@ -35,7 +36,9 @@ const Preview = (props: PreviewProps): ReactElement => {
     const onReload = (): void => {
       iframeRef.current?.contentWindow?.location.reload();
     };
+
     store.subscribe('reload', onReload);
+
     return () => {
       store.unsubscribe('reload', onReload);
     };
@@ -45,7 +48,9 @@ const Preview = (props: PreviewProps): ReactElement => {
     const onOpenIsolated = (): void => {
       window.open(`${window.location.origin}/play/sandbox/?code=${codeTranspiledEncoded}`, 'sandbox');
     };
+
     store.subscribe('openIsolated', onOpenIsolated);
+
     return () => {
       store.unsubscribe('openIsolated', onOpenIsolated);
     };

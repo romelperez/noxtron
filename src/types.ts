@@ -72,12 +72,13 @@ export interface RouterState {
 
 export interface StoreSandbox {
   name: string
+  language?: string
   code?: string
   children?: StoreSandbox[]
 }
 export type StoreEvent =
-  | 'run'
   | 'reload'
+  | 'resetPredefinedSandboxCode'
   | 'copyCode'
   | 'customSandbox'
   | 'openIsolated';

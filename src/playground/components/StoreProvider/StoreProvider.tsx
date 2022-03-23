@@ -10,11 +10,11 @@ type StoreSubscriptions = {
   [event in StoreEvent]?: Set<StoreSubscriber>
 }
 
-interface WarehouseProviderProps {
+interface StoreProviderProps {
   children: ReactNode
 }
 
-const StoreProvider = (props: WarehouseProviderProps): ReactElement => {
+const StoreProvider = (props: StoreProviderProps): ReactElement => {
   const { children } = props;
 
   const routerState = useRouterState();
@@ -42,15 +42,15 @@ const StoreProvider = (props: WarehouseProviderProps): ReactElement => {
     }
 
     const { type, sandbox, code } = routerState.optionsControls;
-    const sandboxSelected = findSandboxByPath(sandboxes, sandbox);
+    const newSandboxSelected = findSandboxByPath(sandboxes, sandbox);
 
-    if (sandboxSelected) {
-      if (store.sandboxSelected !== sandboxSelected) {
-        setSandboxSelected(sandboxSelected);
+    if (newSandboxSelected) {
+      if (newSandboxSelected !== sandboxSelected) {
+        setSandboxSelected(newSandboxSelected);
       }
 
       if (type === 'predefined') {
-        setSandboxCode(sandboxSelected.code || '');
+        setSandboxCode(newSandboxSelected.code || '');
       }
     }
     else if (type !== 'custom') {
@@ -60,7 +60,7 @@ const StoreProvider = (props: WarehouseProviderProps): ReactElement => {
     if (type === 'custom') {
       setSandboxCode(code);
     }
-  }, [routerState, sandboxes]);
+  }, [routerState, sandboxes, sandboxSelected]);
 
   const store = useMemo(() => {
     const store: Store = {
@@ -83,6 +83,21 @@ const StoreProvider = (props: WarehouseProviderProps): ReactElement => {
     };
     return store;
   }, [sandboxes, sandboxSelected, sandboxCode]);
+
+  useEffect(() => {
+    // TODO: This will not work until a proper code management is implemented.
+    const onResetPredefinedSandboxCode = (): void => {
+      if (routerState.optionsControls.type === 'predefined') {
+        store.setSandboxCode(store?.sandboxSelected?.code || '');
+      }
+    };
+
+    store.subscribe('resetPredefinedSandboxCode', onResetPredefinedSandboxCode);
+
+    return () => {
+      store.unsubscribe('resetPredefinedSandboxCode', onResetPredefinedSandboxCode);
+    };
+  }, [routerState, store]);
 
   return (
     <StoreContext.Provider value={store}>

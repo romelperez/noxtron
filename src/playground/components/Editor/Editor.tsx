@@ -37,7 +37,7 @@ const Editor = (props: EditorProps): ReactElement => {
       readOnly: !isBreakpointMediumUp,
       domReadOnly: !isBreakpointMediumUp,
       value: '',
-      language: 'typescript',
+      language: 'javascript',
       tabSize: 2,
       showDeprecated: true,
       showUnused: true,
@@ -77,14 +77,8 @@ const Editor = (props: EditorProps): ReactElement => {
   }, [routerState]);
 
   useEffect(() => {
-    const onRun = (): void => {
-      const code = editorRef.current?.getValue() || '';
-      routerState.setOptions({ type: 'custom', code });
-    };
-
     const onCopy = (): void => {
-      const code = editorRef.current?.getValue() || '';
-      window.navigator.clipboard.writeText(code);
+      window.navigator.clipboard.writeText(editorRef.current?.getValue() || '');
     };
 
     const onCustomSandbox = (): void => {
@@ -94,20 +88,22 @@ const Editor = (props: EditorProps): ReactElement => {
       });
     };
 
-    store.subscribe('run', onRun);
     store.subscribe('copyCode', onCopy);
     store.subscribe('customSandbox', onCustomSandbox);
 
     return () => {
-      store.unsubscribe('run', onRun);
       store.unsubscribe('copyCode', onCopy);
       store.unsubscribe('customSandbox', onCustomSandbox);
     };
   }, [routerState, store]);
 
   useEffect(() => {
-    editorRef.current?.setValue(store?.sandboxCode || '');
-  }, [store?.sandboxCode]);
+    // TODO: Update editor with new sandbox language.
+    if (store?.sandboxSelected && editorRef.current) {
+      const { code = '' } = store.sandboxSelected;
+      editorRef.current.setValue(code);
+    }
+  }, [store?.sandboxSelected]);
 
   return (
     <div

@@ -3,21 +3,19 @@
     "name": "@package/one",
     "children": [
       {
-        "name": "Animation",
-        "children": [
-          {
-            "name": "basic",
-            "code": "// TODO"
-          },
-          {
-            "name": "medium",
-            "code": "// TODO"
-          },
-          {
-            "name": "complex",
-            "code": "// TODO"
-          }
-        ]
+        "name": "basic",
+        "language": "typescript",
+        "code": "// TODO"
+      },
+      {
+        "name": "medium",
+        "language": "typescript",
+        "code": "// TODO"
+      },
+      {
+        "name": "complex",
+        "language": "typescript",
+        "code": "// TODO"
       }
     ]
   },
@@ -29,14 +27,17 @@
         "children": [
           {
             "name": "basic",
+            "language": "typescript",
             "code": "render(\n  <h1\n    className='title'\n    style={{ margin: '20px', color: 'yellow', background: 'black' }}\n  >\n    SomeProvider basic!\n  </h1>\n);\n"
           },
           {
             "name": "medium",
+            "language": "typescript",
             "code": "render(\n  <h1\n    className='title'\n    style={{ margin: '20px', color: 'cyan', background: 'black' }}\n  >\n    SomeProvider medium!\n  </h1>\n);\n"
           },
           {
             "name": "complex",
+            "language": "typescript",
             "code": "render(\n  <h1\n    className='title'\n    style={{ margin: '20px', color: 'magenta', background: 'black' }}\n  >\n    SomeProvider complex!\n  </h1>\n);\n"
           }
         ]
@@ -46,10 +47,12 @@
         "children": [
           {
             "name": "basic",
+            "language": "typescript",
             "code": "// TODO"
           },
           {
             "name": "complex",
+            "language": "typescript",
             "code": "// TODO"
           }
         ]
@@ -64,10 +67,12 @@
         "children": [
           {
             "name": "basic",
+            "language": "typescript",
             "code": "// TODO"
           },
           {
             "name": "complex",
+            "language": "typescript",
             "code": "// TODO"
           }
         ]
@@ -77,10 +82,12 @@
         "children": [
           {
             "name": "basic",
+            "language": "typescript",
             "code": "// TODO"
           },
           {
             "name": "medium",
+            "language": "typescript",
             "code": "// TODO"
           }
         ]

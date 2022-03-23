@@ -1,9 +1,12 @@
 {
   "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "module": "CommonJS",
-    "declaration": true,
-    "outDir": "build"
-  },
-  "exclude": ["node_modules", "build", "**/*.test.ts"]
+  "exclude": [
+    "node_modules",
+    "build",
+    "e2e",
+    "**/node_modules",
+    "**/build",
+    "**/e2e",
+    "**/*.test.ts"
+  ]
 }

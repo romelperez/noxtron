@@ -26,10 +26,10 @@
   "files": [
     "build"
   ],
-  "types": "./build/index.d.ts",
-  "main": "./build/index.js",
+  "types": "./build/cjs/apps/index.d.ts",
+  "main": "./build/cjs/apps/index.js",
   "bin": {
-    "noxtron": "./build/cli.js"
+    "noxtron": "./build/cjs/cli/index.js"
   },
   "peerDependencies": {
     "react": "17.x.x",
@@ -77,9 +77,11 @@
     "lint-fix": "prettier --write .",
     "test": "jest",
     "test-watch": "jest --watch",
-    "build": "cross-env NODE_ENV=production webpack --progress",
-    "dev": "webpack serve",
-    "start": "TODO",
+    "clean": "rm -rf ./build && rm -f .tsbuildinfo",
+    "build": "sh ./scripts/build-cjs.sh",
+    "dev": "sh ./scripts/build-cjs.sh --watch",
+    "e2e-build": "cross-env NODE_ENV=production webpack --config ./e2e/webpack.config.js --progress",
+    "e2e-dev": "webpack serve --config ./e2e/webpack.config.js",
     "prepublishOnly": "npm run clean && npm run build && npm run lint && npm run test"
   }
 }

@@ -3,8 +3,8 @@ import { ThemeProvider, Theme, Global } from '@emotion/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import * as monaco from 'monaco-editor';
 
-import { createTheme } from '@src/apps/utils/createTheme';
-import { useRouterState } from '@src/apps/utils/useRouterState';
+import { createTheme } from '../../../utils/createTheme';
+import { useRouterState } from '../../../utils/useRouterState';
 import { StoreProvider } from '../StoreProvider';
 import { App } from '../App';
 import { createStyles } from './Playground.styles';

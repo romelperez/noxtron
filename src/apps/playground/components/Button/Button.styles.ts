@@ -1,4 +1,4 @@
-import type { Theme, Styles } from '@src/apps/types';
+import type { Theme, Styles } from '../../../types';
 
 interface StyleProps {
   color?: keyof Theme['colors']

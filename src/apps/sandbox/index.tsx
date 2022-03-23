@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import escape from 'lodash/escape';
 import * as empanada from 'empanada';
 
-import { decodeSourceCode } from '@src/apps/utils/decodeSourceCode';
-import { convertLocationSearchToObject } from '@src/apps/utils/convertLocationSearchToObject';
+import { decodeSourceCode } from '../utils/decodeSourceCode';
+import { convertLocationSearchToObject } from '../utils/convertLocationSearchToObject';
 
 const setupSandbox = (): void => {
   const root = document.querySelector('#root') as HTMLDivElement;

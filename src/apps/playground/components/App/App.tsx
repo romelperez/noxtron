@@ -2,8 +2,8 @@
 import { jsx, useTheme } from '@emotion/react';
 import { Fragment, ReactElement, useEffect, useMemo, useRef } from 'react';
 
-import { useRouterState } from '@src/apps/utils/useRouterState';
-import { useMediaQuery } from '@src/apps/utils/useMediaQuery';
+import { useRouterState } from '../../../utils/useRouterState';
+import { useMediaQuery } from '../../../utils/useMediaQuery';
 import { Header } from '../Header';
 import { Explorer } from '../Explorer';
 import { Toolbar } from '../Toolbar';

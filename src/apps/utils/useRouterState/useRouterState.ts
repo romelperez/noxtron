@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import type { RouterURLOption, RouterState } from '@src/apps/types';
-import { ROUTER_URL_OPTIONS_BOOLEANS, ROUTER_URL_OPTIONS } from '@src/apps/constants';
+import type { RouterURLOption, RouterState } from '../../types';
+import { ROUTER_URL_OPTIONS_BOOLEANS, ROUTER_URL_OPTIONS } from '../../constants';
 import { convertLocationSearchToString } from '../convertLocationSearchToString';
 import { convertLocationSearchToObject } from '../convertLocationSearchToObject';
 import { encodeSourceCode } from '../encodeSourceCode';

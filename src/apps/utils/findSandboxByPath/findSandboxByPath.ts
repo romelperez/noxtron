@@ -1,4 +1,4 @@
-import type { StoreSandbox } from '@src/apps/types';
+import type { StoreSandbox } from '../../types';
 
 const findSandboxByPath = (sandboxes: StoreSandbox[], routerSandbox: string[]): StoreSandbox | undefined => {
   if (routerSandbox.length) {

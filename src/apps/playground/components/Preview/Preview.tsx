@@ -3,9 +3,9 @@ import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useEffect, useMemo, useRef } from 'react';
 import { transform } from '@babel/standalone';
 
-import { cx } from '@src/apps/utils/cx';
-import { useStore } from '@src/apps/utils/useStore';
-import { encodeSourceCode } from '@src/apps/utils/encodeSourceCode';
+import { cx } from '../../../utils/cx';
+import { useStore } from '../../../utils/useStore';
+import { encodeSourceCode } from '../../../utils/encodeSourceCode';
 import { createStyles } from './Preview.styles';
 
 interface PreviewProps {

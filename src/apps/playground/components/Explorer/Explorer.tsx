@@ -2,10 +2,10 @@
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 
-import type { Styles, StoreSandbox } from '@src/apps/types';
-import { cx } from '@src/apps/utils/cx';
-import { useRouterState } from '@src/apps/utils/useRouterState';
-import { useStore } from '@src/apps/utils/useStore';
+import type { Styles, StoreSandbox } from '../../../types';
+import { cx } from '../../../utils/cx';
+import { useRouterState } from '../../../utils/useRouterState';
+import { useStore } from '../../../utils/useStore';
 import { createStyles } from './Explorer.styles';
 
 interface ExplorerNavListProps {

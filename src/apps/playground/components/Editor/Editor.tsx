@@ -4,11 +4,11 @@ import { ReactElement, useEffect, useMemo, useRef } from 'react';
 import debounce from 'lodash/debounce';
 import * as monaco from 'monaco-editor';
 
-import { cx } from '@src/apps/utils/cx';
-import { useRouterState } from '@src/apps/utils/useRouterState';
-import { useStore } from '@src/apps/utils/useStore';
+import { cx } from '../../../utils/cx';
+import { useRouterState } from '../../../utils/useRouterState';
+import { useStore } from '../../../utils/useStore';
 import { createStyles } from './Editor.styles';
-import { useMediaQuery } from '@src/apps/utils/useMediaQuery';
+import { useMediaQuery } from '../../../utils/useMediaQuery';
 
 // TODO: Handle code errors.
 // TODO: Update URL when user changes editor code with debounce time.

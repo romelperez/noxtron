@@ -1,4 +1,4 @@
-import type { Theme, Styles } from '@src/apps/types';
+import type { Theme, Styles } from '../../../types';
 
 const createStyles = (theme: Theme): Styles => {
   const bgNeutral = theme.colors.primary.bg(3);

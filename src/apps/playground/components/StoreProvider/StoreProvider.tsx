@@ -1,10 +1,10 @@
 import React, { ReactNode, ReactElement, useState, useEffect, useMemo, useRef } from 'react';
 import ky from 'ky';
 
-import type { StoreSandbox, StoreEvent, StoreSubscriber, Store } from '@src/apps/types';
-import { StoreContext } from '@src/apps/utils/StoreContext';
-import { useRouterState } from '@src/apps/utils/useRouterState';
-import { findSandboxByPath } from '@src/apps/utils/findSandboxByPath';
+import type { StoreSandbox, StoreEvent, StoreSubscriber, Store } from '../../../types';
+import { StoreContext } from '../../../utils/StoreContext';
+import { useRouterState } from '../../../utils/useRouterState';
+import { findSandboxByPath } from '../../../utils/findSandboxByPath';
 
 type StoreSubscriptions = {
   [event in StoreEvent]?: Set<StoreSubscriber>

@@ -4,6 +4,8 @@ import type { RouterURLOption, RouterState } from '@src/types';
 import { ROUTER_URL_OPTIONS_BOOLEANS, ROUTER_URL_OPTIONS } from '@src/constants';
 import { convertLocationSearchToString } from '../convertLocationSearchToString';
 import { convertLocationSearchToObject } from '../convertLocationSearchToObject';
+import { encodeSourceCode } from '../encodeSourceCode';
+import { decodeSourceCode } from '../decodeSourceCode';
 import { useMemo } from 'react';
 
 const useRouterState = (): RouterState => {
@@ -21,7 +23,8 @@ const useRouterState = (): RouterState => {
 
     const optionsControls: RouterState['optionsControls'] = {
       type: options.type === 'predefined' ? 'predefined' : 'custom',
-      sandbox: (options.sandbox || '').split('|').filter(Boolean)
+      sandbox: (options.sandbox || '').split('|').filter(Boolean),
+      code: decodeSourceCode(options.code || '')
     };
 
     if (!options.type) {
@@ -35,7 +38,10 @@ const useRouterState = (): RouterState => {
       .reduce((all, item) => ({ ...all, ...item }), {}) as RouterState['optionsBooleans'];
 
     const setOptions: RouterState['setOptions'] = newOptions => {
-      if (newOptions.type === 'custom') {
+      if (newOptions.type === 'predefined') {
+        newOptions.code = '';
+      }
+      else if (newOptions.type === 'custom') {
         newOptions.sandbox = [];
       }
 
@@ -51,6 +57,10 @@ const useRouterState = (): RouterState => {
               case 'sandbox': {
                 const valueList = rawValue as RouterState['optionsControls']['sandbox'] | undefined;
                 value = valueList ? valueList.filter(Boolean).join('|') : '';
+                break;
+              }
+              case 'code': {
+                value = encodeSourceCode(rawValue as RouterState['options']['code'] || '');
                 break;
               }
               default: {

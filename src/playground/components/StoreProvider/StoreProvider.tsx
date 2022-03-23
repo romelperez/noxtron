@@ -1,11 +1,14 @@
-import React, { ReactNode, ReactElement, useState, useEffect, useMemo } from 'react';
+import React, { ReactNode, ReactElement, useState, useEffect, useMemo, useRef } from 'react';
 import ky from 'ky';
 
-import type { StoreSandbox, Store } from '@src/types';
+import type { StoreSandbox, StoreEvent, StoreSubscriber, Store } from '@src/types';
 import { StoreContext } from '@src/utils/StoreContext';
 import { useRouterState } from '@src/utils/useRouterState';
 import { findSandboxByPath } from '@src/utils/findSandboxByPath';
 
+type StoreSubscriptions = {
+  [event in StoreEvent]?: Set<StoreSubscriber>
+}
 
 interface WarehouseProviderProps {
   children: ReactNode
@@ -20,6 +23,8 @@ const StoreProvider = (props: WarehouseProviderProps): ReactElement => {
   const [sandboxSelected, setSandboxSelected] = useState<StoreSandbox | null>(null);
   const [sandboxCode, setSandboxCode] = useState('');
 
+  const subscriptionsRef = useRef<StoreSubscriptions>({});
+
   useEffect(() => {
     ky
       .get('/play/sandboxes.json')
@@ -32,14 +37,14 @@ const StoreProvider = (props: WarehouseProviderProps): ReactElement => {
   }, []);
 
   useEffect(() => {
-    if (!warehouse) {
+    if (!sandboxes.length) {
       return;
     }
 
-    const sandboxSelected = findSandboxByPath(warehouse.sandboxes, routerState.optionsControls.sandbox);
+    const sandboxSelected = findSandboxByPath(sandboxes, routerState.optionsControls.sandbox);
 
     if (sandboxSelected) {
-      if (warehouse.sandboxSelected !== sandboxSelected) {
+      if (store.sandboxSelected !== sandboxSelected) {
         setSandboxSelected(sandboxSelected);
       }
     }
@@ -48,17 +53,30 @@ const StoreProvider = (props: WarehouseProviderProps): ReactElement => {
     }
   }, [sandboxes, routerState.optionsControls.sandbox]);
 
-  const warehouse: Store = useMemo(() => ({
-    sandboxes,
-    sandboxSelected,
-    sandboxCode,
-    setSandboxCode: (newCode: string) => {
-      setSandboxCode(newCode);
-    }
-  }), [sandboxes, sandboxSelected, sandboxCode]);
+  const store = useMemo(() => {
+    const store: Store = {
+      sandboxes,
+      sandboxSelected,
+      sandboxCode,
+      setSandboxCode: (newCode: string) => {
+        setSandboxCode(newCode);
+      },
+      subscribe: (event, subscriber) => {
+        subscriptionsRef.current[event] = subscriptionsRef.current[event] || new Set();
+        subscriptionsRef.current[event]?.add(subscriber);
+      },
+      unsubscribe: (event, subscriber) => {
+        subscriptionsRef.current[event]?.delete(subscriber);
+      },
+      trigger: event => {
+        subscriptionsRef.current[event]?.forEach(subscribe => subscribe());
+      }
+    };
+    return store;
+  }, [sandboxes, sandboxSelected, sandboxCode]);
 
   return (
-    <StoreContext.Provider value={warehouse}>
+    <StoreContext.Provider value={store}>
       {children}
     </StoreContext.Provider>
   );

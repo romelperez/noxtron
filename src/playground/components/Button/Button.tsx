@@ -6,6 +6,7 @@ import { createStyles } from './Button.styles';
 
 interface ButtonProps {
   className?: string
+  title?: string
   color?: keyof Theme['colors']
   size?: 'default' | 'small'
   disabled?: boolean
@@ -14,7 +15,7 @@ interface ButtonProps {
 }
 
 const Button = (props: ButtonProps): ReactElement => {
-  const { className, color, size, disabled, onClick, children } = props;
+  const { className, title, color, size, disabled, onClick, children } = props;
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme, props), [theme, color, size, disabled]);
@@ -23,6 +24,7 @@ const Button = (props: ButtonProps): ReactElement => {
     <button
       className={className}
       css={styles.root}
+      title={title}
       disabled={disabled}
       onClick={onClick}
     >

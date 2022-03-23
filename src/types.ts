@@ -51,20 +51,20 @@ export interface Theme {
 export type Style = CSSObject;
 export type Styles = Record<string, Style>;
 
-export type RouterURLOptionControl = 'type' | 'sandbox';
-export type RouterURLOptionText = 'code';
+export type RouterURLOptionControl = 'type' | 'sandbox' | 'code';
 export type RouterURLOptionBoolean = 'explorer' | 'editor' | 'preview' | 'dark';
-export type RouterURLOption = RouterURLOptionControl | RouterURLOptionText | RouterURLOptionBoolean;
+export type RouterURLOption = RouterURLOptionControl | RouterURLOptionBoolean;
 export type RouterStateSetOptionsUpdate =
   & { type?: 'predefined' | 'custom' }
   & { sandbox?: string[] }
-  & { [name in RouterURLOptionText]?: string }
+  & { code?: string }
   & { [name in RouterURLOptionBoolean]?: boolean }
 export interface RouterState {
   options: Record<RouterURLOption, string | undefined>
   optionsControls: {
     type: 'predefined' | 'custom'
     sandbox: string[]
+    code: string
   }
   optionsBooleans: Record<RouterURLOptionBoolean, boolean>
   setOptions: (newOptions: RouterStateSetOptionsUpdate) => void
@@ -75,9 +75,19 @@ export interface StoreSandbox {
   code?: string
   children?: StoreSandbox[]
 }
+export type StoreEvent =
+  | 'run'
+  | 'reload'
+  | 'copy'
+  | 'customSandbox'
+  | 'openIsolated';
+export type StoreSubscriber = () => void;
 export interface Store {
   sandboxes: StoreSandbox[]
   sandboxSelected: StoreSandbox | null
   sandboxCode: string
   setSandboxCode: (code: string) => void
+  subscribe: (event: StoreEvent, subscriber: StoreSubscriber) => void
+  unsubscribe: (event: StoreEvent, subscriber: StoreSubscriber) => void
+  trigger: (event: StoreEvent) => void
 }

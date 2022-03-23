@@ -1,10 +1,11 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
-import { ReactElement, useMemo } from 'react';
+import { ReactElement, useEffect, useMemo, useRef } from 'react';
 import { transform } from '@babel/standalone';
 
 import { cx } from '@src/utils/cx';
 import { useStore } from '@src/utils/useStore';
+import { encodeSourceCode } from '@src/utils/encodeSourceCode';
 import { createStyles } from './Preview.styles';
 
 interface PreviewProps {
@@ -18,15 +19,37 @@ const Preview = (props: PreviewProps): ReactElement => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const store = useStore();
 
-  const codeEncoded = useMemo(() => {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  const codeTranspiledEncoded = useMemo(() => {
     const code = store?.sandboxCode || '';
     const transformation = transform(code, {
       filename: 'sandbox.tsx',
       presets: ['env', 'react', 'typescript']
     });
     const codeProcessed = transformation?.code || '';
-    return window.encodeURI(window.btoa(codeProcessed));
+    return encodeSourceCode(codeProcessed);
   }, [store?.sandboxCode]);
+
+  useEffect(() => {
+    const onReload = (): void => {
+      iframeRef.current?.contentWindow?.location.reload();
+    };
+    store.subscribe('reload', onReload);
+    return () => {
+      store.unsubscribe('reload', onReload);
+    };
+  }, []);
+
+  useEffect(() => {
+    const onOpenIsolated = (): void => {
+      window.open(`${window.location.origin}/play/sandbox/?code=${codeTranspiledEncoded}`, 'sandbox');
+    };
+    store.subscribe('openIsolated', onOpenIsolated);
+    return () => {
+      store.unsubscribe('openIsolated', onOpenIsolated);
+    };
+  }, [codeTranspiledEncoded]);
 
   return (
     <div
@@ -34,8 +57,9 @@ const Preview = (props: PreviewProps): ReactElement => {
       css={styles.root}
     >
       <iframe
+        ref={iframeRef}
         css={styles.sandbox}
-        src={`/play/sandbox/?code=${codeEncoded}`}
+        src={`/play/sandbox/?code=${codeTranspiledEncoded}`}
       />
     </div>
   );

@@ -74,10 +74,35 @@ const Editor = (props: EditorProps): ReactElement => {
   }, [routerState]);
 
   useEffect(() => {
-    if (!editorRef.current) {
-      return;
-    }
+    const onRun = (): void => {
+      const code = editorRef.current?.getValue() || '';
+      routerState.setOptions({ type: 'custom', code });
+    };
 
+    const onCopy = (): void => {
+      const code = editorRef.current?.getValue() || '';
+      navigator.clipboard.writeText(code);
+    };
+
+    const onCustomSandbox = (): void => {
+      routerState.setOptions({
+        type: 'custom',
+        code: editorRef.current?.getValue() || ''
+      });
+    };
+
+    store.subscribe('run', onRun);
+    store.subscribe('copy', onCopy);
+    store.subscribe('customSandbox', onCustomSandbox);
+
+    return () => {
+      store.unsubscribe('run', onRun);
+      store.unsubscribe('copy', onCopy);
+      store.unsubscribe('customSandbox', onCustomSandbox);
+    };
+  }, [routerState, store]);
+
+  useEffect(() => {
     const { type } = routerState.optionsControls;
 
     if (type === 'predefined') {
@@ -88,8 +113,7 @@ const Editor = (props: EditorProps): ReactElement => {
     }
     else {
       try {
-        const code = window.atob(window.decodeURI(routerState.options.code || ''));
-        store?.setSandboxCode(code);
+        store?.setSandboxCode(routerState.optionsControls.code);
       } catch (error: unknown) {
         // TODO: Handle error.
         console.error(error);

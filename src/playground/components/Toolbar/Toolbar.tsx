@@ -47,9 +47,18 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
         <Button
           size='small'
           title='Copy source code'
-          onClick={() => store?.trigger('copy')}
+          onClick={() => store?.trigger('copyCode')}
         >
-          Copy
+          Copy Code
+        </Button>
+        <Button
+          size='small'
+          title='Copy playground URL'
+          onClick={() => {
+            window.navigator.clipboard.writeText(window.location.href);
+          }}
+        >
+          Copy URL
         </Button>
         <Button
           size='small'

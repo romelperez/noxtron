@@ -15,7 +15,7 @@ const Header = (props: HeaderProps): ReactElement => {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const { optionsControls, optionsBooleans, setOptions } = useRouterState();
+  const { optionsBooleans, setOptions } = useRouterState();
 
   return (
     <header
@@ -24,33 +24,31 @@ const Header = (props: HeaderProps): ReactElement => {
     >
       <nav css={styles.options}>
           <Button
+            title='Toggle explorer panel'
             color={optionsBooleans.explorer ? 'secondary' : 'primary'}
             onClick={() => setOptions({ explorer: !optionsBooleans.explorer })}
           >
             Explorer
           </Button>
           <Button
+            title='Toggle editor panel'
             color={optionsBooleans.editor ? 'secondary' : 'primary'}
             onClick={() => setOptions({ editor: !optionsBooleans.editor })}
           >
             Editor
           </Button>
           <Button
+            title='Toggle preview panel'
             color={optionsBooleans.preview ? 'secondary' : 'primary'}
             onClick={() => setOptions({ preview: !optionsBooleans.preview })}
           >
             Preview
           </Button>
           <Button
+            title='Toggle theme color scheme'
             onClick={() => setOptions({ dark: !optionsBooleans.dark })}
           >
             Color: {optionsBooleans.dark ? 'Dark' : 'Light'}
-          </Button>
-          <Button
-            disabled={optionsControls.type === 'custom'}
-            onClick={() => setOptions({ type: 'custom' })}
-          >
-            Create Sandbox
           </Button>
         </nav>
         <div css={styles.logo}>

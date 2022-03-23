@@ -78,7 +78,7 @@ export interface StoreSandbox {
 export type StoreEvent =
   | 'run'
   | 'reload'
-  | 'copy'
+  | 'copyCode'
   | 'customSandbox'
   | 'openIsolated';
 export type StoreSubscriber = () => void;

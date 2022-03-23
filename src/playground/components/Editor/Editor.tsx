@@ -8,6 +8,10 @@ import { cx } from '@src/utils/cx';
 import { useRouterState } from '@src/utils/useRouterState';
 import { useStore } from '@src/utils/useStore';
 import { createStyles } from './Editor.styles';
+import { useMediaQuery } from '@src/utils/useMediaQuery';
+
+// TODO: Handle code errors.
+// TODO: Update URL when user changes editor code with debounce time.
 
 interface EditorProps {
   className?: string
@@ -20,6 +24,7 @@ const Editor = (props: EditorProps): ReactElement => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const store = useStore();
+  const isBreakpointMediumUp = useMediaQuery(theme.breakpoints.medium.up);
 
   const editorElementRef = useRef<HTMLDivElement>(null);
 	const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
@@ -29,6 +34,8 @@ const Editor = (props: EditorProps): ReactElement => {
     const { fontFamily, fontSize, fontWeight } = theme.typography.code(1);
 
     editorRef.current = monaco.editor.create(editorElement, {
+      readOnly: !isBreakpointMediumUp,
+      domReadOnly: !isBreakpointMediumUp,
       value: '',
       language: 'typescript',
       tabSize: 2,
@@ -60,11 +67,7 @@ const Editor = (props: EditorProps): ReactElement => {
 	}, []);
 
   useEffect(() => {
-    if (!editorRef.current) {
-      return;
-    }
-
-    editorRef.current.updateOptions({
+    editorRef.current?.updateOptions({
       theme: theme.colorScheme === 'dark' ? 'vs-dark' : 'vs'
     });
   }, [theme]);
@@ -81,7 +84,7 @@ const Editor = (props: EditorProps): ReactElement => {
 
     const onCopy = (): void => {
       const code = editorRef.current?.getValue() || '';
-      navigator.clipboard.writeText(code);
+      window.navigator.clipboard.writeText(code);
     };
 
     const onCustomSandbox = (): void => {
@@ -92,34 +95,15 @@ const Editor = (props: EditorProps): ReactElement => {
     };
 
     store.subscribe('run', onRun);
-    store.subscribe('copy', onCopy);
+    store.subscribe('copyCode', onCopy);
     store.subscribe('customSandbox', onCustomSandbox);
 
     return () => {
       store.unsubscribe('run', onRun);
-      store.unsubscribe('copy', onCopy);
+      store.unsubscribe('copyCode', onCopy);
       store.unsubscribe('customSandbox', onCustomSandbox);
     };
   }, [routerState, store]);
-
-  useEffect(() => {
-    const { type } = routerState.optionsControls;
-
-    if (type === 'predefined') {
-      if (store?.sandboxSelected) {
-        const code = store.sandboxSelected.code || '';
-        store.setSandboxCode(code);
-      }
-    }
-    else {
-      try {
-        store?.setSandboxCode(routerState.optionsControls.code);
-      } catch (error: unknown) {
-        // TODO: Handle error.
-        console.error(error);
-      }
-    }
-  }, [routerState, store?.sandboxSelected]);
 
   useEffect(() => {
     editorRef.current?.setValue(store?.sandboxCode || '');

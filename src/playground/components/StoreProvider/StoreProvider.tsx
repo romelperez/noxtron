@@ -41,24 +41,33 @@ const StoreProvider = (props: WarehouseProviderProps): ReactElement => {
       return;
     }
 
-    const sandboxSelected = findSandboxByPath(sandboxes, routerState.optionsControls.sandbox);
+    const { type, sandbox, code } = routerState.optionsControls;
+    const sandboxSelected = findSandboxByPath(sandboxes, sandbox);
 
     if (sandboxSelected) {
       if (store.sandboxSelected !== sandboxSelected) {
         setSandboxSelected(sandboxSelected);
       }
+
+      if (type === 'predefined') {
+        setSandboxCode(sandboxSelected.code || '');
+      }
     }
-    else if (routerState.optionsControls.type !== 'custom') {
+    else if (type !== 'custom') {
       routerState.setOptions({ type: 'custom' });
     }
-  }, [sandboxes, routerState.optionsControls.sandbox]);
+
+    if (type === 'custom') {
+      setSandboxCode(code);
+    }
+  }, [routerState, sandboxes]);
 
   const store = useMemo(() => {
     const store: Store = {
       sandboxes,
       sandboxSelected,
       sandboxCode,
-      setSandboxCode: (newCode: string) => {
+      setSandboxCode: (newCode: string = '') => {
         setSandboxCode(newCode);
       },
       subscribe: (event, subscriber) => {

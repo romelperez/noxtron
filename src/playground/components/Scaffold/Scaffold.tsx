@@ -1,6 +1,7 @@
 import React, { ReactElement, useMemo } from 'react';
 import { ThemeProvider, Theme, Global } from '@emotion/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import * as monaco from 'monaco-editor';
 
 import { createTheme } from '@src/utils/createTheme';
 import { useRouterState } from '@src/utils/useRouterState';
@@ -23,6 +24,27 @@ window.MonacoEnvironment = {
     }
 	}
 };
+
+// Validation settings.
+monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+  noSemanticValidation: true,
+  noSyntaxValidation: false
+});
+
+// Compiler options.
+monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
+  target: monaco.languages.typescript.ScriptTarget.ES2015,
+  allowNonTsExtensions: true
+});
+
+const libSource = 'declare const render: (element: unknown) => void;';
+const libUri = 'ts:filename/render.d.ts';
+
+monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, libUri);
+
+// When resolving definitions and references, the editor will try to use created models.
+// Creating a model for the library allows "peek definition/references" commands to work with the library.
+monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(libUri));
 
 const ScaffoldRouted = (): ReactElement => {
   const routerState = useRouterState();

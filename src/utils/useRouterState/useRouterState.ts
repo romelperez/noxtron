@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import type { RouterURLOption, RouterState } from '@src/types';
@@ -6,7 +7,8 @@ import { convertLocationSearchToString } from '../convertLocationSearchToString'
 import { convertLocationSearchToObject } from '../convertLocationSearchToObject';
 import { encodeSourceCode } from '../encodeSourceCode';
 import { decodeSourceCode } from '../decodeSourceCode';
-import { useMemo } from 'react';
+
+// TODO: Prevent user from hiding all panels.
 
 const useRouterState = (): RouterState => {
   const location = useLocation();

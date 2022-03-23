@@ -31,9 +31,9 @@ const createStyles = (theme: Theme, props: StyleProps): Styles => {
       cursor: disabled ? 'not-allowed' : 'pointer',
       userSelect: 'none',
       opacity: disabled ? 0.6 : 1,
-      transitionDuration: '200ms',
+      transitionProperty: 'color, background-color, border-color',
       transitionTimingFunction: 'ease-out',
-      transitionProperty: 'color, background-color',
+      transitionDuration: '0.2s',
 
       '&::-moz-focus-inner': {
         border: 'none'

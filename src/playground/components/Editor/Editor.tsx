@@ -6,6 +6,7 @@ import * as monaco from 'monaco-editor';
 
 import { cx } from '@src/utils/cx';
 import { useRouterState } from '@src/utils/useRouterState';
+import { useStore } from '@src/utils/useStore';
 import { createStyles } from './Editor.styles';
 
 interface EditorProps {
@@ -18,16 +19,16 @@ const Editor = (props: EditorProps): ReactElement => {
   const routerState = useRouterState();
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const store = useStore();
 
   const editorElementRef = useRef<HTMLDivElement>(null);
-
-	let editor: monaco.editor.IStandaloneCodeEditor;
+	const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
 	useEffect(() => {
     const editorElement = editorElementRef.current as HTMLDivElement;
     const { fontFamily, fontSize, fontWeight } = theme.typography.code(1);
 
-    editor = monaco.editor.create(editorElement, {
+    editorRef.current = monaco.editor.create(editorElement, {
       value: '',
       language: 'typescript',
       tabSize: 2,
@@ -47,28 +48,58 @@ const Editor = (props: EditorProps): ReactElement => {
     });
 
     const onResize = debounce((): void => {
-      editor?.layout();
+      editorRef.current?.layout();
     }, 100);
 
     window.addEventListener('resize', onResize);
 
 		return () => {
       window.removeEventListener('resize', onResize);
-      editor.dispose();
+      editorRef.current?.dispose();
 		};
-	}, [theme]);
+	}, []);
 
   useEffect(() => {
-    const codeProvided = routerState.options.code;
-    if (editor && codeProvided) {
+    if (!editorRef.current) {
+      return;
+    }
+
+    editorRef.current.updateOptions({
+      theme: theme.colorScheme === 'dark' ? 'vs-dark' : 'vs'
+    });
+  }, [theme]);
+
+  useEffect(() => {
+    editorRef.current?.layout();
+  }, [routerState]);
+
+  useEffect(() => {
+    if (!editorRef.current) {
+      return;
+    }
+
+    const { type } = routerState.optionsControls;
+
+    if (type === 'predefined') {
+      if (store?.sandboxSelected) {
+        const code = store.sandboxSelected.code || '';
+        store.setSandboxCode(code);
+      }
+    }
+    else {
       try {
-        const codeProcessed = window.atob(window.decodeURI(codeProvided));
-        editor.setValue(codeProcessed);
+        const code = window.atob(window.decodeURI(routerState.options.code || ''));
+        store?.setSandboxCode(code);
       } catch (error: unknown) {
+        // TODO: Handle error.
         console.error(error);
       }
     }
-  }, [routerState]);
+  }, [routerState, store?.sandboxSelected]);
+
+  useEffect(() => {
+    editorRef.current?.setValue(store?.sandboxCode || '');
+  }, [store?.sandboxCode]);
 
   return (
     <div

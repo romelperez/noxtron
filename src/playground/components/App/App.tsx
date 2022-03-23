@@ -26,12 +26,16 @@ const App = (): ReactElement => {
       return;
     }
 
-    setOptions({
-      explorer: isMQMediumUp ? optionsBooleans.explorer || true : false,
-      editor: isMQMediumUp ? optionsBooleans.editor || true : false,
-      preview: !options.preview ? true : optionsBooleans.preview,
-      dark: !options.dark ? true : optionsBooleans.dark
-    });
+    const editor = isMQMediumUp ? optionsBooleans.editor ?? true : false;
+    const preview = !options.preview ? true : optionsBooleans.preview;
+    const dark = !options.dark ? true : optionsBooleans.dark;
+
+    let explorer = isMQMediumUp ? optionsBooleans.explorer ?? true : false;
+    if (!(editor || preview)) {
+      explorer = true;
+    }
+
+    setOptions({ explorer, editor, preview, dark });
   }, []);
 
   return (

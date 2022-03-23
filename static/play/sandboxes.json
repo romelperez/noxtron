@@ -1,0 +1,90 @@
+[
+  {
+    "name": "@package/one",
+    "children": [
+      {
+        "name": "Animation",
+        "children": [
+          {
+            "name": "basic",
+            "code": "// TODO"
+          },
+          {
+            "name": "medium",
+            "code": "// TODO"
+          },
+          {
+            "name": "complex",
+            "code": "// TODO"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "@package/two",
+    "children": [
+      {
+        "name": "SomeProvider",
+        "children": [
+          {
+            "name": "basic",
+            "code": "render(\n  <h1\n    className='title'\n    style={{ margin: '20px', color: 'yellow', background: 'black' }}\n  >\n    SomeProvider basic!\n  </h1>\n);\n"
+          },
+          {
+            "name": "medium",
+            "code": "render(\n  <h1\n    className='title'\n    style={{ margin: '20px', color: 'cyan', background: 'black' }}\n  >\n    SomeProvider medium!\n  </h1>\n);\n"
+          },
+          {
+            "name": "complex",
+            "code": "render(\n  <h1\n    className='title'\n    style={{ margin: '20px', color: 'magenta', background: 'black' }}\n  >\n    SomeProvider complex!\n  </h1>\n);\n"
+          }
+        ]
+      },
+      {
+        "name": "useContext",
+        "children": [
+          {
+            "name": "basic",
+            "code": "// TODO"
+          },
+          {
+            "name": "complex",
+            "code": "// TODO"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "@package/three",
+    "children": [
+      {
+        "name": "Text",
+        "children": [
+          {
+            "name": "basic",
+            "code": "// TODO"
+          },
+          {
+            "name": "complex",
+            "code": "// TODO"
+          }
+        ]
+      },
+      {
+        "name": "Background",
+        "children": [
+          {
+            "name": "basic",
+            "code": "// TODO"
+          },
+          {
+            "name": "medium",
+            "code": "// TODO"
+          }
+        ]
+      }
+    ]
+  }
+]

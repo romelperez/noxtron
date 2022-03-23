@@ -15,7 +15,7 @@ const Header = (props: HeaderProps): ReactElement => {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const { optionsBooleans, setOptions } = useRouterState();
+  const { optionsControls, optionsBooleans, setOptions } = useRouterState();
 
   return (
     <header
@@ -46,7 +46,10 @@ const Header = (props: HeaderProps): ReactElement => {
           >
             Color: {optionsBooleans.dark ? 'Dark' : 'Light'}
           </Button>
-          <Button>
+          <Button
+            disabled={optionsControls.type === 'custom'}
+            onClick={() => setOptions({ type: 'custom' })}
+          >
             Create Sandbox
           </Button>
         </nav>

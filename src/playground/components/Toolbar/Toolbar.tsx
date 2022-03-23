@@ -26,11 +26,12 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
       css={styles.root}
     >
       <div css={styles.options}>
-        <Button size='small'>Copy</Button>
-        <Button size='small'>Reload</Button>
+        <Button size='small' disabled>Run</Button>
+        <Button size='small' disabled>Reload</Button>
         <Button size='small' disabled>Reset</Button>
+        <Button size='small' disabled>Copy</Button>
         <Button size='small' disabled>Custom Sandbox</Button>
-        <Button size='small'>Open Isolated</Button>
+        <Button size='small' disabled>Open Isolated</Button>
       </div>
       {!!location && (
         <code css={styles.location}>

@@ -21,7 +21,7 @@ const useRouterState = (): RouterState => {
 
     const optionsControls: RouterState['optionsControls'] = {
       type: options.type === 'predefined' ? 'predefined' : 'custom',
-      sandbox: (options.sandbox || '').split('|')
+      sandbox: (options.sandbox || '').split('|').filter(Boolean)
     };
 
     if (!options.type) {
@@ -35,11 +35,32 @@ const useRouterState = (): RouterState => {
       .reduce((all, item) => ({ ...all, ...item }), {}) as RouterState['optionsBooleans'];
 
     const setOptions: RouterState['setOptions'] = newOptions => {
+      if (newOptions.type === 'custom') {
+        newOptions.sandbox = [];
+      }
+
       const newLocationSearch = convertLocationSearchToString({
         ...options,
         ...Object
           .keys(newOptions)
-          .map(name => ({ [name]: String(newOptions[name as RouterURLOption] ?? '') }))
+          .map(name => {
+            const rawValue = newOptions[name as RouterURLOption];
+            let value = '';
+
+            switch (name) {
+              case 'sandbox': {
+                const valueList = rawValue as RouterState['optionsControls']['sandbox'] | undefined;
+                value = valueList ? valueList.filter(Boolean).join('|') : '';
+                break;
+              }
+              default: {
+                value = String(rawValue ?? '');
+                break;
+              }
+            }
+
+            return { [name]: value };
+          })
           .reduce((all, item) => ({ ...all, ...item }), {})
       });
 

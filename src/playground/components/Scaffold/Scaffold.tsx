@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { createTheme } from '@src/utils/createTheme';
 import { useRouterState } from '@src/utils/useRouterState';
+import { StoreProvider } from '../StoreProvider';
 import { App } from '../App';
 import { createStyles } from './Scaffold.styles';
 
@@ -29,14 +30,16 @@ const ScaffoldRouted = (): ReactElement => {
   const theme: Theme = useMemo(() => {
     const colorScheme = routerState.optionsBooleans.dark ? 'dark' : 'light';
     return createTheme(colorScheme);
-  }, [routerState]);
+  }, [routerState.optionsBooleans.dark]);
 
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   return (
     <ThemeProvider theme={theme}>
       <Global styles={styles.global} />
-      <App />
+      <StoreProvider>
+        <App />
+      </StoreProvider>
     </ThemeProvider>
   );
 };

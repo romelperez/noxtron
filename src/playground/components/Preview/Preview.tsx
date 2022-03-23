@@ -4,19 +4,8 @@ import { ReactElement, useMemo } from 'react';
 import { transform } from '@babel/standalone';
 
 import { cx } from '@src/utils/cx';
+import { useStore } from '@src/utils/useStore';
 import { createStyles } from './Preview.styles';
-
-const codeRaw = `render(
-  <h1 style={{ margin: "20px", padding: "20px", color: "cyan", background: "black" }}>
-    Noxtron Sandbox!
-  </h1>
-);
-`;
-const transformation = transform(codeRaw, {
-  filename: 'sandbox.tsx',
-  presets: ['env', 'react', 'typescript']
-});
-const codeEncoded = window.encodeURI(window.btoa(transformation.code || ''));;
 
 interface PreviewProps {
   className?: string
@@ -27,6 +16,17 @@ const Preview = (props: PreviewProps): ReactElement => {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const store = useStore();
+
+  const codeEncoded = useMemo(() => {
+    const code = store?.sandboxCode || '';
+    const transformation = transform(code, {
+      filename: 'sandbox.tsx',
+      presets: ['env', 'react', 'typescript']
+    });
+    const codeProcessed = transformation?.code || '';
+    return window.encodeURI(window.btoa(codeProcessed));
+  }, [store?.sandboxCode]);
 
   return (
     <div

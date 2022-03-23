@@ -2,40 +2,66 @@
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 
-import type { Styles } from '@src/types';
+import type { Styles, StoreSandbox } from '@src/types';
 import { cx } from '@src/utils/cx';
+import { useRouterState } from '@src/utils/useRouterState';
+import { useStore } from '@src/utils/useStore';
 import { createStyles } from './Explorer.styles';
 
-interface ExplorerDataItem {
-  name: string
-  link?: string
-  isActive?: boolean
-  children?: ExplorerDataItem[]
+interface ExplorerNavListProps {
+  styles: Styles
+  items: StoreSandbox[]
+  currentSandboxPath: string[]
 }
 
-const createExplorerItems = (styles: Styles, items: ExplorerDataItem[]): ReactElement => {
+const ExplorerNavList = (props: ExplorerNavListProps): ReactElement => {
+  const { styles, items, currentSandboxPath } = props;
+
+  const { optionsControls, setOptions } = useRouterState();
+  const routerSandbox = optionsControls.sandbox;
+
   return (
     <ul>
-      {items.map(({ name, link, isActive, children }, index) => (
-        <li key={index}>
-          {!link && (
-            <div
-              css={[styles.item, isActive && styles.itemActive]}
-            >
-              {name}
-            </div>
-          )}
-          {!!link && (
-            <a
-              css={[styles.item, styles.link, isActive && styles.linkActive]}
-              href={link}
-            >
-              {name}
-            </a>
-          )}
-          {!!children && !!children.length && createExplorerItems(styles, children)}
-        </li>
-      ))}
+      {items.map(({ name, code, children }, index) => {
+        const isLink = !!code;
+        const itemSandboxPath = [...currentSandboxPath, name];
+        const isActive = itemSandboxPath.every((itemSandboxPathFragment, i) =>
+          routerSandbox[i] === itemSandboxPathFragment
+        );
+
+        return (
+          <li key={index}>
+            {!isLink && (
+              <div
+                css={[styles.item, isActive && styles.itemActive]}
+              >
+                {name}
+              </div>
+            )}
+            {!!isLink && (
+              <button
+                css={[styles.item, styles.link, isActive && styles.linkActive]}
+                onClick={event => {
+                  event.preventDefault();
+                  setOptions({
+                    type: 'predefined',
+                    sandbox: itemSandboxPath
+                  });
+                }}
+              >
+                {name}
+              </button>
+            )}
+            {!!children && !!children.length && (
+              <ExplorerNavList
+                styles={styles}
+                items={children}
+                currentSandboxPath={itemSandboxPath}
+              />
+            )}
+          </li>
+        );
+      })}
     </ul>
   );
 };
@@ -49,58 +75,9 @@ const Explorer = (props: ExplorerProps): ReactElement => {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const store = useStore();
 
-  // DEBUG:
-  const items: ExplorerDataItem[] = [
-    {
-      name: '@arwes/animator',
-      children: [
-        {
-          name: 'Animator',
-          children: [
-            {
-              name: 'basic',
-              link: '#'
-            },
-            {
-              name: 'stagger',
-              link: '#'
-            },
-            {
-              name: 'sequence',
-              link: '#'
-            }
-          ]
-        }
-      ]
-    },
-    {
-      name: '@arwes/bleeps',
-      isActive: true,
-      children: [
-        {
-          name: 'BleepsProvider',
-          isActive: true,
-          children: [
-            {
-              name: 'basic',
-              link: '#'
-            },
-            {
-              name: 'loops',
-              isActive: true,
-              link: '#'
-            },
-            {
-              name: 'categories',
-              link: '#'
-            }
-          ]
-        }
-      ]
-    }
-  ];
-  // DEBUG:
+  const items: StoreSandbox[] = store ? store.sandboxes : [];
 
   return (
     <aside
@@ -108,7 +85,11 @@ const Explorer = (props: ExplorerProps): ReactElement => {
       css={styles.root}
     >
       <nav css={styles.nav}>
-        {createExplorerItems(styles, items)}
+        <ExplorerNavList
+          styles={styles}
+          items={items}
+          currentSandboxPath={[]}
+        />
       </nav>
     </aside>
   );

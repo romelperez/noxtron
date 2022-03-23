@@ -69,3 +69,15 @@ export interface RouterState {
   optionsBooleans: Record<RouterURLOptionBoolean, boolean>
   setOptions: (newOptions: RouterStateSetOptionsUpdate) => void
 }
+
+export interface StoreSandbox {
+  name: string
+  code?: string
+  children?: StoreSandbox[]
+}
+export interface Store {
+  sandboxes: StoreSandbox[]
+  sandboxSelected: StoreSandbox | null
+  sandboxCode: string
+  setSandboxCode: (code: string) => void
+}

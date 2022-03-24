@@ -1,6 +1,8 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
+import Icon from '@mdi/react';
+import { mdiReload, mdiBackupRestore, mdiPencil, mdiTestTube, mdiContentCopy, mdiShareVariant } from '@mdi/js';
 
 import { cx } from '../../../utils/cx';
 import { useRouterState } from '../../../utils/useRouterState';
@@ -29,51 +31,63 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
     >
       <div css={styles.options}>
         <Button
+          css={styles.option}
           size='small'
           title='Reload preview'
           disabled={!optionsBooleans.preview}
           onClick={() => store?.trigger('reload')}
         >
-          Reload
+          <Icon css={styles.optionIcon} path={mdiReload} />
+          <span css={styles.optionLabel}>Reload</span>
         </Button>
         <Button
+          css={styles.option}
           size='small'
           title='Reset predefined sandbox source code'
           disabled={optionsControls.type === 'custom'}
           onClick={() => store?.trigger('resetPredefinedSandboxCode')}
         >
-          Reset
+          <Icon css={styles.optionIcon} path={mdiBackupRestore} />
+          <span css={styles.optionLabel}>Reset</span>
         </Button>
         <Button
+          css={styles.option}
           size='small'
           disabled={optionsControls.type === 'custom'}
           title='Make custom sandbox from current source code'
           onClick={() => store?.trigger('customSandbox')}
         >
-          Custom Sandbox
+          <Icon css={styles.optionIcon} path={mdiPencil} />
+          <span css={styles.optionLabel}>Custom Sandbox</span>
         </Button>
         <Button
+          css={styles.option}
           size='small'
           title='Open preview in an independent isolated window'
           onClick={() => store?.trigger('openIsolated')}
         >
-          Open Isolated
+          <Icon css={styles.optionIcon} path={mdiTestTube} />
+          <span css={styles.optionLabel}>Open Isolated</span>
         </Button>
         <Button
+          css={styles.option}
           size='small'
           title='Copy source code'
           onClick={() => store?.trigger('copyCode')}
         >
-          Copy Code
+          <Icon css={styles.optionIcon} path={mdiContentCopy} />
+          <span css={styles.optionLabel}>Copy Code</span>
         </Button>
         <Button
+          css={styles.option}
           size='small'
           title='Copy playground URL'
           onClick={() => {
             window.navigator.clipboard.writeText(window.location.href);
           }}
         >
-          Copy URL
+          <Icon css={styles.optionIcon} path={mdiShareVariant} />
+          <span css={styles.optionLabel}>Copy URL</span>
         </Button>
       </div>
       {!!location && (

@@ -3,13 +3,13 @@ import { jsx, useTheme } from '@emotion/react';
 import { HTMLProps, ReactElement, useMemo } from 'react';
 
 import { getUserGlobalConfig } from '../../../utils/getUserGlobalConfig';
-import { createStyles } from './Footer.styles';
+import { createStyles } from './DesktopFooter.styles';
 
-interface FooterProps {
+interface DesktopFooterProps {
   className?: string
 }
 
-const Footer = (props: FooterProps): ReactElement => {
+const DesktopFooter = (props: DesktopFooterProps): ReactElement => {
   const { className } = props;
 
   const theme = useTheme();
@@ -17,8 +17,6 @@ const Footer = (props: FooterProps): ReactElement => {
 
   const { links = {} } = getUserGlobalConfig();
   const { desktop = [] } = links;
-
-  // TODO: Implement mobile version.
 
   return (
     <footer
@@ -54,4 +52,4 @@ const Footer = (props: FooterProps): ReactElement => {
   );
 };
 
-export { Footer };
+export { DesktopFooter };

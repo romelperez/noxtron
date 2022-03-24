@@ -74,7 +74,10 @@ export interface Config {
   basePath: string
   playgroundPath: string
   sandboxPath: string
-  title?: string
+  title?: {
+    mobile?: string
+    desktop?: string
+  }
   theme?: {
     typography?: {
       heading?: CSSProperties

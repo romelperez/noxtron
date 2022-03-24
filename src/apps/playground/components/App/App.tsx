@@ -9,7 +9,7 @@ import { Explorer } from '../Explorer';
 import { Toolbar } from '../Toolbar';
 import { Editor } from '../Editor';
 import { Preview } from '../Preview';
-import { Footer } from '../Footer';
+import { DesktopFooter } from '../DesktopFooter';
 import { createStyles } from './App.styles';
 
 const App = (): ReactElement => {
@@ -55,7 +55,7 @@ const App = (): ReactElement => {
           )}
         </div>
       </main>
-      <Footer css={styles.footer} />
+      <DesktopFooter css={styles.desktopFooter} />
     </div>
   );
 };

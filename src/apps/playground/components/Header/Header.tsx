@@ -1,6 +1,8 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
+import Icon from '@mdi/react';
+import { mdiXml, mdiMenu, mdiChartBubble, mdiInvertColors } from '@mdi/js';
 
 import { useRouterState } from '../../../utils/useRouterState';
 import { getUserGlobalConfig } from '../../../utils/getUserGlobalConfig';
@@ -26,39 +28,56 @@ const Header = (props: HeaderProps): ReactElement => {
       css={styles.root}
     >
       <nav css={styles.options}>
-          <Button
-            title='Toggle explorer panel'
-            color={optionsBooleans.explorer ? 'secondary' : 'primary'}
-            onClick={() => setOptions({ explorer: !optionsBooleans.explorer })}
-          >
+        <Button
+          css={styles.option}
+          title='Toggle explorer panel'
+          color={optionsBooleans.explorer ? 'secondary' : 'primary'}
+          onClick={() => setOptions({ explorer: !optionsBooleans.explorer })}
+        >
+          <Icon css={styles.optionIcon} path={mdiMenu} />
+          <span css={styles.optionLabel}>
             Explorer
-          </Button>
-          <Button
-            title='Toggle editor panel'
-            color={optionsBooleans.editor ? 'secondary' : 'primary'}
-            onClick={() => setOptions({ editor: !optionsBooleans.editor })}
-          >
+          </span>
+        </Button>
+        <Button
+          css={styles.option}
+          title='Toggle editor panel'
+          color={optionsBooleans.editor ? 'secondary' : 'primary'}
+          onClick={() => setOptions({ editor: !optionsBooleans.editor })}
+        >
+          <Icon css={styles.optionIcon} path={mdiXml} />
+          <span css={styles.optionLabel}>
             Editor
-          </Button>
-          <Button
-            title='Toggle preview panel'
-            color={optionsBooleans.preview ? 'secondary' : 'primary'}
-            onClick={() => setOptions({ preview: !optionsBooleans.preview })}
-          >
+          </span>
+        </Button>
+        <Button
+          css={styles.option}
+          title='Toggle preview panel'
+          color={optionsBooleans.preview ? 'secondary' : 'primary'}
+          onClick={() => setOptions({ preview: !optionsBooleans.preview })}
+        >
+          <Icon css={styles.optionIcon} path={mdiChartBubble} />
+          <span css={styles.optionLabel}>
             Preview
-          </Button>
-          <Button
-            title='Toggle theme color scheme'
-            onClick={() => setOptions({ dark: !optionsBooleans.dark })}
-          >
+          </span>
+        </Button>
+        <Button
+          css={styles.option}
+          title='Toggle theme color scheme'
+          onClick={() => setOptions({ dark: !optionsBooleans.dark })}
+        >
+          <Icon css={styles.optionIcon} path={mdiInvertColors} />
+          <span css={styles.optionLabel}>
             Color: {optionsBooleans.dark ? 'Dark' : 'Light'}
-          </Button>
-        </nav>
-        <div css={styles.logo}>
-          <a href={config.playgroundPath}>
-            <b>{config.title || 'Noxtron'}</b>
-          </a>
-        </div>
+          </span>
+        </Button>
+      </nav>
+      <div css={styles.logo}>
+        <a href={config.playgroundPath}>
+          <b css={styles.logoMobile}>{config.title?.mobile || 'Noxtron'}</b>
+          <b css={styles.logoDesktop}>{config.title?.desktop || 'Noxtron'}</b>
+        </a>
+      </div>
     </header>
   );
 };

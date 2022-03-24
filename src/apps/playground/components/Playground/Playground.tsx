@@ -2,9 +2,9 @@ import React, { ReactElement, useMemo } from 'react';
 import { ThemeProvider, Theme, Global } from '@emotion/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import type { Config } from '../../../types';
 import { createTheme } from '../../../utils/createTheme';
 import { useRouterState } from '../../../utils/useRouterState';
+import { getUserGlobalConfig } from '../../../utils/getUserGlobalConfig';
 import { StoreProvider } from '../StoreProvider';
 import { App } from '../App';
 import { createStyles } from './Playground.styles';
@@ -30,8 +30,7 @@ const PlaygroundRouted = (): ReactElement => {
 };
 
 const Playground = (): ReactElement => {
-  const noxtronConfig: Config = (window as any).noxtronConfig;
-  const { basePath = '/' } = noxtronConfig;
+  const { basePath } = getUserGlobalConfig();
 
   return (
     <BrowserRouter basename={basePath}>

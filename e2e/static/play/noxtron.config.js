@@ -2,7 +2,10 @@ window.noxtronConfig = {
   basePath: '/play',
   playgroundPath: '/play',
   sandboxPath: '/play/sandbox.html',
-  title: 'Noxtron e2e',
+  title: {
+    mobile: 'Noxtron',
+    desktop: 'Noxtron e2e'
+  },
   theme: {
     typography: {
       heading: {

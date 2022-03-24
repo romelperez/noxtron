@@ -96,11 +96,6 @@ const createTheme = (colorScheme: ThemeColorScheme): Theme => {
           textTransform: 'uppercase',
           ...userTheme?.typography?.heading,
           fontSize: 18
-        },
-        {
-          textTransform: 'uppercase',
-          ...userTheme?.typography?.heading,
-          fontSize: 16
         }
       ]),
       body: createThemeStyle([

@@ -19,10 +19,6 @@ const createStyles = (theme: Theme): Styles => {
       borderBottom: line,
       backgroundColor: bgNeutral
     },
-    footer: {
-      borderTop: line,
-      backgroundColor: bgNeutral
-    },
     main: {
       flex: 1,
       display: 'flex',
@@ -79,6 +75,15 @@ const createStyles = (theme: Theme): Styles => {
         '* + &': {
           borderLeft: line
         }
+      }
+    },
+    desktopFooter: {
+      display: 'none', // Hidden on mobile.
+      borderTop: line,
+      backgroundColor: bgNeutral,
+
+      [theme.breakpoints.medium.up]: {
+        display: 'flex'
       }
     }
   };

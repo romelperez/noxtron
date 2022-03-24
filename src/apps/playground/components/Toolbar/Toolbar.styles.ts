@@ -14,17 +14,27 @@ const createStyles = (theme: Theme): Styles => {
     },
     options: {
       display: 'flex',
-      flexDirection: 'row',
-      marginRight: theme.space(4),
-
-      'button + button': {
-        marginLeft: theme.space(2)
-      }
+      flexDirection: 'row'
+    },
+    option: {
+      display: 'inline-flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight: theme.space(2)
+    },
+    optionIcon: {
+      width: '1em',
+      height: '1em'
+    },
+    optionLabel: {
+      display: 'inline-block',
+      marginLeft: theme.space(1)
     },
     location: {
       flex: 1,
       ...theme.typography.code(1),
       overflow: 'hidden',
+      marginLeft: theme.space(2),
       whiteSpace: 'nowrap',
       textOverflow: 'ellipsis',
       letterSpacing: '-1px'

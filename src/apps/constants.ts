@@ -4,19 +4,19 @@ import type {
   NTRouterURLOption
 } from './types';
 
-export const ROUTER_URL_OPTIONS_CONTROLS: NTRouterURLOptionControl[] = [
+export const NT_ROUTER_URL_OPTIONS_CONTROLS: NTRouterURLOptionControl[] = [
   'type',
   'sandbox',
   'code'
 ];
-export const ROUTER_URL_OPTIONS_BOOLEANS: NTRouterURLOptionBoolean[] = [
+export const NT_ROUTER_URL_OPTIONS_BOOLEANS: NTRouterURLOptionBoolean[] = [
   'explorer',
   'editor',
   'preview',
   'dark'
 ];
 
-export const ROUTER_URL_OPTIONS: NTRouterURLOption[] = [
-  ...ROUTER_URL_OPTIONS_CONTROLS,
-  ...ROUTER_URL_OPTIONS_BOOLEANS
+export const NT_ROUTER_URL_OPTIONS: NTRouterURLOption[] = [
+  ...NT_ROUTER_URL_OPTIONS_CONTROLS,
+  ...NT_ROUTER_URL_OPTIONS_BOOLEANS
 ];

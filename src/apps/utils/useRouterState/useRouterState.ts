@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import type { NTRouterURLOption, NTRouterState } from '../../types';
 import {
-  ROUTER_URL_OPTIONS_BOOLEANS,
-  ROUTER_URL_OPTIONS
+  NT_ROUTER_URL_OPTIONS_BOOLEANS,
+  NT_ROUTER_URL_OPTIONS
 } from '../../constants';
 import { convertLocationSearchToString } from '../convertLocationSearchToString';
 import { convertLocationSearchToObject } from '../convertLocationSearchToObject';
@@ -22,7 +22,7 @@ const useRouterState = (): NTRouterState => {
       convertLocationSearchToObject(location.search);
 
     const options: NTRouterState['options'] = Object.keys(locationOptions)
-      .filter((key) => (ROUTER_URL_OPTIONS as string[]).includes(key))
+      .filter((key) => (NT_ROUTER_URL_OPTIONS as string[]).includes(key))
       .map((key) => ({ [key]: locationOptions[key] || '' }))
       .reduce(
         (all, item) => ({ ...all, ...item }),
@@ -42,7 +42,9 @@ const useRouterState = (): NTRouterState => {
     const optionsBooleans: NTRouterState['optionsBooleans'] = Object.keys(
       locationOptions
     )
-      .filter((key) => (ROUTER_URL_OPTIONS_BOOLEANS as string[]).includes(key))
+      .filter((key) =>
+        (NT_ROUTER_URL_OPTIONS_BOOLEANS as string[]).includes(key)
+      )
       .map((key) => ({ [key]: locationOptions[key]?.toLowerCase() === 'true' }))
       .reduce(
         (all, item) => ({ ...all, ...item }),

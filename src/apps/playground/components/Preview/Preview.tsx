@@ -27,6 +27,7 @@ const Preview = (props: PreviewProps): ReactElement => {
   const codeTranspiledEncoded = useMemo(() => {
     const code = store?.sandboxCode || '';
     const transformation = transform(code, {
+      // TODO: Change filetype according to sandbox type.
       filename: 'sandbox.tsx',
       presets: ['env', 'react', 'typescript']
     });

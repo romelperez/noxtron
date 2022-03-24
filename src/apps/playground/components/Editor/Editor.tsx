@@ -3,6 +3,7 @@ import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useEffect, useMemo, useRef, useCallback } from 'react';
 import * as monaco from 'monaco-editor';
 import MonacoEditor from '@monaco-editor/react';
+import debounce from 'lodash/debounce';
 
 import type { Store } from '../../../types';
 import { cx } from '../../../utils/cx';
@@ -58,7 +59,11 @@ const Editor = (props: EditorProps): ReactElement => {
         fontWeight: fontWeight ? String(fontWeight) : undefined
       });
 
-      newEditorRef.setValue(storeRef.current.sandboxSelected?.code || '');
+      const initialCode =
+        routerState.optionsControls.type === 'predefined'
+          ? storeRef.current.sandboxSelected?.code || ''
+          : routerState.optionsControls.code;
+      newEditorRef.setValue(initialCode);
 
       editorRef.current?.updateOptions({
         theme: theme.colorScheme === 'dark' ? 'vs-dark' : 'vs'
@@ -67,13 +72,25 @@ const Editor = (props: EditorProps): ReactElement => {
     []
   );
 
+  const onEditorChange = useCallback(
+    debounce(() => {
+      const code = editorRef.current?.getValue() || '';
+      storeRef.current.setSandboxCode(code);
+    }, 500),
+    []
+  );
+
   useEffect(() => {
-    // TODO: Update editor with new sandbox language.
-    if (store?.sandboxSelected && editorRef.current) {
-      const { code = '' } = store.sandboxSelected;
-      editorRef.current.setValue(code);
+    editorRef.current?.setValue(store.sandboxSelected?.code || '');
+  }, [store.sandboxSelected]);
+
+  useEffect(() => {
+    const newCode = store.sandboxCode;
+    const currentCode = editorRef.current?.getValue();
+    if (newCode !== currentCode) {
+      editorRef.current?.setValue(newCode);
     }
-  }, [store?.sandboxSelected]);
+  }, [store.sandboxCode]);
 
   useEffect(() => {
     editorRef.current?.updateOptions({
@@ -116,6 +133,7 @@ const Editor = (props: EditorProps): ReactElement => {
         theme="vs-dark"
         defaultLanguage="typescript"
         onMount={onEditorMount}
+        onChange={onEditorChange}
       />
     </div>
   );

@@ -68,7 +68,11 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
       sandboxSelected,
       sandboxCode,
       setSandboxCode: (newCode: string = '') => {
-        setSandboxCode(newCode);
+        if (routerState.optionsControls.type === 'predefined') {
+          setSandboxCode(newCode);
+        } else {
+          routerState.setOptions({ code: newCode });
+        }
       },
       subscribe: (event, subscriber) => {
         subscriptionsRef.current[event] =
@@ -83,13 +87,12 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
       }
     };
     return store;
-  }, [sandboxes, sandboxSelected, sandboxCode]);
+  }, [routerState, sandboxes, sandboxSelected, sandboxCode]);
 
   useEffect(() => {
-    // TODO: This will not work until a proper code management is implemented.
     const onResetPredefinedSandboxCode = (): void => {
       if (routerState.optionsControls.type === 'predefined') {
-        store.setSandboxCode(store?.sandboxSelected?.code || '');
+        store.setSandboxCode(store.sandboxSelected?.code || '');
       }
     };
 

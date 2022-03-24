@@ -1,6 +1,6 @@
-import type { Theme, Styles } from '../../../types';
+import type { NTTheme, NTStyles } from '../../../types';
 
-const createStyles = (theme: Theme): Styles => {
+const createStyles = (theme: NTTheme): NTStyles => {
   const isDark = theme.colorScheme === 'dark';
   const { primary, secondary } = theme.colors;
 

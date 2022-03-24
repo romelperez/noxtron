@@ -1,25 +1,25 @@
 import type {
-  ThemeSettingsMultiplier,
-  ThemeSettingsStyle,
-  ThemeSettingsColor,
-  ThemeMultiplier,
-  ThemeStyle,
-  ThemeStyleValue,
-  ThemeColor,
-  ThemePalette,
-  ThemeColorScheme,
-  Theme
+  NTThemeSettingsMultiplier,
+  NTThemeSettingsStyle,
+  NTThemeSettingsColor,
+  NTThemeMultiplier,
+  NTThemeStyle,
+  NTThemeStyleValue,
+  NTThemeColor,
+  NTThemePalette,
+  NTThemeColorScheme,
+  NTTheme
 } from '../../types';
 import { getUserGlobalConfig } from '../getUserGlobalConfig';
 
 const createThemeMultiplier = (
-  settings: ThemeSettingsMultiplier
-): ThemeMultiplier => {
+  settings: NTThemeSettingsMultiplier
+): NTThemeMultiplier => {
   return (index: number) => Math.round(index) * settings;
 };
 
-const createThemeStyle = (series: ThemeSettingsStyle): ThemeStyle => {
-  return (indexProvided: number): ThemeStyleValue => {
+const createThemeStyle = (series: NTThemeSettingsStyle): NTThemeStyle => {
+  return (indexProvided: number): NTThemeStyleValue => {
     if (!series.length) {
       return {};
     }
@@ -41,7 +41,7 @@ const fromArrayToHSLA = (src: [number, number, number, number?]): string => {
   return `hsla(${H}, ${S}%, ${L}%, ${A})`;
 };
 
-const createThemeColor = (createColor: ThemeSettingsColor): ThemeColor => {
+const createThemeColor = (createColor: NTThemeSettingsColor): NTThemeColor => {
   return (index: number): string => {
     const color = createColor(Math.round(index));
     return fromArrayToHSLA(color);
@@ -50,8 +50,8 @@ const createThemeColor = (createColor: ThemeSettingsColor): ThemeColor => {
 
 const createThemeColorPalette = (
   hue: number,
-  colorScheme: ThemeColorScheme
-): ThemePalette => {
+  colorScheme: NTThemeColorScheme
+): NTThemePalette => {
   if (colorScheme === 'dark') {
     return {
       text: createThemeColor((i) => [hue, 50, i * 5, 1]),
@@ -76,7 +76,7 @@ const createThemeColorPalette = (
   };
 };
 
-const createTheme = (colorScheme: ThemeColorScheme): Theme => {
+const createTheme = (colorScheme: NTThemeColorScheme): NTTheme => {
   const { theme: userTheme } = getUserGlobalConfig();
 
   return {

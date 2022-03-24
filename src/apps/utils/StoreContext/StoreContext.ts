@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
-import type { Store } from '../../types';
+import type { NTStore } from '../../types';
 
-const StoreContext = createContext<Store>(null as any);
+const StoreContext = createContext<NTStore>(null as any);
 
 export { StoreContext };

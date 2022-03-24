@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 
-import type { Store } from '../../types';
+import type { NTStore } from '../../types';
 import { StoreContext } from '../../utils/StoreContext';
 
-const useStore = (): Store => {
+const useStore = (): NTStore => {
   return useContext(StoreContext);
 };
 

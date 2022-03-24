@@ -1,8 +1,8 @@
-import type { Sandbox } from '../../types';
+import type { NTSandbox } from '../../types';
 
-const getUserGlobalSandboxes = (): Sandbox[] => {
+const getUserGlobalSandboxes = (): NTSandbox[] => {
   const win = window as any;
-  const sandboxes: Sandbox[] = win.noxtronSandboxes || [];
+  const sandboxes: NTSandbox[] = win.noxtronSandboxes || [];
   return sandboxes;
 };
 

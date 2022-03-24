@@ -1,11 +1,11 @@
-import type { Config } from '../../types';
+import type { NTConfig } from '../../types';
 
-const getUserGlobalConfig = (): Config => {
+const getUserGlobalConfig = (): NTConfig => {
   const win = window as any;
-  const globalConfig: Partial<Config> = win.getNoxtronConfig
+  const globalConfig: Partial<NTConfig> = win.getNoxtronConfig
     ? win.getNoxtronConfig()
     : {};
-  const config: Config = {
+  const config: NTConfig = {
     playgroundPath: '/',
     sandboxPath: '/sandbox/',
     ...globalConfig,

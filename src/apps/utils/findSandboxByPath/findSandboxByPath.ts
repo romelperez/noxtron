@@ -1,11 +1,11 @@
-import type { Sandbox } from '../../types';
+import type { NTSandbox } from '../../types';
 
 const findSandboxByPath = (
-  sandboxes: Sandbox[],
+  sandboxes: NTSandbox[],
   routerSandbox: string[]
-): Sandbox | undefined => {
+): NTSandbox | undefined => {
   if (routerSandbox.length) {
-    let parentSandboxes: Sandbox[] = sandboxes;
+    let parentSandboxes: NTSandbox[] = sandboxes;
 
     for (let index = 0; index < routerSandbox.length; index++) {
       const namePart = routerSandbox[index];

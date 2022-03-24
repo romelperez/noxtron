@@ -1,12 +1,12 @@
-import type { Theme, Styles } from '../../../types';
+import type { NTTheme, NTStyles } from '../../../types';
 
 interface StyleProps {
-  color?: keyof Theme['colors'];
+  color?: keyof NTTheme['colors'];
   size?: 'default' | 'small';
   disabled?: boolean;
 }
 
-const createStyles = (theme: Theme, props: StyleProps): Styles => {
+const createStyles = (theme: NTTheme, props: StyleProps): NTStyles => {
   const { color, disabled, size = 'default' } = props;
 
   const palette = theme.colors[color || 'primary'];

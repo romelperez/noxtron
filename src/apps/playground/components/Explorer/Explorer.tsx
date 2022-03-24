@@ -2,15 +2,15 @@
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 
-import type { Styles, Sandbox } from '../../../types';
+import type { NTStyles, NTSandbox } from '../../../types';
 import { cx } from '../../../utils/cx';
 import { getUserGlobalSandboxes } from '../../../utils/getUserGlobalSandboxes';
 import { useRouterState } from '../../../utils/useRouterState';
 import { createStyles } from './Explorer.styles';
 
 interface ExplorerNavListProps {
-  styles: Styles;
-  items: Sandbox[];
+  styles: NTStyles;
+  items: NTSandbox[];
   currentSandboxPath: string[];
 }
 

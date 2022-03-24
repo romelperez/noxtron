@@ -1,40 +1,40 @@
 import type { CSSProperties, HTMLProps } from 'react';
 import type { CSSObject } from '@emotion/react';
 
-export type ThemeSettingsMultiplier = number;
-export type ThemeSettingsStyle = CSSProperties[];
-export type ThemeSettingsColor = (
+export type NTThemeSettingsMultiplier = number;
+export type NTThemeSettingsStyle = CSSProperties[];
+export type NTThemeSettingsColor = (
   index: number
 ) => [number, number, number, number?];
 
-export type ThemeMultiplier = (index: number) => number;
-export type ThemeStyleValue = CSSProperties;
-export type ThemeStyle = (index: number) => ThemeStyleValue;
-export type ThemeColor = (index: number) => string;
-export type ThemeColorScheme = 'dark' | 'light';
-export interface ThemePalette {
-  text: ThemeColor;
-  textHigh: ThemeColor;
-  deco: ThemeColor;
-  decoHigh: ThemeColor;
-  level: ThemeColor;
-  levelHigh: ThemeColor;
-  bg: ThemeColor;
-  overlay: ThemeColor;
+export type NTThemeMultiplier = (index: number) => number;
+export type NTThemeStyleValue = CSSProperties;
+export type NTThemeStyle = (index: number) => NTThemeStyleValue;
+export type NTThemeColor = (index: number) => string;
+export type NTThemeColorScheme = 'dark' | 'light';
+export interface NTThemePalette {
+  text: NTThemeColor;
+  textHigh: NTThemeColor;
+  deco: NTThemeColor;
+  decoHigh: NTThemeColor;
+  level: NTThemeColor;
+  levelHigh: NTThemeColor;
+  bg: NTThemeColor;
+  overlay: NTThemeColor;
 }
 
-export interface Theme {
-  space: ThemeMultiplier;
+export interface NTTheme {
+  space: NTThemeMultiplier;
   typography: {
-    heading: ThemeStyle;
-    body: ThemeStyle;
-    cta: ThemeStyle;
-    code: ThemeStyle;
+    heading: NTThemeStyle;
+    body: NTThemeStyle;
+    cta: NTThemeStyle;
+    code: NTThemeStyle;
   };
-  colorScheme: ThemeColorScheme;
+  colorScheme: NTThemeColorScheme;
   colors: {
-    primary: ThemePalette;
-    secondary: ThemePalette;
+    primary: NTThemePalette;
+    secondary: NTThemePalette;
   };
   breakpoints: {
     medium: {
@@ -48,28 +48,36 @@ export interface Theme {
   };
 }
 
-export type Style = CSSObject;
-export type Styles = Record<string, Style>;
+export type NTStyle = CSSObject;
+export type NTStyles = Record<string, NTStyle>;
 
-export type RouterURLOptionControl = 'type' | 'sandbox' | 'code';
-export type RouterURLOptionBoolean = 'explorer' | 'editor' | 'preview' | 'dark';
-export type RouterURLOption = RouterURLOptionControl | RouterURLOptionBoolean;
-export type RouterStateSetOptionsUpdate = { type?: 'predefined' | 'custom' } & {
+export type NTRouterURLOptionControl = 'type' | 'sandbox' | 'code';
+export type NTRouterURLOptionBoolean =
+  | 'explorer'
+  | 'editor'
+  | 'preview'
+  | 'dark';
+export type NTRouterURLOption =
+  | NTRouterURLOptionControl
+  | NTRouterURLOptionBoolean;
+export type NTRouterStateSetOptionsUpdate = {
+  type?: 'predefined' | 'custom';
+} & {
   sandbox?: string[];
-} & { code?: string } & { [name in RouterURLOptionBoolean]?: boolean };
+} & { code?: string } & { [name in NTRouterURLOptionBoolean]?: boolean };
 
-export interface RouterState {
-  options: Record<RouterURLOption, string | undefined>;
+export interface NTRouterState {
+  options: Record<NTRouterURLOption, string | undefined>;
   optionsControls: {
     type: 'predefined' | 'custom';
     sandbox: string[];
     code: string;
   };
-  optionsBooleans: Record<RouterURLOptionBoolean, boolean>;
-  setOptions: (newOptions: RouterStateSetOptionsUpdate) => void;
+  optionsBooleans: Record<NTRouterURLOptionBoolean, boolean>;
+  setOptions: (newOptions: NTRouterStateSetOptionsUpdate) => void;
 }
 
-export interface Config {
+export interface NTConfig {
   basePath: string;
   playgroundPath: string;
   sandboxPath: string;
@@ -95,27 +103,27 @@ export interface Config {
   };
 }
 
-export interface Sandbox {
+export interface NTSandbox {
   name: string;
   language?: string;
   code?: string;
-  children?: Sandbox[];
+  children?: NTSandbox[];
 }
 
-export type StoreEvent =
+export type NTStoreEvent =
   | 'reload'
   | 'resetPredefinedSandboxCode'
   | 'copyCode'
   | 'customSandbox'
   | 'openIsolated';
 
-export type StoreSubscriber = () => void;
+export type NTStoreSubscriber = () => void;
 
-export interface Store {
-  sandboxSelected: Sandbox | null;
+export interface NTStore {
+  sandboxSelected: NTSandbox | null;
   sandboxCode: string;
   setSandboxCode: (code: string) => void;
-  subscribe: (event: StoreEvent, subscriber: StoreSubscriber) => void;
-  unsubscribe: (event: StoreEvent, subscriber: StoreSubscriber) => void;
-  trigger: (event: StoreEvent) => void;
+  subscribe: (event: NTStoreEvent, subscriber: NTStoreSubscriber) => void;
+  unsubscribe: (event: NTStoreEvent, subscriber: NTStoreSubscriber) => void;
+  trigger: (event: NTStoreEvent) => void;
 }

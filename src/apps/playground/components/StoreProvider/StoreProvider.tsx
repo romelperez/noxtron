@@ -8,10 +8,10 @@ import React, {
 } from 'react';
 
 import type {
-  Sandbox,
-  StoreEvent,
-  StoreSubscriber,
-  Store
+  NTSandbox,
+  NTStoreEvent,
+  NTStoreSubscriber,
+  NTStore
 } from '../../../types';
 import { StoreContext } from '../../../utils/StoreContext';
 import { useRouterState } from '../../../utils/useRouterState';
@@ -19,7 +19,7 @@ import { getUserGlobalSandboxes } from '../../../utils/getUserGlobalSandboxes';
 import { findSandboxByPath } from '../../../utils/findSandboxByPath';
 
 type StoreSubscriptions = {
-  [event in StoreEvent]?: Set<StoreSubscriber>;
+  [event in NTStoreEvent]?: Set<NTStoreSubscriber>;
 };
 
 interface StoreProviderProps {
@@ -31,7 +31,9 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
 
   const routerState = useRouterState();
 
-  const [sandboxSelected, setSandboxSelected] = useState<Sandbox | null>(null);
+  const [sandboxSelected, setSandboxSelected] = useState<NTSandbox | null>(
+    null
+  );
   const [sandboxCode, setSandboxCode] = useState('');
 
   const subscriptionsRef = useRef<StoreSubscriptions>({});
@@ -64,7 +66,7 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
   }, [routerState, sandboxes, sandboxSelected]);
 
   const store = useMemo(() => {
-    const store: Store = {
+    const store: NTStore = {
       sandboxSelected,
       sandboxCode,
       setSandboxCode: (newCode: string = '') => {

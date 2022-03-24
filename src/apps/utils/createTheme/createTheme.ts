@@ -12,8 +12,6 @@ import type {
 } from '../../types';
 import { getUserGlobalConfig } from '../getUserGlobalConfig';
 
-// TODO: Polish light theme color scheme.
-
 const createThemeMultiplier = (
   settings: ThemeSettingsMultiplier
 ): ThemeMultiplier => {

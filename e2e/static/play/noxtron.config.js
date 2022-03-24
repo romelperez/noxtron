@@ -9,15 +9,15 @@ window.getNoxtronConfig = () => ({
   theme: {
     typography: {
       heading: {
-        fontFamily: '"Titillium Web", sans-serif',
-        fontWeight: '600'
+        fontFamily: 'Jura, sans-serif',
+        fontWeight: '700'
       },
       body: {
-        fontFamily: '"Titillium Web", sans-serif',
+        fontFamily: 'Jura, sans-serif',
         fontWeight: '400'
       },
       cta: {
-        fontFamily: '"Titillium Web", sans-serif',
+        fontFamily: 'Jura, sans-serif',
         fontWeight: '400'
       },
       code: {

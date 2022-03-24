@@ -56,8 +56,11 @@ const Editor = (props: EditorProps): ReactElement => {
       fontWeight: fontWeight ? String(fontWeight) : undefined
     });
 
-    const initialCode = storeRef.current.sandboxSelected?.code || '';
-    newEditorRef.setValue(initialCode);
+    newEditorRef.setValue(storeRef.current.sandboxSelected?.code || '');
+
+    editorRef.current?.updateOptions({
+      theme: theme.colorScheme === 'dark' ? 'vs-dark' : 'vs'
+    });
   }, []);
 
   useEffect(() => {

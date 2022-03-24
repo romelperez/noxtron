@@ -18,8 +18,8 @@ const createStyles = (theme: Theme, props: StyleProps): Styles => {
       display: 'inline-block',
       outline: 'none',
       border: isDark
-        ? `1px solid ${palette.levelHigh(2)}`
-        : `1px solid ${palette.decoHigh(8)}`,
+        ? `1px solid ${palette.levelHigh(3)}`
+        : `1px solid ${palette.decoHigh(12)}`,
       padding: `${theme.space(isSmall ? 1 : 2)}px ${theme.space(isSmall ? 3 : 4)}px`,
       verticalAlign: 'middle',
       ...theme.typography.cta(isSmall ? 1 : 0),

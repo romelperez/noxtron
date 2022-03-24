@@ -74,8 +74,8 @@ const Header = (props: HeaderProps): ReactElement => {
       </nav>
       <div css={styles.logo}>
         <a href={config.playgroundPath}>
-          <b css={styles.logoMobile}>{config.title?.mobile || 'Noxtron'}</b>
-          <b css={styles.logoDesktop}>{config.title?.desktop || 'Noxtron'}</b>
+          <span css={styles.logoMobile}>{config.title?.mobile || 'Noxtron'}</span>
+          <span css={styles.logoDesktop}>{config.title?.desktop || 'Noxtron'}</span>
         </a>
       </div>
     </header>

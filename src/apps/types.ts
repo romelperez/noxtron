@@ -59,6 +59,7 @@ export type RouterStateSetOptionsUpdate =
   & { sandbox?: string[] }
   & { code?: string }
   & { [name in RouterURLOptionBoolean]?: boolean }
+
 export interface RouterState {
   options: Record<RouterURLOption, string | undefined>
   optionsControls: {
@@ -92,22 +93,24 @@ export interface Config {
   }
 }
 
-export interface StoreSandbox {
+export interface Sandbox {
   name: string
   language?: string
   code?: string
-  children?: StoreSandbox[]
+  children?: Sandbox[]
 }
+
 export type StoreEvent =
   | 'reload'
   | 'resetPredefinedSandboxCode'
   | 'copyCode'
   | 'customSandbox'
   | 'openIsolated';
+
 export type StoreSubscriber = () => void;
+
 export interface Store {
-  sandboxes: StoreSandbox[]
-  sandboxSelected: StoreSandbox | null
+  sandboxSelected: Sandbox | null
   sandboxCode: string
   setSandboxCode: (code: string) => void
   subscribe: (event: StoreEvent, subscriber: StoreSubscriber) => void

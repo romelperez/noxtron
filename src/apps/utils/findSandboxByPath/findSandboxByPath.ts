@@ -1,8 +1,8 @@
-import type { StoreSandbox } from '../../types';
+import type { Sandbox } from '../../types';
 
-const findSandboxByPath = (sandboxes: StoreSandbox[], routerSandbox: string[]): StoreSandbox | undefined => {
+const findSandboxByPath = (sandboxes: Sandbox[], routerSandbox: string[]): Sandbox | undefined => {
   if (routerSandbox.length) {
-    let parentSandboxes: StoreSandbox[] = sandboxes;
+    let parentSandboxes: Sandbox[] = sandboxes;
 
     for (let index = 0; index < routerSandbox.length; index++) {
       const namePart = routerSandbox[index];

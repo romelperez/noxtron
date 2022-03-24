@@ -1,10 +1,9 @@
 import React, { ReactNode, ReactElement, useState, useEffect, useMemo, useRef } from 'react';
-import ky from 'ky';
 
-import type { StoreSandbox, StoreEvent, StoreSubscriber, Store } from '../../../types';
+import type { Sandbox, StoreEvent, StoreSubscriber, Store } from '../../../types';
 import { StoreContext } from '../../../utils/StoreContext';
 import { useRouterState } from '../../../utils/useRouterState';
-import { getUserGlobalConfig } from '../../../utils/getUserGlobalConfig';
+import { getUserGlobalSandboxes } from '../../../utils/getUserGlobalSandboxes';
 import { findSandboxByPath } from '../../../utils/findSandboxByPath';
 
 type StoreSubscriptions = {
@@ -20,24 +19,12 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
 
   const routerState = useRouterState();
 
-  const [sandboxes, setSandboxes] = useState <StoreSandbox[]>([]);
-  const [sandboxSelected, setSandboxSelected] = useState<StoreSandbox | null>(null);
+  const [sandboxSelected, setSandboxSelected] = useState<Sandbox | null>(null);
   const [sandboxCode, setSandboxCode] = useState('');
 
   const subscriptionsRef = useRef<StoreSubscriptions>({});
 
-  const config = getUserGlobalConfig();
-
-  useEffect(() => {
-    ky
-      .get(`${config.basePath}/sandboxes.json`)
-      .then<StoreSandbox[]>(response => response.json())
-      .then(sandboxes => {
-        setSandboxes(sandboxes);
-      })
-      // TODO: Show error in UI.
-      .catch(console.error);
-  }, []);
+  const sandboxes = getUserGlobalSandboxes();
 
   useEffect(() => {
     if (!sandboxes.length) {
@@ -67,7 +54,6 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
 
   const store = useMemo(() => {
     const store: Store = {
-      sandboxes,
       sandboxSelected,
       sandboxCode,
       setSandboxCode: (newCode: string = '') => {

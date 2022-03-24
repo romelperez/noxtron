@@ -2,15 +2,15 @@
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 
-import type { Styles, StoreSandbox } from '../../../types';
+import type { Styles, Sandbox } from '../../../types';
 import { cx } from '../../../utils/cx';
+import { getUserGlobalSandboxes } from '../../../utils/getUserGlobalSandboxes';
 import { useRouterState } from '../../../utils/useRouterState';
-import { useStore } from '../../../utils/useStore';
 import { createStyles } from './Explorer.styles';
 
 interface ExplorerNavListProps {
   styles: Styles
-  items: StoreSandbox[]
+  items: Sandbox[]
   currentSandboxPath: string[]
 }
 
@@ -75,9 +75,8 @@ const Explorer = (props: ExplorerProps): ReactElement => {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const store = useStore();
 
-  const items: StoreSandbox[] = store ? store.sandboxes : [];
+  const sandboxes = getUserGlobalSandboxes();
 
   return (
     <aside
@@ -87,7 +86,7 @@ const Explorer = (props: ExplorerProps): ReactElement => {
       <nav css={styles.nav}>
         <ExplorerNavList
           styles={styles}
-          items={items}
+          items={sandboxes}
           currentSandboxPath={[]}
         />
       </nav>

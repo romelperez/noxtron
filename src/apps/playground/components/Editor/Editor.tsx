@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useEffect, useMemo, useRef, useCallback } from 'react';
-import debounce from 'lodash/debounce';
 import * as monaco from 'monaco-editor';
 import MonacoEditor from '@monaco-editor/react';
 

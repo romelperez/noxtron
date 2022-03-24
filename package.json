@@ -80,6 +80,6 @@
     "e2e-clean": "rm -rf ./e2e/build",
     "e2e-build": "cross-env NODE_ENV=production webpack --config ./e2e/webpack.config.js --progress",
     "e2e-dev": "webpack serve --config ./e2e/webpack.config.js",
-    "prepublishOnly": "npm run clean && npm run build && npm run lint && npm run test"
+    "prepublishOnly": "npm run clean && npm run build && npm run e2e-clean && npm run e2e-build && npm run lint && npm run test"
   }
 }

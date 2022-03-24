@@ -1,7 +1,8 @@
 import type { Config } from '../../types';
 
 const getUserGlobalConfig = (): Config => {
-  const globalConfig: Partial<Config> = (window as any).noxtronConfig || {};
+  const win = window as any;
+  const globalConfig: Partial<Config> = win.getNoxtronConfig ? win.getNoxtronConfig() : {};
   const config: Config = {
     playgroundPath: '/',
     sandboxPath: '/sandbox/',

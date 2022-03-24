@@ -1,4 +1,4 @@
-window.noxtronConfig = {
+window.getNoxtronConfig = () => ({
   basePath: '/play',
   playgroundPath: '/play',
   sandboxPath: '/play/sandbox.html',
@@ -41,4 +41,4 @@ window.noxtronConfig = {
       ]
     ]
   }
-};
+});

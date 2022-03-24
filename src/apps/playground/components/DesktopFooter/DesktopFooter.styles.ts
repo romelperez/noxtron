@@ -12,7 +12,7 @@ const createStyles = (theme: Theme): Styles => {
     },
     section: {
       display: 'flex',
-      flexDirection: 'row',
+      flexDirection: 'row'
     },
     item: {
       display: 'inline-block',

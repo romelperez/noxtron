@@ -1,6 +1,9 @@
 import type { Sandbox } from '../../types';
 
-const findSandboxByPath = (sandboxes: Sandbox[], routerSandbox: string[]): Sandbox | undefined => {
+const findSandboxByPath = (
+  sandboxes: Sandbox[],
+  routerSandbox: string[]
+): Sandbox | undefined => {
   if (routerSandbox.length) {
     let parentSandboxes: Sandbox[] = sandboxes;
 

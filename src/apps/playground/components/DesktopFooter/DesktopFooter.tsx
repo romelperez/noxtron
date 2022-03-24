@@ -6,7 +6,7 @@ import { getUserGlobalConfig } from '../../../utils/getUserGlobalConfig';
 import { createStyles } from './DesktopFooter.styles';
 
 interface DesktopFooterProps {
-  className?: string
+  className?: string;
 }
 
 const DesktopFooter = (props: DesktopFooterProps): ReactElement => {
@@ -19,15 +19,9 @@ const DesktopFooter = (props: DesktopFooterProps): ReactElement => {
   const { desktop = [] } = links;
 
   return (
-    <footer
-      className={className}
-      css={styles.root}
-    >
+    <footer className={className} css={styles.root}>
       {desktop.map((section = [], index) => (
-        <div
-          key={index}
-          css={styles.section}
-        >
+        <div key={index} css={styles.section}>
           {section.map(({ as, ...itemProps }, itemIndex) => {
             if (as === 'a') {
               return (

@@ -5,20 +5,23 @@ import { ReactNode, ReactElement, useMemo } from 'react';
 import { createStyles } from './Button.styles';
 
 interface ButtonProps {
-  className?: string
-  title?: string
-  color?: keyof Theme['colors']
-  size?: 'default' | 'small'
-  disabled?: boolean
-  onClick?: () => void
-  children?: ReactNode
+  className?: string;
+  title?: string;
+  color?: keyof Theme['colors'];
+  size?: 'default' | 'small';
+  disabled?: boolean;
+  onClick?: () => void;
+  children?: ReactNode;
 }
 
 const Button = (props: ButtonProps): ReactElement => {
   const { className, title, color, size, disabled, onClick, children } = props;
 
   const theme = useTheme();
-  const styles = useMemo(() => createStyles(theme, props), [theme, color, size, disabled]);
+  const styles = useMemo(
+    () => createStyles(theme, props),
+    [theme, color, size, disabled]
+  );
 
   return (
     <button

@@ -15,7 +15,7 @@ import { useMediaQuery } from '../../../utils/useMediaQuery';
 // TODO: Update URL when user changes editor code with debounce time.
 
 interface EditorProps {
-  className?: string
+  className?: string;
 }
 
 const Editor = (props: EditorProps): ReactElement => {
@@ -27,40 +27,45 @@ const Editor = (props: EditorProps): ReactElement => {
   const store = useStore();
   const isBreakpointMediumUp = useMediaQuery(theme.breakpoints.medium.up);
 
-	const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
   const storeRef = useRef<Store>(store);
 
   storeRef.current = store;
 
-  const onEditorMount = useCallback((newEditorRef: monaco.editor.IStandaloneCodeEditor) => {
-    editorRef.current = newEditorRef;
+  const onEditorMount = useCallback(
+    (newEditorRef: monaco.editor.IStandaloneCodeEditor) => {
+      editorRef.current = newEditorRef;
 
-    const { fontFamily, fontSize, fontWeight } = theme.typography.code(1);
+      const { fontFamily, fontSize, fontWeight } = theme.typography.code(1);
 
-    newEditorRef.updateOptions({
-      readOnly: !isBreakpointMediumUp,
-      domReadOnly: !isBreakpointMediumUp,
-      tabSize: 2,
-      showDeprecated: true,
-      showUnused: true,
-      scrollBeyondLastLine: false,
-      autoDetectHighContrast: false,
-      padding: {
-        top: theme.space(4),
-        bottom: theme.space(4)
-      },
-      fontFamily,
-      // Assuming fontSize is in pixels, remove the unit name and convert to number.
-      fontSize: fontSize ? Number(String(fontSize).replace(/[^\d]/g, '')) : undefined,
-      fontWeight: fontWeight ? String(fontWeight) : undefined
-    });
+      newEditorRef.updateOptions({
+        readOnly: !isBreakpointMediumUp,
+        domReadOnly: !isBreakpointMediumUp,
+        tabSize: 2,
+        showDeprecated: true,
+        showUnused: true,
+        scrollBeyondLastLine: false,
+        autoDetectHighContrast: false,
+        padding: {
+          top: theme.space(4),
+          bottom: theme.space(4)
+        },
+        fontFamily,
+        // Assuming fontSize is in pixels, remove the unit name and convert to number.
+        fontSize: fontSize
+          ? Number(String(fontSize).replace(/[^\d]/g, ''))
+          : undefined,
+        fontWeight: fontWeight ? String(fontWeight) : undefined
+      });
 
-    newEditorRef.setValue(storeRef.current.sandboxSelected?.code || '');
+      newEditorRef.setValue(storeRef.current.sandboxSelected?.code || '');
 
-    editorRef.current?.updateOptions({
-      theme: theme.colorScheme === 'dark' ? 'vs-dark' : 'vs'
-    });
-  }, []);
+      editorRef.current?.updateOptions({
+        theme: theme.colorScheme === 'dark' ? 'vs-dark' : 'vs'
+      });
+    },
+    []
+  );
 
   useEffect(() => {
     // TODO: Update editor with new sandbox language.
@@ -102,17 +107,14 @@ const Editor = (props: EditorProps): ReactElement => {
   }, [routerState, store]);
 
   return (
-    <div
-      className={cx('editor', className)}
-      css={styles.root}
-    >
+    <div className={cx('editor', className)} css={styles.root}>
       <MonacoEditor
-        className='editor__monaco-editor'
+        className="editor__monaco-editor"
         css={styles.editor}
-        width='100%'
-        height='100%'
-        theme='vs-dark'
-        defaultLanguage='typescript'
+        width="100%"
+        height="100%"
+        theme="vs-dark"
+        defaultLanguage="typescript"
         onMount={onEditorMount}
       />
     </div>

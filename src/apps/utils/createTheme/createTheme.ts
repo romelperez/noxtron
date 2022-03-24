@@ -48,7 +48,10 @@ const createThemeColor = (createColor: ThemeSettingsColor): ThemeColor => {
   };
 };
 
-const createThemeColorPalette = (hue: number, colorScheme: ThemeColorScheme): ThemePalette => {
+const createThemeColorPalette = (
+  hue: number,
+  colorScheme: ThemeColorScheme
+): ThemePalette => {
   if (colorScheme === 'dark') {
     return {
       text: createThemeColor((i) => [hue, 50, i * 5, 1]),
@@ -71,7 +74,7 @@ const createThemeColorPalette = (hue: number, colorScheme: ThemeColorScheme): Th
     bg: createThemeColor((i) => [hue, 5, 100 - i * 2, 1]),
     overlay: createThemeColor((i) => [hue, 10, 100 - i * 5, 0.65])
   };
-}
+};
 
 const createTheme = (colorScheme: ThemeColorScheme): Theme => {
   const { theme: userTheme } = getUserGlobalConfig();

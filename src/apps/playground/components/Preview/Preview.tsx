@@ -10,7 +10,7 @@ import { getUserGlobalConfig } from '../../../utils/getUserGlobalConfig';
 import { createStyles } from './Preview.styles';
 
 interface PreviewProps {
-  className?: string
+  className?: string;
 }
 
 const Preview = (props: PreviewProps): ReactElement => {
@@ -49,7 +49,10 @@ const Preview = (props: PreviewProps): ReactElement => {
 
   useEffect(() => {
     const onOpenIsolated = (): void => {
-      window.open(`${window.location.origin}${config.sandboxPath}?code=${codeTranspiledEncoded}`, 'sandbox');
+      window.open(
+        `${window.location.origin}${config.sandboxPath}?code=${codeTranspiledEncoded}`,
+        'sandbox'
+      );
     };
 
     store.subscribe('openIsolated', onOpenIsolated);
@@ -60,10 +63,7 @@ const Preview = (props: PreviewProps): ReactElement => {
   }, [codeTranspiledEncoded]);
 
   return (
-    <div
-      className={cx('preview', className)}
-      css={styles.root}
-    >
+    <div className={cx('preview', className)} css={styles.root}>
       <iframe
         ref={iframeRef}
         css={styles.sandbox}

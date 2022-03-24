@@ -1,17 +1,29 @@
-import React, { ReactNode, ReactElement, useState, useEffect, useMemo, useRef } from 'react';
+import React, {
+  ReactNode,
+  ReactElement,
+  useState,
+  useEffect,
+  useMemo,
+  useRef
+} from 'react';
 
-import type { Sandbox, StoreEvent, StoreSubscriber, Store } from '../../../types';
+import type {
+  Sandbox,
+  StoreEvent,
+  StoreSubscriber,
+  Store
+} from '../../../types';
 import { StoreContext } from '../../../utils/StoreContext';
 import { useRouterState } from '../../../utils/useRouterState';
 import { getUserGlobalSandboxes } from '../../../utils/getUserGlobalSandboxes';
 import { findSandboxByPath } from '../../../utils/findSandboxByPath';
 
 type StoreSubscriptions = {
-  [event in StoreEvent]?: Set<StoreSubscriber>
-}
+  [event in StoreEvent]?: Set<StoreSubscriber>;
+};
 
 interface StoreProviderProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const StoreProvider = (props: StoreProviderProps): ReactElement => {
@@ -42,8 +54,7 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
       if (type === 'predefined') {
         setSandboxCode(newSandboxSelected.code || '');
       }
-    }
-    else if (type !== 'custom') {
+    } else if (type !== 'custom') {
       routerState.setOptions({ type: 'custom' });
     }
 
@@ -60,14 +71,15 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
         setSandboxCode(newCode);
       },
       subscribe: (event, subscriber) => {
-        subscriptionsRef.current[event] = subscriptionsRef.current[event] || new Set();
+        subscriptionsRef.current[event] =
+          subscriptionsRef.current[event] || new Set();
         subscriptionsRef.current[event]?.add(subscriber);
       },
       unsubscribe: (event, subscriber) => {
         subscriptionsRef.current[event]?.delete(subscriber);
       },
-      trigger: event => {
-        subscriptionsRef.current[event]?.forEach(subscribe => subscribe());
+      trigger: (event) => {
+        subscriptionsRef.current[event]?.forEach((subscribe) => subscribe());
       }
     };
     return store;
@@ -84,14 +96,15 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
     store.subscribe('resetPredefinedSandboxCode', onResetPredefinedSandboxCode);
 
     return () => {
-      store.unsubscribe('resetPredefinedSandboxCode', onResetPredefinedSandboxCode);
+      store.unsubscribe(
+        'resetPredefinedSandboxCode',
+        onResetPredefinedSandboxCode
+      );
     };
   }, [routerState, store]);
 
   return (
-    <StoreContext.Provider value={store}>
-      {children}
-    </StoreContext.Provider>
+    <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
   );
 };
 

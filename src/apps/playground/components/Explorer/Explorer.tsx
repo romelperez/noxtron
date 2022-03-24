@@ -9,9 +9,9 @@ import { useRouterState } from '../../../utils/useRouterState';
 import { createStyles } from './Explorer.styles';
 
 interface ExplorerNavListProps {
-  styles: Styles
-  items: Sandbox[]
-  currentSandboxPath: string[]
+  styles: Styles;
+  items: Sandbox[];
+  currentSandboxPath: string[];
 }
 
 const ExplorerNavList = (props: ExplorerNavListProps): ReactElement => {
@@ -25,23 +25,22 @@ const ExplorerNavList = (props: ExplorerNavListProps): ReactElement => {
       {items.map(({ name, code, children }, index) => {
         const isLink = !!code;
         const itemSandboxPath = [...currentSandboxPath, name];
-        const isActive = itemSandboxPath.every((itemSandboxPathFragment, i) =>
-          routerSandbox[i] === itemSandboxPathFragment
+        const isActive = itemSandboxPath.every(
+          (itemSandboxPathFragment, i) =>
+            routerSandbox[i] === itemSandboxPathFragment
         );
 
         return (
           <li key={index}>
             {!isLink && (
-              <div
-                css={[styles.item, isActive && styles.itemActive]}
-              >
+              <div css={[styles.item, isActive && styles.itemActive]}>
                 {name}
               </div>
             )}
             {!!isLink && (
               <button
                 css={[styles.item, styles.link, isActive && styles.linkActive]}
-                onClick={event => {
+                onClick={(event) => {
                   event.preventDefault();
                   setOptions({
                     type: 'predefined',
@@ -67,7 +66,7 @@ const ExplorerNavList = (props: ExplorerNavListProps): ReactElement => {
 };
 
 interface ExplorerProps {
-  className?: string
+  className?: string;
 }
 
 const Explorer = (props: ExplorerProps): ReactElement => {
@@ -79,10 +78,7 @@ const Explorer = (props: ExplorerProps): ReactElement => {
   const sandboxes = getUserGlobalSandboxes();
 
   return (
-    <aside
-      className={cx('explorer', className)}
-      css={styles.root}
-    >
+    <aside className={cx('explorer', className)} css={styles.root}>
       <nav css={styles.nav}>
         <ExplorerNavList
           styles={styles}

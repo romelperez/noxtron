@@ -39,7 +39,7 @@ const App = (): ReactElement => {
   }, []);
 
   return (
-    <div className='app' css={styles.root}>
+    <div className="app" css={styles.root}>
       <Header css={styles.header} />
       <main css={styles.main}>
         {optionsBooleans.explorer && <Explorer css={styles.explorer} />}
@@ -48,8 +48,12 @@ const App = (): ReactElement => {
             <Fragment>
               <Toolbar css={styles.toolbar} />
               <div css={styles.panels}>
-                {optionsBooleans.editor && <Editor css={[styles.panel, styles.panelEditor]} />}
-                {optionsBooleans.preview && <Preview css={[styles.panel, styles.panelPreview]} />}
+                {optionsBooleans.editor && (
+                  <Editor css={[styles.panel, styles.panelEditor]} />
+                )}
+                {optionsBooleans.preview && (
+                  <Preview css={[styles.panel, styles.panelPreview]} />
+                )}
               </div>
             </Fragment>
           )}

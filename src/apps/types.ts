@@ -54,50 +54,52 @@ export type Styles = Record<string, Style>;
 export type RouterURLOptionControl = 'type' | 'sandbox' | 'code';
 export type RouterURLOptionBoolean = 'explorer' | 'editor' | 'preview' | 'dark';
 export type RouterURLOption = RouterURLOptionControl | RouterURLOptionBoolean;
-export type RouterStateSetOptionsUpdate =
-  & { type?: 'predefined' | 'custom' }
-  & { sandbox?: string[] }
-  & { code?: string }
-  & { [name in RouterURLOptionBoolean]?: boolean }
+export type RouterStateSetOptionsUpdate = { type?: 'predefined' | 'custom' } & {
+  sandbox?: string[];
+} & { code?: string } & { [name in RouterURLOptionBoolean]?: boolean };
 
 export interface RouterState {
-  options: Record<RouterURLOption, string | undefined>
+  options: Record<RouterURLOption, string | undefined>;
   optionsControls: {
-    type: 'predefined' | 'custom'
-    sandbox: string[]
-    code: string
-  }
-  optionsBooleans: Record<RouterURLOptionBoolean, boolean>
-  setOptions: (newOptions: RouterStateSetOptionsUpdate) => void
+    type: 'predefined' | 'custom';
+    sandbox: string[];
+    code: string;
+  };
+  optionsBooleans: Record<RouterURLOptionBoolean, boolean>;
+  setOptions: (newOptions: RouterStateSetOptionsUpdate) => void;
 }
 
 export interface Config {
-  basePath: string
-  playgroundPath: string
-  sandboxPath: string
+  basePath: string;
+  playgroundPath: string;
+  sandboxPath: string;
   title?: {
-    mobile?: string
-    desktop?: string
-  }
+    mobile?: string;
+    desktop?: string;
+  };
   theme?: {
     typography?: {
-      heading?: CSSProperties
-      body?: CSSProperties
-      cta?: CSSProperties
-      code?: CSSProperties
-    }
-  }
+      heading?: CSSProperties;
+      body?: CSSProperties;
+      cta?: CSSProperties;
+      code?: CSSProperties;
+    };
+  };
   links?: {
-    mobile?: Array<HTMLProps<HTMLElement> & { as: keyof HTMLElementTagNameMap }>
-    desktop?: Array<Array<HTMLProps<HTMLElement> & { as: keyof HTMLElementTagNameMap }>>
-  }
+    mobile?: Array<
+      HTMLProps<HTMLElement> & { as: keyof HTMLElementTagNameMap }
+    >;
+    desktop?: Array<
+      Array<HTMLProps<HTMLElement> & { as: keyof HTMLElementTagNameMap }>
+    >;
+  };
 }
 
 export interface Sandbox {
-  name: string
-  language?: string
-  code?: string
-  children?: Sandbox[]
+  name: string;
+  language?: string;
+  code?: string;
+  children?: Sandbox[];
 }
 
 export type StoreEvent =
@@ -110,10 +112,10 @@ export type StoreEvent =
 export type StoreSubscriber = () => void;
 
 export interface Store {
-  sandboxSelected: Sandbox | null
-  sandboxCode: string
-  setSandboxCode: (code: string) => void
-  subscribe: (event: StoreEvent, subscriber: StoreSubscriber) => void
-  unsubscribe: (event: StoreEvent, subscriber: StoreSubscriber) => void
-  trigger: (event: StoreEvent) => void
+  sandboxSelected: Sandbox | null;
+  sandboxCode: string;
+  setSandboxCode: (code: string) => void;
+  subscribe: (event: StoreEvent, subscriber: StoreSubscriber) => void;
+  unsubscribe: (event: StoreEvent, subscriber: StoreSubscriber) => void;
+  trigger: (event: StoreEvent) => void;
 }

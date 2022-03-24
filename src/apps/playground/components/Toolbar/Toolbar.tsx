@@ -2,7 +2,14 @@
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 import Icon from '@mdi/react';
-import { mdiReload, mdiBackupRestore, mdiPencil, mdiTestTube, mdiContentCopy, mdiShareVariant } from '@mdi/js';
+import {
+  mdiReload,
+  mdiBackupRestore,
+  mdiPencil,
+  mdiTestTube,
+  mdiContentCopy,
+  mdiShareVariant
+} from '@mdi/js';
 
 import { cx } from '../../../utils/cx';
 import { useRouterState } from '../../../utils/useRouterState';
@@ -11,7 +18,7 @@ import { Button } from '../Button';
 import { createStyles } from './Toolbar.styles';
 
 interface ToolbarProps {
-  className?: string
+  className?: string;
 }
 
 const Toolbar = (props: ToolbarProps): ReactElement => {
@@ -22,18 +29,18 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const store = useStore();
 
-  const location = optionsControls.type === 'predefined' ? optionsControls.sandbox.join(' / ') : '';
+  const location =
+    optionsControls.type === 'predefined'
+      ? optionsControls.sandbox.join(' / ')
+      : '';
 
   return (
-    <nav
-      className={cx('toolbar', className)}
-      css={styles.root}
-    >
+    <nav className={cx('toolbar', className)} css={styles.root}>
       <div css={styles.options}>
         <Button
           css={styles.option}
-          size='small'
-          title='Reload preview'
+          size="small"
+          title="Reload preview"
           disabled={!optionsBooleans.preview}
           onClick={() => store?.trigger('reload')}
         >
@@ -42,8 +49,8 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
         </Button>
         <Button
           css={styles.option}
-          size='small'
-          title='Reset predefined sandbox source code'
+          size="small"
+          title="Reset predefined sandbox source code"
           disabled={optionsControls.type === 'custom'}
           onClick={() => store?.trigger('resetPredefinedSandboxCode')}
         >
@@ -52,9 +59,9 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
         </Button>
         <Button
           css={styles.option}
-          size='small'
+          size="small"
           disabled={optionsControls.type === 'custom'}
-          title='Make custom sandbox from current source code'
+          title="Make custom sandbox from current source code"
           onClick={() => store?.trigger('customSandbox')}
         >
           <Icon css={styles.optionIcon} path={mdiPencil} />
@@ -62,8 +69,8 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
         </Button>
         <Button
           css={styles.option}
-          size='small'
-          title='Open preview in an independent isolated window'
+          size="small"
+          title="Open preview in an independent isolated window"
           onClick={() => store?.trigger('openIsolated')}
         >
           <Icon css={styles.optionIcon} path={mdiTestTube} />
@@ -71,8 +78,8 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
         </Button>
         <Button
           css={styles.option}
-          size='small'
-          title='Copy source code'
+          size="small"
+          title="Copy source code"
           onClick={() => store?.trigger('copyCode')}
         >
           <Icon css={styles.optionIcon} path={mdiContentCopy} />
@@ -80,8 +87,8 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
         </Button>
         <Button
           css={styles.option}
-          size='small'
-          title='Copy playground URL'
+          size="small"
+          title="Copy playground URL"
           onClick={() => {
             window.navigator.clipboard.writeText(window.location.href);
           }}
@@ -90,11 +97,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           <span css={styles.optionLabel}>Copy URL</span>
         </Button>
       </div>
-      {!!location && (
-        <code css={styles.location}>
-          {location}
-        </code>
-      )}
+      {!!location && <code css={styles.location}>{location}</code>}
     </nav>
   );
 };

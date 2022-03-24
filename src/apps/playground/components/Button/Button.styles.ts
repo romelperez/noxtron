@@ -1,9 +1,9 @@
 import type { Theme, Styles } from '../../../types';
 
 interface StyleProps {
-  color?: keyof Theme['colors']
-  size?: 'default' | 'small'
-  disabled?: boolean
+  color?: keyof Theme['colors'];
+  size?: 'default' | 'small';
+  disabled?: boolean;
 }
 
 const createStyles = (theme: Theme, props: StyleProps): Styles => {
@@ -20,13 +20,13 @@ const createStyles = (theme: Theme, props: StyleProps): Styles => {
       border: isDark
         ? `1px solid ${palette.levelHigh(3)}`
         : `1px solid ${palette.decoHigh(12)}`,
-      padding: `${theme.space(isSmall ? 1 : 2)}px ${theme.space(isSmall ? 3 : 4)}px`,
+      padding: `${theme.space(isSmall ? 1 : 2)}px ${theme.space(
+        isSmall ? 3 : 4
+      )}px`,
       verticalAlign: 'middle',
       ...theme.typography.cta(isSmall ? 1 : 0),
       lineHeight: 1,
-      color: isDark
-        ? palette.textHigh(14)
-        : palette.textHigh(18),
+      color: isDark ? palette.textHigh(14) : palette.textHigh(18),
       backgroundColor: palette.levelHigh(1),
       cursor: disabled ? 'not-allowed' : 'pointer',
       userSelect: 'none',
@@ -40,7 +40,7 @@ const createStyles = (theme: Theme, props: StyleProps): Styles => {
       },
       '&:hover, &:focus': !disabled && {
         color: palette.textHigh(18),
-        backgroundColor: palette.levelHigh(2),
+        backgroundColor: palette.levelHigh(2)
       }
     }
   };

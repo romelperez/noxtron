@@ -35,10 +35,7 @@ const Playground = (): ReactElement => {
   return (
     <BrowserRouter basename={basePath}>
       <Routes>
-        <Route
-          path='*'
-          element={<PlaygroundRouted />}
-        />
+        <Route path="*" element={<PlaygroundRouted />} />
       </Routes>
     </BrowserRouter>
   );

@@ -21,23 +21,37 @@ window.getNoxtronConfig = () => ({
         fontWeight: '400'
       },
       code: {
-        fontFamily: '"Source Code Pro", Menlo, Monaco, "Courier New", monospace',
+        fontFamily:
+          '"Source Code Pro", Menlo, Monaco, "Courier New", monospace',
         fontWeight: '400'
       }
     }
   },
   links: {
-    mobile: [
-      { children: 'v1.2.3 22-12-31' }
-    ],
+    mobile: [{ children: 'v1.2.3 22-12-31' }],
     desktop: [
       [
         { children: 'v1.2.3 22-12-31' },
-        { as: 'a', href: 'https://github.com/romelperez/noxtron', target: 'Documentation', children: 'Website' }
+        {
+          as: 'a',
+          href: 'https://github.com/romelperez/noxtron',
+          target: 'Documentation',
+          children: 'Website'
+        }
       ],
       [
-        { as: 'a', href: 'https://twitter.com/romelperez07', target: 'Twitter', children: 'Twitter' },
-        { as: 'a', href: 'https://github.com/romelperez/noxtron', target: 'GitHub', children: 'GitHub' }
+        {
+          as: 'a',
+          href: 'https://twitter.com/romelperez07',
+          target: 'Twitter',
+          children: 'Twitter'
+        },
+        {
+          as: 'a',
+          href: 'https://github.com/romelperez/noxtron',
+          target: 'GitHub',
+          children: 'GitHub'
+        }
       ]
     ]
   }

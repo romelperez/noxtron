@@ -3,28 +3,62 @@ import ReactDOM from 'react-dom';
 import escape from 'lodash/escape';
 import * as empanada from 'empanada';
 
-import { decodeSourceCode } from '../utils/decodeSourceCode';
+import { decodeURLParameter } from '../utils/decodeURLParameter';
 import { convertLocationSearchToObject } from '../utils/convertLocationSearchToObject';
 
-const setupSandbox = (): void => {
-  const root = document.querySelector('#root') as HTMLDivElement;
+interface SetupSandboxSettingsDependency {
+  name: string;
+  pkg: unknown;
+}
+
+interface SetupSandboxSettings {
+  root?: string | HTMLElement;
+  dependencies?: SetupSandboxSettingsDependency[];
+}
+
+const setupSandbox = (settings: SetupSandboxSettings = {}): void => {
+  const { root, dependencies = [] } = settings;
+
+  const rootElement =
+    root instanceof HTMLElement
+      ? root
+      : (document.querySelector(root || '#root') as HTMLElement);
 
   try {
     const parameters = convertLocationSearchToObject(window.location.search);
-    const codeRaw = decodeSourceCode(parameters.code);
 
-    if (!codeRaw) {
-      throw new Error('No source code provided.');
+    if (parameters.error) {
+      throw new Error(decodeURLParameter(parameters.error));
     }
 
-    const codeWrap = `(function () { ${codeRaw}; })();`;
-    const fn = new Function('React', 'render', 'empanada', codeWrap);
+    const codeRaw = decodeURLParameter(parameters.code);
+
+    if (!codeRaw) {
+      throw new Error('No valid source code provided.');
+    }
+
+    const dependenciesNames = [
+      'React',
+      'render',
+      'empanada',
+      ...dependencies.map(({ name }) => name)
+    ];
 
     const render = (element: ReactElement): void => {
-      ReactDOM.render(element, root);
+      ReactDOM.render(element, rootElement);
     };
 
-    fn(React, render, empanada);
+    const dependenciesPackages = [
+      React,
+      render,
+      empanada,
+      ...dependencies.map(({ pkg }) => pkg)
+    ];
+
+    const codeWrap = `(function () { ${codeRaw}; })();`;
+    const fn = new Function(...dependenciesNames, codeWrap);
+
+    fn(...dependenciesPackages);
   } catch (error: unknown) {
     Object.assign(document.body.style, {
       margin: '20px',
@@ -37,8 +71,9 @@ const setupSandbox = (): void => {
       error instanceof Error
         ? escape(String(error))
         : 'ERROR: Source code processing error.';
-    root.innerHTML = `<pre>${errorMessage}</pre>`;
+    rootElement.innerHTML = `<pre>${errorMessage}</pre>`;
   }
 };
 
+export type { SetupSandboxSettings };
 export { setupSandbox };

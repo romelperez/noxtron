@@ -8,8 +8,8 @@ import {
 } from '../../constants';
 import { convertLocationSearchToString } from '../convertLocationSearchToString';
 import { convertLocationSearchToObject } from '../convertLocationSearchToObject';
-import { encodeSourceCode } from '../encodeSourceCode';
-import { decodeSourceCode } from '../decodeSourceCode';
+import { encodeURLParameter } from '../encodeURLParameter';
+import { decodeURLParameter } from '../decodeURLParameter';
 
 // TODO: Prevent user from hiding all panels.
 
@@ -32,7 +32,7 @@ const useRouterState = (): NTRouterState => {
     const optionsControls: NTRouterState['optionsControls'] = {
       type: options.type === 'predefined' ? 'predefined' : 'custom',
       sandbox: (options.sandbox || '').split('|').filter(Boolean),
-      code: decodeSourceCode(options.code || '')
+      code: decodeURLParameter(options.code || '')
     };
 
     if (!options.type) {
@@ -74,7 +74,7 @@ const useRouterState = (): NTRouterState => {
                 break;
               }
               case 'code': {
-                value = encodeSourceCode(
+                value = encodeURLParameter(
                   (rawValue as NTRouterState['options']['code']) || ''
                 );
                 break;

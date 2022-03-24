@@ -41,7 +41,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           css={styles.option}
           size="small"
           title="Reload preview"
-          disabled={!optionsBooleans.preview}
+          disabled={!optionsBooleans.preview || !!store.sandboxError}
           onClick={() => store?.trigger('reload')}
         >
           <Icon css={styles.optionIcon} path={mdiReload} />
@@ -51,7 +51,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           css={styles.option}
           size="small"
           title="Reset predefined sandbox source code"
-          disabled={optionsControls.type === 'custom'}
+          disabled={optionsControls.type === 'custom' || !!store.sandboxError}
           onClick={() => store?.trigger('resetPredefinedSandboxCode')}
         >
           <Icon css={styles.optionIcon} path={mdiBackupRestore} />
@@ -71,6 +71,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           css={styles.option}
           size="small"
           title="Open preview in an independent isolated window"
+          disabled={!!store.sandboxError}
           onClick={() => store?.trigger('openIsolated')}
         >
           <Icon css={styles.optionIcon} path={mdiTestTube} />

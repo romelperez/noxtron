@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
-import { ReactElement, useEffect, useMemo, useRef } from 'react';
+import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { transform } from '@babel/standalone';
 
 import { cx } from '../../../utils/cx';
 import { useStore } from '../../../utils/useStore';
-import { encodeSourceCode } from '../../../utils/encodeSourceCode';
+import { encodeURLParameter } from '../../../utils/encodeURLParameter';
 import { getUserGlobalConfig } from '../../../utils/getUserGlobalConfig';
 import { createStyles } from './Preview.styles';
 
@@ -20,20 +20,30 @@ const Preview = (props: PreviewProps): ReactElement => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const store = useStore();
 
+  const [codeTranspiledEncoded, setCodeTranspiledEncoded] = useState('');
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const config = getUserGlobalConfig();
 
-  const codeTranspiledEncoded = useMemo(() => {
+  useEffect(() => {
     const code = store?.sandboxCode || '';
-    const transformation = transform(code, {
-      // TODO: Change filetype according to sandbox type.
-      filename: 'sandbox.tsx',
-      presets: ['env', 'react', 'typescript']
-    });
-    const codeProcessed = transformation?.code || '';
+    let codeProcessed = '';
 
-    return encodeSourceCode(codeProcessed);
+    try {
+      const transformation = transform(code, {
+        // TODO: Change filetype according to sandbox type.
+        filename: 'sandbox.tsx',
+        presets: ['env', 'react', 'typescript']
+      });
+      codeProcessed = transformation?.code || '';
+
+      setCodeTranspiledEncoded(encodeURLParameter(codeProcessed));
+      store.setSandboxError('');
+    } catch (error: unknown) {
+      setCodeTranspiledEncoded('');
+      store.setSandboxError(String(error));
+      console.error(error);
+    }
   }, [store?.sandboxCode]);
 
   useEffect(() => {
@@ -63,12 +73,15 @@ const Preview = (props: PreviewProps): ReactElement => {
     };
   }, [codeTranspiledEncoded]);
 
+  const codeParam = codeTranspiledEncoded;
+  const errorParam = encodeURLParameter(store.sandboxError);
+
   return (
     <div className={cx('preview', className)} css={styles.root}>
       <iframe
         ref={iframeRef}
         css={styles.sandbox}
-        src={`${config.sandboxPath}?code=${codeTranspiledEncoded}`}
+        src={`${config.sandboxPath}?code=${codeParam}&error=${errorParam}`}
       />
     </div>
   );

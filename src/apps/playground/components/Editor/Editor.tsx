@@ -12,9 +12,6 @@ import { useStore } from '../../../utils/useStore';
 import { createStyles } from './Editor.styles';
 import { useMediaQuery } from '../../../utils/useMediaQuery';
 
-// TODO: Handle code errors.
-// TODO: Update URL when user changes editor code with debounce time.
-
 interface EditorProps {
   className?: string;
 }

@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, useTheme } from '@emotion/react';
+import { jsx, useTheme, Global } from '@emotion/react';
 import { Fragment, ReactElement, useEffect, useMemo, useRef } from 'react';
 
 import { useRouterState } from '../../../utils/useRouterState';
@@ -39,28 +39,31 @@ const App = (): ReactElement => {
   }, []);
 
   return (
-    <div className="app" css={styles.root}>
-      <Header css={styles.header} />
-      <main css={styles.main}>
-        {optionsBooleans.explorer && <Explorer css={styles.explorer} />}
-        <div css={styles.workspace}>
-          {(optionsBooleans.editor || optionsBooleans.preview) && (
-            <Fragment>
-              <Toolbar css={styles.toolbar} />
-              <div css={styles.panels}>
-                {optionsBooleans.editor && (
-                  <Editor css={[styles.panel, styles.panelEditor]} />
-                )}
-                {optionsBooleans.preview && (
-                  <Preview css={[styles.panel, styles.panelPreview]} />
-                )}
-              </div>
-            </Fragment>
-          )}
-        </div>
-      </main>
-      <DesktopFooter css={styles.desktopFooter} />
-    </div>
+    <Fragment>
+      <Global styles={styles.global} />
+      <div className="app" css={styles.root}>
+        <Header css={styles.header} />
+        <main css={styles.main}>
+          {optionsBooleans.explorer && <Explorer css={styles.explorer} />}
+          <div css={styles.workspace}>
+            {(optionsBooleans.editor || optionsBooleans.preview) && (
+              <Fragment>
+                <Toolbar css={styles.toolbar} />
+                <div css={styles.panels}>
+                  {optionsBooleans.editor && (
+                    <Editor css={[styles.panel, styles.panelEditor]} />
+                  )}
+                  {optionsBooleans.preview && (
+                    <Preview css={[styles.panel, styles.panelPreview]} />
+                  )}
+                </div>
+              </Fragment>
+            )}
+          </div>
+        </main>
+        <DesktopFooter css={styles.desktopFooter} />
+      </div>
+    </Fragment>
   );
 };
 

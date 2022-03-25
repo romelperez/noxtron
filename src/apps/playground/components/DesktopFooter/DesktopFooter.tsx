@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
-import { HTMLProps, ReactElement, useMemo } from 'react';
+import { Fragment, ReactElement, useMemo } from 'react';
 
-import { getUserGlobalConfig } from '../../../utils/getUserGlobalConfig';
+import { useUserConfig } from '../../utils/useUserConfig';
 import { createStyles } from './DesktopFooter.styles';
 
 interface DesktopFooterProps {
@@ -14,32 +14,19 @@ const DesktopFooter = (props: DesktopFooterProps): ReactElement => {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const { links = {} } = useUserConfig();
 
-  const { links = {} } = getUserGlobalConfig();
   const { desktop = [] } = links;
 
   return (
     <footer className={className} css={styles.root}>
       {desktop.map((section = [], index) => (
         <div key={index} css={styles.section}>
-          {section.map(({ as, ...itemProps }, itemIndex) => {
-            if (as === 'a') {
-              return (
-                <a
-                  key={itemIndex}
-                  css={styles.item}
-                  {...(itemProps as HTMLProps<HTMLAnchorElement>)}
-                />
-              );
-            }
-            return (
-              <div
-                key={itemIndex}
-                css={styles.item}
-                {...(itemProps as HTMLProps<HTMLDivElement>)}
-              />
-            );
-          })}
+          {section.map((item, itemIndex) => (
+            <span key={itemIndex} css={styles.item}>
+              {item}
+            </span>
+          ))}
         </div>
       ))}
     </footer>

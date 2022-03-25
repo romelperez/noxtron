@@ -5,7 +5,7 @@ import Icon from '@mdi/react';
 import { mdiXml, mdiMenu, mdiChartBubble, mdiInvertColors } from '@mdi/js';
 
 import { useRouterState } from '../../../utils/useRouterState';
-import { getUserGlobalConfig } from '../../../utils/getUserGlobalConfig';
+import { useUserConfig } from '../../utils/useUserConfig';
 import { Button } from '../Button';
 import { createStyles } from './Header.styles';
 
@@ -20,7 +20,7 @@ const Header = (props: HeaderProps): ReactElement => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { optionsBooleans, setOptions } = useRouterState();
 
-  const config = getUserGlobalConfig();
+  const { title, playgroundPath } = useUserConfig();
 
   return (
     <header className={className} css={styles.root}>
@@ -64,13 +64,9 @@ const Header = (props: HeaderProps): ReactElement => {
         </Button>
       </nav>
       <div css={styles.logo}>
-        <a href={config.playgroundPath}>
-          <span css={styles.logoMobile}>
-            {config.title?.mobile || 'Noxtron'}
-          </span>
-          <span css={styles.logoDesktop}>
-            {config.title?.desktop || 'Noxtron'}
-          </span>
+        <a href={playgroundPath}>
+          <span css={styles.logoMobile}>{title?.mobile || 'Noxtron'}</span>
+          <span css={styles.logoDesktop}>{title?.desktop || 'Noxtron'}</span>
         </a>
       </div>
     </header>

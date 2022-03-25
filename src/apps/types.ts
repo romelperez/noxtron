@@ -1,4 +1,4 @@
-import type { CSSProperties, HTMLProps } from 'react';
+import type { ReactNode, CSSProperties, HTMLProps } from 'react';
 import type { CSSObject } from '@emotion/react';
 
 export type NTThemeSettingsMultiplier = number;
@@ -12,6 +12,7 @@ export type NTThemeStyleValue = CSSProperties;
 export type NTThemeStyle = (index: number) => NTThemeStyleValue;
 export type NTThemeColor = (index: number) => string;
 export type NTThemeColorScheme = 'dark' | 'light';
+
 export interface NTThemePalette {
   text: NTThemeColor;
   textHigh: NTThemeColor;
@@ -77,32 +78,6 @@ export interface NTRouterState {
   setOptions: (newOptions: NTRouterStateSetOptionsUpdate) => void;
 }
 
-export interface NTConfig {
-  basePath: string;
-  playgroundPath: string;
-  sandboxPath: string;
-  title?: {
-    mobile?: string;
-    desktop?: string;
-  };
-  theme?: {
-    typography?: {
-      heading?: CSSProperties;
-      body?: CSSProperties;
-      cta?: CSSProperties;
-      code?: CSSProperties;
-    };
-  };
-  links?: {
-    mobile?: Array<
-      HTMLProps<HTMLElement> & { as: keyof HTMLElementTagNameMap }
-    >;
-    desktop?: Array<
-      Array<HTMLProps<HTMLElement> & { as: keyof HTMLElementTagNameMap }>
-    >;
-  };
-}
-
 export interface NTSandbox {
   name: string;
   language?: string;
@@ -128,4 +103,33 @@ export interface NTStore {
   subscribe: (event: NTStoreEvent, subscriber: NTStoreSubscriber) => void;
   unsubscribe: (event: NTStoreEvent, subscriber: NTStoreSubscriber) => void;
   trigger: (event: NTStoreEvent) => void;
+}
+
+export type NTUserConfigTheme = Partial<{
+  typographyCommons: {
+    heading: CSSProperties;
+    body: CSSProperties;
+    cta: CSSProperties;
+    code: CSSProperties;
+  };
+  colorHues: Partial<{
+    primary: number;
+    secondary: number;
+  }>;
+}>;
+
+export interface NTUserConfig {
+  sandboxes: NTSandbox[];
+  basePath: string;
+  playgroundPath: string;
+  sandboxPath: string;
+  theme?: NTUserConfigTheme;
+  title?: {
+    mobile?: ReactNode;
+    desktop?: ReactNode;
+  };
+  links?: {
+    mobile?: ReactNode[];
+    desktop?: ReactNode[][];
+  };
 }

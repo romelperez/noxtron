@@ -1,1 +1,1 @@
-export * from './components/Playground';
+export * from './containers/Playground';

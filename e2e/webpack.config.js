@@ -1,13 +1,11 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const { NODE_ENV } = process.env;
 
 const CWD = __dirname;
 const TSCONFIG_FILE_PATH = path.join(CWD, 'tsconfig.json');
 const SRC_PATH = path.join(CWD, 'src');
-const STATIC_PATH = path.join(CWD, 'static');
 const BUILD_PATH = path.join(CWD, 'build');
 
 const BASE_PATH = '/play';
@@ -17,12 +15,12 @@ const SANDBOX_PATH = `${BASE_PATH}/sandbox.html`;
 module.exports = {
   mode: NODE_ENV || 'development',
   entry: {
-    playground: path.join(SRC_PATH, 'playground.tsx'),
-    sandbox: path.join(SRC_PATH, 'sandbox.tsx')
+    playground: path.join(SRC_PATH, 'playground/playground.tsx'),
+    sandbox: path.join(SRC_PATH, 'sandbox/sandbox.tsx')
   },
   output: {
     path: path.join(BUILD_PATH, BASE_PATH),
-    filename: 'e2e-[name].js',
+    filename: '[name].js',
     publicPath: BASE_PATH,
     clean: true
   },
@@ -42,29 +40,25 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.md$/i,
+        use: 'raw-loader'
       }
     ]
   },
   plugins: [
     new HtmlWebpackPlugin({
       publicPath: BASE_PATH,
-      template: path.join(SRC_PATH, 'playground.html'),
+      template: path.join(SRC_PATH, 'playground/playground.html'),
       filename: path.join(BUILD_PATH, PLAYGROUND_PATH),
       chunks: ['playground']
     }),
     new HtmlWebpackPlugin({
       publicPath: BASE_PATH,
-      template: path.join(SRC_PATH, 'sandbox.html'),
+      template: path.join(SRC_PATH, 'sandbox/sandbox.html'),
       filename: path.join(BUILD_PATH, SANDBOX_PATH),
       chunks: ['sandbox']
-    }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: STATIC_PATH,
-          to: BUILD_PATH
-        }
-      ]
     })
   ],
   devServer: {

@@ -15,7 +15,7 @@ import type {
 } from '../../../types';
 import { StoreContext } from '../../../utils/StoreContext';
 import { useRouterState } from '../../../utils/useRouterState';
-import { getUserGlobalSandboxes } from '../../../utils/getUserGlobalSandboxes';
+import { useUserConfig } from '../../utils/useUserConfig';
 import { findSandboxByPath } from '../../../utils/findSandboxByPath';
 
 type StoreSubscriptions = {
@@ -39,7 +39,7 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
 
   const subscriptionsRef = useRef<StoreSubscriptions>({});
 
-  const sandboxes = getUserGlobalSandboxes();
+  const { sandboxes } = useUserConfig();
 
   useEffect(() => {
     if (!sandboxes.length) {

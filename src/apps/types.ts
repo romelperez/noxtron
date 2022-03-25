@@ -133,3 +133,13 @@ export interface NTUserConfig {
     desktop?: ReactNode[][];
   };
 }
+
+export interface NTUserSandboxSettingsDependency {
+  name: string;
+  slug: string;
+  pkg: unknown;
+}
+
+export interface NTUserSandboxSettings {
+  dependencies?: NTUserSandboxSettingsDependency[];
+}

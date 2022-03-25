@@ -1,5 +1,6 @@
 ```tsx
 import React, { useRef, useEffect } from 'react';
+import { render } from 'react-dom';
 import random from 'lodash/random';
 import * as empanada from 'empanada';
 import { animate } from 'motion';
@@ -11,7 +12,7 @@ const App = (): ReactElement => {
   useEffect(() => {
     animate(
       elementRef.current,
-      { x: [0, 100] },
+      { x: [0, 50] },
       { repeat: Infinity, direction: 'alternate', duration: 1 }
     );
   }, []);
@@ -32,5 +33,5 @@ const App = (): ReactElement => {
   );
 };
 
-render(<App />);
+render(<App />, document.querySelector('#root'));
 ```

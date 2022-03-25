@@ -1,7 +1,14 @@
 ```tsx
+import React from 'react';
+import { render } from 'react-dom';
+
 const App = (): ReactElement => {
-  return <h1 style={{ color: 'yellow' }}>useSomeContext Basic</h1>;
+  return (
+    <h1 style={{ padding: 20, color: '#ff0', background: '#000' }}>
+      two useSomeContext basic
+    </h1>
+  );
 };
 
-render(<App />);
+render(<App />, document.querySelector('#root'));
 ```

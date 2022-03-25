@@ -1,31 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import escape from 'lodash/escape';
+import uniqBy from 'lodash/uniqBy';
+import flatten from 'lodash/flatten';
 import * as empanada from 'empanada';
 
 import type {
-  NTUserSandboxSettingsDependency,
-  NTUserSandboxSettings
+  NTUserSandboxConfigDependency,
+  NTUserSandboxConfig
 } from '../types';
 import { decodeURLParameter } from '../utils/decodeURLParameter';
 import { convertLocationSearchToObject } from '../utils/convertLocationSearchToObject';
 
-interface SandboxImportsRef {
-  names: string;
-  from: string;
+interface SandboxDependency extends NTUserSandboxConfigDependency {
   slug: string;
 }
 
+interface SandboxImportsRef {
+  values: string;
+  dependencyName: string;
+  dependencySlug: string;
+}
+
 const getImportsRefsFragments = (
-  dependencies: NTUserSandboxSettingsDependency[],
+  dependencies: SandboxDependency[],
   importsLines: string[]
 ): SandboxImportsRef[] => {
-  const importsRefsFragments: SandboxImportsRef[] = [];
-
-  importsLines.forEach((line) => {
+  const lists = importsLines.map((line) => {
     // Types not needed.
     if (line.trim().startsWith('import type ')) {
-      return '';
+      return [];
     }
 
     const fragments = line.trim().split(/(import|from)/);
@@ -53,7 +57,7 @@ const getImportsRefsFragments = (
 
       // Remove if it has already been declared by the function.
       if (nameMain !== dependency.slug) {
-        newNamesList.push(`{ default: ${nameMain} }`);
+        newNamesList.push(nameMain);
       }
 
       newNamesList.push(nameDes);
@@ -67,32 +71,26 @@ const getImportsRefsFragments = (
       newNamesList.push(names);
     }
 
-    newNamesList.forEach((newNamesItem) => {
-      importsRefsFragments.push({
-        names: newNamesItem,
-        from: dependency.name,
-        slug: dependency.slug
-      });
+    return newNamesList.map((newNamesItem) => {
+      return {
+        values: newNamesItem,
+        dependencyName: dependency.name,
+        dependencySlug: dependency.slug
+      } as SandboxImportsRef;
     });
   });
-
-  return importsRefsFragments;
+  return flatten(lists);
 };
 
-const getImportsRefsCode = (
-  dependencies: NTUserSandboxSettingsDependency[],
-  importsRefs: SandboxImportsRef[]
-): string => {
+const getImportsRefsCode = (importsRefs: SandboxImportsRef[]): string => {
   return importsRefs
-    .filter(({ names, from }) => {
-      const dependency = dependencies.find((dep) => dep.name === from);
-      return dependency?.slug !== names;
-    })
-    .map(({ names, slug }) => `const ${names} = ${slug};\n`)
+    .map(
+      ({ values, dependencySlug }) => `const ${values} = ${dependencySlug};\n`
+    )
     .join('');
 };
 
-const setupSandbox = (settings: NTUserSandboxSettings = {}): void => {
+const setupSandbox = (settings: NTUserSandboxConfig = {}): void => {
   const { dependencies: dependenciesProvided = [] } = settings;
 
   try {
@@ -102,24 +100,32 @@ const setupSandbox = (settings: NTUserSandboxSettings = {}): void => {
       throw new Error(decodeURLParameter(parameters.error));
     }
 
-    const dependenciesAvailable: NTUserSandboxSettingsDependency[] = [
-      {
-        name: 'react',
-        slug: 'React',
-        pkg: React
-      },
-      {
-        name: 'react-dom',
-        slug: 'ReactDOM',
-        pkg: ReactDOM
-      },
-      {
-        name: 'empanada',
-        slug: 'empanada',
-        pkg: empanada
-      },
+    const codeRaw = decodeURLParameter(parameters.code);
+
+    if (!codeRaw) {
+      throw new Error('No valid source code provided.');
+    }
+
+    const userDependenciesAvailable: NTUserSandboxConfigDependency[] = [
+      { name: 'react', pkg: React },
+      { name: 'react-dom', pkg: ReactDOM },
+      { name: 'empanada', pkg: empanada },
       ...dependenciesProvided
     ];
+
+    // Dependencies available for the sandbox to use but not injected until
+    // explicitely defined in the source code.
+    const dependenciesAvailable: SandboxDependency[] =
+      userDependenciesAvailable.map((dep) => {
+        const nameSlug = dep.name.toUpperCase().replace(/[^A-Za-z0-9]/, '_');
+        return {
+          ...dep,
+          // To prevent the user from using dependencies without explicitely
+          // defining their names and to allow organization packages, a slug name
+          // is used to pass the dependency to the sandbox executor.
+          slug: `__NOXTRON_${nameSlug}__`
+        };
+      });
 
     const importsLines: string[] = JSON.parse(
       decodeURLParameter(parameters.importsLines)
@@ -129,24 +135,19 @@ const setupSandbox = (settings: NTUserSandboxSettings = {}): void => {
       importsLines
     );
 
-    const dependenciesToInject: NTUserSandboxSettingsDependency[] = importsRefs
+    // Dependencies to pass to the sandbox executor.
+    const dependenciesToInject: SandboxDependency[] = uniqBy(
+      importsRefs,
+      (importRef) => importRef.dependencySlug
+    )
       .map((importRef) =>
         dependenciesAvailable.find(
-          (dependency) => dependency.name === importRef.from
+          (dependency) => dependency.name === importRef.dependencyName
         )
       )
-      .filter(Boolean) as NTUserSandboxSettingsDependency[];
+      .filter(Boolean) as SandboxDependency[];
 
-    const importsRefsCode = getImportsRefsCode(
-      dependenciesAvailable,
-      importsRefs
-    );
-    const codeRaw = decodeURLParameter(parameters.code);
-
-    if (!codeRaw) {
-      throw new Error('No valid source code provided.');
-    }
-
+    const importsRefsCode = getImportsRefsCode(importsRefs);
     const dependenciesNames = dependenciesToInject.map(({ slug }) => slug);
     const dependenciesPackages = dependenciesToInject.map(({ pkg }) => pkg);
     const codeWrap = `${importsRefsCode};\n\n${codeRaw};`;
@@ -171,7 +172,7 @@ const setupSandbox = (settings: NTUserSandboxSettings = {}): void => {
     const rootElement = document.querySelector('#root') as HTMLElement;
     rootElement.innerHTML = `
       <div style="overflow-x:auto;">
-        <pre style="margin:0;padding:0;">${errorMessage}</pre>
+        <pre style="margin:0;padding:0 0 20px;">${errorMessage}</pre>
       </div>
     `;
 

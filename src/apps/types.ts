@@ -134,12 +134,11 @@ export interface NTUserConfig {
   };
 }
 
-export interface NTUserSandboxSettingsDependency {
+export interface NTUserSandboxConfigDependency {
   name: string;
-  slug: string;
   pkg: unknown;
 }
 
-export interface NTUserSandboxSettings {
-  dependencies?: NTUserSandboxSettingsDependency[];
+export interface NTUserSandboxConfig {
+  dependencies?: NTUserSandboxConfigDependency[];
 }

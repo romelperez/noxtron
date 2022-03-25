@@ -5,7 +5,7 @@ import { setupSandbox } from '../../../build/cjs/apps/sandbox';
 
 setupSandbox({
   dependencies: [
-    { name: 'lodash/random', slug: 'lodashRandom', pkg: random },
-    { name: 'motion', slug: 'motion', pkg: motion }
+    { name: 'lodash/random', pkg: random },
+    { name: 'motion', pkg: motion }
   ]
 });

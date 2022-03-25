@@ -70,7 +70,7 @@ module.exports = {
     allowedHosts: 'all',
     compress: true,
     host: '127.0.0.1',
-    port: 9000,
+    port: 4000,
     open: BASE_PATH
   }
 };

@@ -119,7 +119,7 @@ const setupSandbox = (settings: NTUserSandboxConfig = {}): void => {
     // explicitely defined in the source code.
     const dependenciesAvailable: SandboxDependency[] =
       userDependenciesAvailable.map((dep) => {
-        const nameSlug = dep.name.toUpperCase().replace(/[^A-Za-z0-9]/, '_');
+        const nameSlug = dep.name.toUpperCase().replace(/[^A-Za-z0-9]/g, '_');
         return {
           ...dep,
           // To prevent the user from using dependencies without explicitely

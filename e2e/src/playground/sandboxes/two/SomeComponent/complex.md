@@ -1,4 +1,6 @@
 ```tsx
+/** @jsx jsx */
+import { jsx } from '@emotion/react';
 import React, { useRef, useEffect } from 'react';
 import { render } from 'react-dom';
 import random from 'lodash/random';
@@ -20,8 +22,8 @@ const App = (): ReactElement => {
   return (
     <h1
       ref={elementRef}
-      style={{
-        padding: '20px',
+      css={{
+        padding: 20,
         width: '60%',
         fontSize: '24px',
         color: 'yellow',

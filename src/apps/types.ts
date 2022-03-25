@@ -97,9 +97,7 @@ export type NTStoreSubscriber = () => void;
 export interface NTStore {
   sandboxSelected: NTSandbox | null;
   sandboxCode: string;
-  sandboxError: string;
   setSandboxCode: (code: string) => void;
-  setSandboxError: (error: string) => void;
   subscribe: (event: NTStoreEvent, subscriber: NTStoreSubscriber) => void;
   unsubscribe: (event: NTStoreEvent, subscriber: NTStoreSubscriber) => void;
   trigger: (event: NTStoreEvent) => void;

@@ -84,9 +84,6 @@ const Preview = (props: PreviewProps): ReactElement => {
         code: codeProcessed,
         error: ''
       });
-
-      // TODO:
-      // store.setSandboxError('');
     } catch (error: unknown) {
       setSandboxSearchParams({
         importsLines: [],
@@ -95,9 +92,6 @@ const Preview = (props: PreviewProps): ReactElement => {
       });
 
       console.error(error);
-
-      // TODO:
-      // store.setSandboxError(String(error));
     }
   }, [store?.sandboxCode]);
 

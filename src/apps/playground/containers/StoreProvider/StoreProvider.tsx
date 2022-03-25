@@ -35,7 +35,6 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
     null
   );
   const [sandboxCode, setSandboxCode] = useState('');
-  const [sandboxError, setSandboxError] = useState('');
 
   const subscriptionsRef = useRef<StoreSubscriptions>({});
 
@@ -70,16 +69,12 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
     const store: NTStore = {
       sandboxSelected,
       sandboxCode,
-      sandboxError,
       setSandboxCode: (newCode: string = '') => {
         if (routerState.optionsControls.type === 'predefined') {
           setSandboxCode(newCode);
         } else {
           routerState.setOptions({ code: newCode });
         }
-      },
-      setSandboxError: (newError: string = '') => {
-        setSandboxError(newError);
       },
       subscribe: (event, subscriber) => {
         subscriptionsRef.current[event] =
@@ -94,7 +89,7 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
       }
     };
     return store;
-  }, [routerState, sandboxes, sandboxSelected, sandboxCode, sandboxError]);
+  }, [routerState, sandboxes, sandboxSelected, sandboxCode]);
 
   useEffect(() => {
     const onResetPredefinedSandboxCode = (): void => {

@@ -64,6 +64,8 @@ const getImportsRefsFragments = (
     }
     // Format: "* as a"
     else if (/^\* as /.test(names)) {
+      // TODO: Check if this is the most compatible/standardized way to
+      // handle this use case.
       newNamesList.push(names.replace('* as ', ''));
     }
     // Format: "a" and errors

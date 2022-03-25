@@ -1,4 +1,7 @@
-import type { NTThemeSettingsMultiplier, NTThemeMultiplier } from '../../types';
+import type {
+  NTThemeSettingsMultiplier,
+  NTThemeMultiplier
+} from '../../../types';
 
 const createThemeMultiplier = (
   settings: NTThemeSettingsMultiplier

@@ -1,4 +1,4 @@
-import type { NTThemeSettingsColor, NTThemeColor } from '../../types';
+import type { NTThemeSettingsColor, NTThemeColor } from '../../../types';
 
 const minMax = (min: number, max: number) => (value: number) =>
   Math.min(max, Math.max(min, value));

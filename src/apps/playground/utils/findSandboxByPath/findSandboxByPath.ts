@@ -1,4 +1,4 @@
-import type { NTSandbox } from '../../types';
+import type { NTSandbox } from '../../../types';
 
 const findSandboxByPath = (
   sandboxes: NTSandbox[],

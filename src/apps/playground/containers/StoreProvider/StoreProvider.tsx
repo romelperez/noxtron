@@ -13,10 +13,10 @@ import type {
   NTStoreSubscriber,
   NTStore
 } from '../../../types';
-import { StoreContext } from '../../../utils/StoreContext';
-import { useRouterState } from '../../../utils/useRouterState';
+import { StoreContext } from '../../utils/StoreContext';
+import { useRouterState } from '../../utils/useRouterState';
 import { useUserConfig } from '../../utils/useUserConfig';
-import { findSandboxByPath } from '../../../utils/findSandboxByPath';
+import { findSandboxByPath } from '../../utils/findSandboxByPath';
 
 type StoreSubscriptions = {
   [event in NTStoreEvent]?: Set<NTStoreSubscriber>;

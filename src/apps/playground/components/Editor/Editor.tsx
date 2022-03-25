@@ -6,11 +6,11 @@ import MonacoEditor from '@monaco-editor/react';
 import debounce from 'lodash/debounce';
 
 import type { NTStore } from '../../../types';
-import { cx } from '../../../utils/cx';
-import { useRouterState } from '../../../utils/useRouterState';
-import { useStore } from '../../../utils/useStore';
+import { cx } from '../../utils/cx';
+import { useRouterState } from '../../utils/useRouterState';
+import { useStore } from '../../utils/useStore';
 import { createStyles } from './Editor.styles';
-import { useMediaQuery } from '../../../utils/useMediaQuery';
+import { useMediaQuery } from '../../utils/useMediaQuery';
 
 interface EditorProps {
   className?: string;

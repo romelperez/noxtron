@@ -1,15 +1,15 @@
 import { useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import type { NTRouterURLOption, NTRouterState } from '../../types';
+import type { NTRouterURLOption, NTRouterState } from '../../../types';
 import {
   NT_ROUTER_URL_OPTIONS_BOOLEANS,
   NT_ROUTER_URL_OPTIONS
-} from '../../constants';
-import { convertLocationSearchToString } from '../convertLocationSearchToString';
-import { convertLocationSearchToObject } from '../convertLocationSearchToObject';
-import { encodeURLParameter } from '../encodeURLParameter';
-import { decodeURLParameter } from '../decodeURLParameter';
+} from '../../../constants';
+import { convertLocationSearchToString } from '../../../utils/convertLocationSearchToString';
+import { convertLocationSearchToObject } from '../../../utils/convertLocationSearchToObject';
+import { encodeURLParameter } from '../../../utils/encodeURLParameter';
+import { decodeURLParameter } from '../../../utils/decodeURLParameter';
 
 // TODO: Prevent user from hiding all panels.
 

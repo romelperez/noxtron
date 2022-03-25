@@ -3,8 +3,8 @@ import { ThemeProvider, Theme } from '@emotion/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import type { NTUserConfig } from '../../../types';
-import { createTheme } from '../../../utils/createTheme';
-import { useRouterState } from '../../../utils/useRouterState';
+import { createTheme } from '../../utils/createTheme';
+import { useRouterState } from '../../utils/useRouterState';
 import { UserConfigProvider } from '../../containers/UserConfigProvider';
 import { useUserConfig } from '../../utils/useUserConfig';
 import { App } from '../../components/App';

@@ -11,9 +11,9 @@ import {
   mdiShareVariant
 } from '@mdi/js';
 
-import { cx } from '../../../utils/cx';
-import { useRouterState } from '../../../utils/useRouterState';
-import { useStore } from '../../../utils/useStore';
+import { cx } from '../../utils/cx';
+import { useRouterState } from '../../utils/useRouterState';
+import { useStore } from '../../utils/useStore';
 import { Button } from '../Button';
 import { createStyles } from './Toolbar.styles';
 

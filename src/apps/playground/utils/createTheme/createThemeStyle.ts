@@ -2,7 +2,7 @@ import type {
   NTThemeSettingsStyle,
   NTThemeStyle,
   NTThemeStyleValue
-} from '../../types';
+} from '../../../types';
 
 const createThemeStyle = (series: NTThemeSettingsStyle): NTThemeStyle => {
   return (indexProvided: number): NTThemeStyleValue => {

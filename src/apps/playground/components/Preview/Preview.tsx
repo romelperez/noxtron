@@ -3,8 +3,8 @@ import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
 import { transform } from '@babel/standalone';
 
-import { cx } from '../../../utils/cx';
-import { useStore } from '../../../utils/useStore';
+import { cx } from '../../utils/cx';
+import { useStore } from '../../utils/useStore';
 import { encodeURLParameter } from '../../../utils/encodeURLParameter';
 import { useUserConfig } from '../../utils/useUserConfig';
 import { createStyles } from './Preview.styles';

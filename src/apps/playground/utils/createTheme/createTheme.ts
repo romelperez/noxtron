@@ -4,7 +4,7 @@ import type {
   NTThemeColorScheme,
   NTTheme,
   NTUserConfigTheme
-} from '../../types';
+} from '../../../types';
 import { createThemeMultiplier } from './createThemeMultiplier';
 import { createThemeStyle } from './createThemeStyle';
 import { createThemeColorPalette } from './createThemeColorPalette';

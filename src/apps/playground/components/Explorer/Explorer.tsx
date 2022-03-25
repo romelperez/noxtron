@@ -3,8 +3,8 @@ import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 
 import type { NTStyles, NTSandbox } from '../../../types';
-import { cx } from '../../../utils/cx';
-import { useRouterState } from '../../../utils/useRouterState';
+import { cx } from '../../utils/cx';
+import { useRouterState } from '../../utils/useRouterState';
 import { useUserConfig } from '../../utils/useUserConfig';
 import { createStyles } from './Explorer.styles';
 

@@ -1,4 +1,4 @@
-import type { NTThemePalette, NTThemeColorScheme } from '../../types';
+import type { NTThemePalette, NTThemeColorScheme } from '../../../types';
 import { createThemeColor } from './createThemeColor';
 
 const createThemeColorPalette = (

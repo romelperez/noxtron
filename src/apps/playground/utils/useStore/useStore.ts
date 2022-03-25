@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import type { NTStore } from '../../types';
+import type { NTStore } from '../../../types';
 import { StoreContext } from '../../utils/StoreContext';
 
 const useStore = (): NTStore => {

@@ -4,7 +4,7 @@ import { ReactElement, useMemo } from 'react';
 import Icon from '@mdi/react';
 import { mdiXml, mdiMenu, mdiChartBubble, mdiInvertColors } from '@mdi/js';
 
-import { useRouterState } from '../../../utils/useRouterState';
+import { useRouterState } from '../../utils/useRouterState';
 import { useUserConfig } from '../../utils/useUserConfig';
 import { Button } from '../Button';
 import { createStyles } from './Header.styles';

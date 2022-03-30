@@ -30,7 +30,7 @@ const App = (): ReactElement => {
     }
 
     setOptions({ explorer, editor, preview, dark });
-  }, []);
+  }, [isMQMediumUp]);
 
   return (
     <Fragment>

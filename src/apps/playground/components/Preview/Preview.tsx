@@ -7,6 +7,7 @@ import { cx } from '../../utils/cx';
 import { useStore } from '../../utils/useStore';
 import { convertLocationSearchToString } from '../../../utils/convertLocationSearchToString';
 import { encodeURLParameter } from '../../../utils/encodeURLParameter';
+import { convertCodeImportsToRefs } from '../../utils/convertCodeImportsToRefs';
 import { useUserConfig } from '../../utils/useUserConfig';
 import { createStyles } from './Preview.styles';
 
@@ -15,24 +16,6 @@ interface SandboxSearchParams {
   code: string;
   error: string;
 }
-
-const convertImportsToRefs = (
-  src: string
-): { code: string; importsLines: string[] } => {
-  const importsLines: string[] = [];
-  const code = src
-    .split(/\r?\n/)
-    .map((line) => {
-      if (/^\s*import\s/.test(line)) {
-        importsLines.push(line.trim());
-        return '__NOXTRON_DEAD_LINE__';
-      }
-      return line;
-    })
-    .filter((line) => line !== '__NOXTRON_DEAD_LINE__')
-    .join('\n');
-  return { code, importsLines };
-};
 
 const sandboxSearchParamsInitial: SandboxSearchParams = {
   importsLines: [],
@@ -51,6 +34,7 @@ const Preview = (props: PreviewProps): ReactElement => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const store = useStore();
 
+  // TODO: Refactor to store to get global visibility on sandbox data.
   const [sandboxSearchParams, setSandboxSearchParams] =
     useState<SandboxSearchParams>(sandboxSearchParamsInitial);
 
@@ -69,11 +53,11 @@ const Preview = (props: PreviewProps): ReactElement => {
 
   useEffect(() => {
     const rawCode = store?.sandboxCode || '';
-    const { importsLines, code: codeWithRefs } = convertImportsToRefs(rawCode);
+    const { importsLines, code: codeWithRefs } =
+      convertCodeImportsToRefs(rawCode);
 
     try {
       const transformation = transform(codeWithRefs, {
-        // TODO: Change filetype according to sandbox type.
         filename: 'sandbox.tsx',
         presets: ['env', 'react', 'typescript']
       });

@@ -96,9 +96,18 @@ export interface NTRouterState {
 
 export interface NTSandbox {
   name: string;
-  language?: string;
   code?: string;
   children?: NTSandbox[];
+}
+
+export interface NTSandboxDependency extends NTUserSandboxConfigDependency {
+  slug: string;
+}
+
+export interface NTSandboxImportRef {
+  values: string;
+  dependencyName: string;
+  dependencySlug: string;
 }
 
 // STORE

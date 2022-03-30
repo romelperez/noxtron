@@ -14,7 +14,6 @@ const config: NTUserConfig = {
       children: [
         {
           name: 'js-sandbox',
-          language: 'javascript',
           code: `import React from 'react';
 import { render } from 'react-dom';
 
@@ -38,7 +37,6 @@ render(<Sandbox />, document.querySelector('#root'));
         },
         {
           name: 'ts-sandbox',
-          language: 'typescript',
           code: `/** @jsx jsx */
 import { jsx } from '@emotion/react';
 import React, { useRef, useEffect, ReactElement } from 'react';

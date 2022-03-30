@@ -1,91 +1,11 @@
 import escape from 'lodash/escape';
 import uniqBy from 'lodash/uniqBy';
 
-import type {
-  NTUserSandboxConfigDependency,
-  NTUserSandboxConfig
-} from '../types';
+import type { NTSandboxDependency, NTUserSandboxConfig } from '../types';
 import { decodeURLParameter } from '../utils/decodeURLParameter';
 import { convertLocationSearchToObject } from '../utils/convertLocationSearchToObject';
-
-interface SandboxDependency extends NTUserSandboxConfigDependency {
-  slug: string;
-}
-
-interface SandboxImportsRef {
-  values: string;
-  dependencyName: string;
-  dependencySlug: string;
-}
-
-const getImportsRefsFragments = (
-  dependencies: SandboxDependency[],
-  importsLines: string[]
-): SandboxImportsRef[] => {
-  return importsLines
-    .map((line) => {
-      // Types not needed.
-      if (line.trim().startsWith('import type ')) {
-        return [];
-      }
-
-      const fragments = line.trim().split(/(import|from)/);
-      const [, , namesProvided, , fromProvided] = fragments;
-      const names = namesProvided.trim().replace(/\s{1,}/g, ' ');
-      const from = fromProvided.trim().replace(/["';]/g, '');
-
-      const dependency = dependencies.find((dep) => dep.name === from);
-
-      if (!dependency) {
-        throw new Error(`Sandbox dependency "${from}" is not available.`);
-      }
-
-      const newNamesList: string[] = [];
-
-      // Format: "{ a, b, c }"
-      if (/^\{.+\}$/.test(names)) {
-        newNamesList.push(names.replace(' as ', ': '));
-      }
-      // Format: "a, { b, c }" and "a, { b as x, c }"
-      else if (/.+\,\s*\{.+\}/.test(names)) {
-        const [nameMainRaw] = names.match(/.+\,\s*\{/) || [];
-        const [nameDes] = names.match(/\{.+\}/) || [];
-        const nameMain = nameMainRaw.replace(/\,\s*\{/, '').trim();
-
-        // Remove if it has already been declared by the function.
-        if (nameMain !== dependency.slug) {
-          newNamesList.push(nameMain);
-        }
-
-        newNamesList.push(nameDes);
-      }
-      // Format: "* as a"
-      else if (/^\* as /.test(names)) {
-        newNamesList.push(names.replace('* as ', ''));
-      }
-      // Format: "a" and errors
-      else {
-        newNamesList.push(names);
-      }
-
-      return newNamesList.map((newNamesItem) => {
-        return {
-          values: newNamesItem,
-          dependencyName: dependency.name,
-          dependencySlug: dependency.slug
-        } as SandboxImportsRef;
-      });
-    })
-    .flat();
-};
-
-const getImportsRefsCode = (importsRefs: SandboxImportsRef[]): string => {
-  return importsRefs
-    .map(
-      ({ values, dependencySlug }) => `const ${values} = ${dependencySlug};\n`
-    )
-    .join('');
-};
+import { getCodeImportsRefsFragments } from './utils/getCodeImportsRefsFragments';
+import { getCodeImportsRefsCode } from './utils/getCodeImportsRefsCode';
 
 const setupSandbox = (settings: NTUserSandboxConfig = {}): void => {
   const { dependencies: userDependenciesAvailable = [] } = settings;
@@ -105,7 +25,7 @@ const setupSandbox = (settings: NTUserSandboxConfig = {}): void => {
 
     // Dependencies available for the sandbox to use but not injected until
     // explicitely defined in the source code.
-    const dependenciesAvailable: SandboxDependency[] =
+    const dependenciesAvailable: NTSandboxDependency[] =
       userDependenciesAvailable.map((dep) => {
         const nameSlug = dep.name.toUpperCase().replace(/[^A-Za-z0-9]/g, '_');
         return {
@@ -120,13 +40,13 @@ const setupSandbox = (settings: NTUserSandboxConfig = {}): void => {
     const importsLines: string[] = JSON.parse(
       decodeURLParameter(parameters.importsLines)
     );
-    const importsRefs = getImportsRefsFragments(
+    const importsRefs = getCodeImportsRefsFragments(
       dependenciesAvailable,
       importsLines
     );
 
     // Dependencies to pass to the sandbox executor.
-    const dependenciesToInject: SandboxDependency[] = uniqBy(
+    const dependenciesToInject: NTSandboxDependency[] = uniqBy(
       importsRefs,
       (importRef) => importRef.dependencySlug
     )
@@ -135,9 +55,9 @@ const setupSandbox = (settings: NTUserSandboxConfig = {}): void => {
           (dependency) => dependency.name === importRef.dependencyName
         )
       )
-      .filter(Boolean) as SandboxDependency[];
+      .filter(Boolean) as NTSandboxDependency[];
 
-    const importsRefsCode = getImportsRefsCode(importsRefs);
+    const importsRefsCode = getCodeImportsRefsCode(importsRefs);
     const dependenciesNames = dependenciesToInject.map(({ slug }) => slug);
     const dependenciesPackages = dependenciesToInject.map(({ pkg }) => pkg);
     const codeWrap = `${importsRefsCode};\n\n${codeRaw};`;

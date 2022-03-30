@@ -46,17 +46,7 @@ const createTheme = (
     typography,
     colors,
     colorScheme,
-    space: createThemeMultiplier(4),
-    breakpoints: {
-      medium: {
-        down: '@media (max-width: 767px)',
-        up: '@media (min-width: 768px)'
-      },
-      large: {
-        down: '@media (max-width: 1023px)',
-        up: '@media (min-width: 1024px)'
-      }
-    }
+    space: createThemeMultiplier(4)
   };
 };
 

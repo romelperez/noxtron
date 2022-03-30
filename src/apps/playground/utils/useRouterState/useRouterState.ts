@@ -1,8 +1,13 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import type { NTRouterURLOption, NTRouterState } from '../../../types';
+import type {
+  NTRouterURLOption,
+  NTRouterState,
+  NTRouterStateOptions
+} from '../../../types';
 import {
+  NT_BREAKPOINTS,
   NT_ROUTER_URL_OPTIONS_BOOLEANS,
   NT_ROUTER_URL_OPTIONS
 } from '../../../constants';
@@ -10,24 +15,30 @@ import { convertLocationSearchToString } from '../../../utils/convertLocationSea
 import { convertLocationSearchToObject } from '../../../utils/convertLocationSearchToObject';
 import { encodeURLParameter } from '../../../utils/encodeURLParameter';
 import { decodeURLParameter } from '../../../utils/decodeURLParameter';
+import { useMediaQuery } from '../useMediaQuery';
 
-// TODO: Prevent user from hiding all panels.
+const getLocationOptions = (): NTRouterStateOptions => {
+  const optionsRaw: Record<string, string | undefined> =
+    convertLocationSearchToObject(window.location.search);
+
+  const options: NTRouterState['options'] = Object.keys(optionsRaw)
+    .filter((key) => (NT_ROUTER_URL_OPTIONS as string[]).includes(key))
+    .map((key) => ({ [key]: optionsRaw[key] || '' }))
+    .reduce(
+      (all, item) => ({ ...all, ...item }),
+      {}
+    ) as NTRouterState['options'];
+
+  return options;
+};
 
 const useRouterState = (): NTRouterState => {
   const location = useLocation();
   const navigate = useNavigate();
+  const isMQMediumUp = useMediaQuery(NT_BREAKPOINTS.medium.up);
 
   return useMemo(() => {
-    const locationOptions: Record<string, string | undefined> =
-      convertLocationSearchToObject(location.search);
-
-    const options: NTRouterState['options'] = Object.keys(locationOptions)
-      .filter((key) => (NT_ROUTER_URL_OPTIONS as string[]).includes(key))
-      .map((key) => ({ [key]: locationOptions[key] || '' }))
-      .reduce(
-        (all, item) => ({ ...all, ...item }),
-        {}
-      ) as NTRouterState['options'];
+    const options = getLocationOptions();
 
     const optionsControls: NTRouterState['optionsControls'] = {
       type: options.type === 'predefined' ? 'predefined' : 'custom',
@@ -35,34 +46,59 @@ const useRouterState = (): NTRouterState => {
       code: decodeURLParameter(options.code || '')
     };
 
-    if (!options.type) {
-      options.type = optionsControls.type;
-    }
-
     const optionsBooleans: NTRouterState['optionsBooleans'] = Object.keys(
-      locationOptions
+      options
     )
       .filter((key) =>
         (NT_ROUTER_URL_OPTIONS_BOOLEANS as string[]).includes(key)
       )
-      .map((key) => ({ [key]: locationOptions[key]?.toLowerCase() === 'true' }))
+      .map((key) => ({
+        [key]: options[key as keyof typeof options]?.toLowerCase() === 'true'
+      }))
       .reduce(
         (all, item) => ({ ...all, ...item }),
         {}
       ) as NTRouterState['optionsBooleans'];
 
-    const setOptions: NTRouterState['setOptions'] = (newOptions) => {
-      if (newOptions.type === 'predefined') {
-        newOptions.code = '';
-      } else if (newOptions.type === 'custom') {
-        newOptions.sandbox = [];
+    const setOptionsDelayed: NTRouterState['setOptions'] = (
+      optionsToUpdate
+    ) => {
+      if (optionsToUpdate.type === 'predefined') {
+        optionsToUpdate.code = '';
+      } else if (optionsToUpdate.type === 'custom') {
+        optionsToUpdate.sandbox = [];
       }
 
-      const newLocationSearch = convertLocationSearchToString({
-        ...options,
-        ...Object.keys(newOptions)
+      if (optionsToUpdate.explorer !== undefined) {
+        if (!isMQMediumUp && optionsToUpdate.explorer) {
+          optionsToUpdate.editor = false;
+          optionsToUpdate.preview = false;
+        }
+      } else if (optionsToUpdate.editor !== undefined) {
+        if (!optionsToUpdate.editor) {
+          optionsToUpdate.preview = true;
+        }
+        if (!isMQMediumUp && optionsToUpdate.editor) {
+          optionsToUpdate.explorer = false;
+          optionsToUpdate.preview = false;
+        }
+      } else if (optionsToUpdate.preview !== undefined) {
+        if (!optionsToUpdate.preview) {
+          optionsToUpdate.editor = true;
+        }
+        if (!isMQMediumUp && optionsToUpdate.preview) {
+          optionsToUpdate.explorer = false;
+          optionsToUpdate.editor = false;
+        }
+      }
+
+      const currentOptions = getLocationOptions();
+
+      const newOptions = {
+        ...currentOptions,
+        ...Object.keys(optionsToUpdate)
           .map((name) => {
-            const rawValue = newOptions[name as NTRouterURLOption];
+            const rawValue = optionsToUpdate[name as NTRouterURLOption];
             let value = '';
 
             switch (name) {
@@ -88,9 +124,29 @@ const useRouterState = (): NTRouterState => {
             return { [name]: value };
           })
           .reduce((all, item) => ({ ...all, ...item }), {})
-      });
+      };
+
+      if (!newOptions.type) {
+        newOptions.type = 'custom';
+      }
+
+      // Always show at least the explorer panel.
+      if (
+        newOptions.explorer === 'false' &&
+        newOptions.editor === 'false' &&
+        newOptions.preview === 'false'
+      ) {
+        newOptions.explorer = 'true';
+      }
+
+      const newLocationSearch = convertLocationSearchToString(newOptions);
 
       navigate(`${location.pathname}?${newLocationSearch}`);
+    };
+
+    const setOptions: NTRouterState['setOptions'] = (optionsToUpdate) => {
+      // If simultaneous calls are made, wait until "window.location" is updated.
+      setTimeout(() => setOptionsDelayed(optionsToUpdate), 0);
     };
 
     const routerState: NTRouterState = Object.freeze({

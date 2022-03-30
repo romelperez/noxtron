@@ -6,6 +6,7 @@ import MonacoEditor from '@monaco-editor/react';
 import debounce from 'lodash/debounce';
 
 import type { NTStore } from '../../../types';
+import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 import { cx } from '../../utils/cx';
 import { useRouterState } from '../../utils/useRouterState';
 import { useStore } from '../../utils/useStore';
@@ -23,7 +24,7 @@ const Editor = (props: EditorProps): ReactElement => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const store = useStore();
-  const isBreakpointMediumUp = useMediaQuery(theme.breakpoints.medium.up);
+  const isBreakpointMediumUp = useMediaQuery(breakpoints.medium.up);
 
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
   const storeRef = useRef<NTStore>(store);

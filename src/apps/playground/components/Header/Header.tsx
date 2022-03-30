@@ -34,6 +34,7 @@ const Header = (props: HeaderProps): ReactElement => {
           <Icon css={styles.optionIcon} path={mdiMenu} />
           <span css={styles.optionLabel}>Explorer</span>
         </Button>
+
         <Button
           css={styles.option}
           title="Toggle editor panel"
@@ -43,6 +44,7 @@ const Header = (props: HeaderProps): ReactElement => {
           <Icon css={styles.optionIcon} path={mdiXml} />
           <span css={styles.optionLabel}>Editor</span>
         </Button>
+
         <Button
           css={styles.option}
           title="Toggle preview panel"
@@ -52,6 +54,7 @@ const Header = (props: HeaderProps): ReactElement => {
           <Icon css={styles.optionIcon} path={mdiChartBubble} />
           <span css={styles.optionLabel}>Preview</span>
         </Button>
+
         <Button
           css={styles.option}
           title="Toggle theme color scheme"

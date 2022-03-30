@@ -1,4 +1,5 @@
 import type { NTTheme, NTStyles } from '../../../types';
+import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 
 const createStyles = (theme: NTTheme): NTStyles => {
   const { primary } = theme.colors;
@@ -86,7 +87,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
       minHeight: 0, // Height overflow issue.
       backgroundColor: bgNeutral,
 
-      [theme.breakpoints.medium.up]: {
+      [breakpoints.medium.up]: {
         flex: 'none',
         width: 300,
         borderRight: line
@@ -104,7 +105,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
       borderBottom: line,
       backgroundColor: bgNeutral,
 
-      [theme.breakpoints.medium.up]: {
+      [breakpoints.medium.up]: {
         display: 'flex'
       }
     },
@@ -118,8 +119,6 @@ const createStyles = (theme: NTTheme): NTStyles => {
     panel: {
       flex: '1 1 50%',
       minWidth: 0, // Width overflow issue.
-      position: 'relative',
-      overflow: 'hidden',
       backgroundColor: bgFocus,
       transition: 'width 200ms ease-out'
     },
@@ -127,7 +126,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
       //
     },
     panelPreview: {
-      [theme.breakpoints.medium.up]: {
+      [breakpoints.medium.up]: {
         '* + &': {
           borderLeft: line
         }
@@ -138,7 +137,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
       borderTop: line,
       backgroundColor: bgNeutral,
 
-      [theme.breakpoints.medium.up]: {
+      [breakpoints.medium.up]: {
         display: 'flex'
       }
     }

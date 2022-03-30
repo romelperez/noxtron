@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx, useTheme, Global } from '@emotion/react';
-import { Fragment, ReactElement, useEffect, useMemo, useRef } from 'react';
+import { Fragment, ReactElement, useEffect, useMemo } from 'react';
 
+import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 import { useRouterState } from '../../utils/useRouterState';
 import { useMediaQuery } from '../../utils/useMediaQuery';
 import { Header } from '../Header';
@@ -16,16 +17,9 @@ const App = (): ReactElement => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { options, optionsBooleans, setOptions } = useRouterState();
-  const isMQMediumUp = useMediaQuery(theme.breakpoints.medium.up);
-
-  const isFirstRenderRef = useRef<boolean | null>(true);
+  const isMQMediumUp = useMediaQuery(breakpoints.medium.up);
 
   useEffect(() => {
-    if (!isFirstRenderRef.current) {
-      isFirstRenderRef.current = false;
-      return;
-    }
-
     const editor = isMQMediumUp ? optionsBooleans.editor ?? true : false;
     const preview = !options.preview ? true : optionsBooleans.preview;
     const dark = !options.dark ? true : optionsBooleans.dark;
@@ -43,13 +37,13 @@ const App = (): ReactElement => {
       <Global styles={styles.global} />
       <div className="app" css={styles.root}>
         <Header css={styles.header} />
-        <main css={styles.main}>
+        <main className="app__content" css={styles.main}>
           {optionsBooleans.explorer && <Explorer css={styles.explorer} />}
-          <div css={styles.workspace}>
-            {(optionsBooleans.editor || optionsBooleans.preview) && (
+          {(optionsBooleans.editor || optionsBooleans.preview) && (
+            <div className="app__workspace" css={styles.workspace}>
               <Fragment>
                 <Toolbar css={styles.toolbar} />
-                <div css={styles.panels}>
+                <div className="app__panels" css={styles.panels}>
                   {optionsBooleans.editor && (
                     <Editor css={[styles.panel, styles.panelEditor]} />
                   )}
@@ -58,8 +52,8 @@ const App = (): ReactElement => {
                   )}
                 </div>
               </Fragment>
-            )}
-          </div>
+            </div>
+          )}
         </main>
         <DesktopFooter css={styles.desktopFooter} />
       </div>

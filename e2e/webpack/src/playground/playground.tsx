@@ -10,10 +10,10 @@ const config: NTUserConfig = {
   sandboxPath: '/play/sandbox.html',
   sandboxes: [
     {
-      name: '@package/random',
+      name: '@org/project',
       children: [
         {
-          name: 'basic',
+          name: 'js-sandbox',
           language: 'javascript',
           code: `import React from 'react';
 import { render } from 'react-dom';
@@ -37,7 +37,7 @@ render(<Sandbox />, document.querySelector('#root'));
 `
         },
         {
-          name: 'complex',
+          name: 'ts-sandbox',
           language: 'typescript',
           code: `/** @jsx jsx */
 import { jsx } from '@emotion/react';

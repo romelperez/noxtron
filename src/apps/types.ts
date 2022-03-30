@@ -1,5 +1,7 @@
-import type { ReactNode, CSSProperties, HTMLProps } from 'react';
+import type { ReactNode, CSSProperties } from 'react';
 import type { CSSObject } from '@emotion/react';
+
+// THEME
 
 export type NTThemeSettingsMultiplier = number;
 export type NTThemeSettingsStyle = CSSProperties[];
@@ -37,20 +39,27 @@ export interface NTTheme {
     primary: NTThemePalette;
     secondary: NTThemePalette;
   };
-  breakpoints: {
-    medium: {
-      down: string;
-      up: string;
-    };
-    large: {
-      down: string;
-      up: string;
-    };
+}
+
+// BREAKPOINTS
+
+export interface NTBreakpoints {
+  medium: {
+    down: string;
+    up: string;
+  };
+  large: {
+    down: string;
+    up: string;
   };
 }
 
+// STYLES
+
 export type NTStyle = CSSObject;
 export type NTStyles = Record<string, NTStyle>;
+
+// ROUTER
 
 export type NTRouterURLOptionControl = 'type' | 'sandbox' | 'code';
 export type NTRouterURLOptionBoolean =
@@ -67,8 +76,13 @@ export type NTRouterStateSetOptionsUpdate = {
   sandbox?: string[];
 } & { code?: string } & { [name in NTRouterURLOptionBoolean]?: boolean };
 
+export type NTRouterStateOptions = Record<
+  NTRouterURLOption,
+  string | undefined
+>;
+
 export interface NTRouterState {
-  options: Record<NTRouterURLOption, string | undefined>;
+  options: NTRouterStateOptions;
   optionsControls: {
     type: 'predefined' | 'custom';
     sandbox: string[];
@@ -78,12 +92,16 @@ export interface NTRouterState {
   setOptions: (newOptions: NTRouterStateSetOptionsUpdate) => void;
 }
 
+// SANDBOX
+
 export interface NTSandbox {
   name: string;
   language?: string;
   code?: string;
   children?: NTSandbox[];
 }
+
+// STORE
 
 export type NTStoreEvent =
   | 'reload'
@@ -103,6 +121,8 @@ export interface NTStore {
   trigger: (event: NTStoreEvent) => void;
 }
 
+// CONFIGS
+
 export type NTUserConfigTheme = Partial<{
   typographyCommons: {
     heading: CSSProperties;
@@ -117,10 +137,10 @@ export type NTUserConfigTheme = Partial<{
 }>;
 
 export interface NTUserConfig {
-  sandboxes: NTSandbox[];
   basePath: string;
   playgroundPath: string;
   sandboxPath: string;
+  sandboxes: NTSandbox[];
   theme?: NTUserConfigTheme;
   title?: {
     mobile?: ReactNode;

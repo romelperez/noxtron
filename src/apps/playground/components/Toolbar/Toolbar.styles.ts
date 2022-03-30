@@ -1,4 +1,5 @@
 import type { NTTheme, NTStyles } from '../../../types';
+import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 
 const createStyles = (theme: NTTheme): NTStyles => {
   return {
@@ -6,7 +7,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
       display: 'block',
       padding: theme.space(4),
 
-      [theme.breakpoints.medium.up]: {
+      [breakpoints.medium.up]: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center'

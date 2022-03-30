@@ -1,4 +1,5 @@
 import type { NTTheme, NTStyles } from '../../../types';
+import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 
 const createStyles = (theme: NTTheme): NTStyles => {
   return {
@@ -17,10 +18,10 @@ const createStyles = (theme: NTTheme): NTStyles => {
       marginRight: theme.space(4),
       padding: `${theme.space(1)}px ${theme.space(2)}px`,
 
-      [theme.breakpoints.medium.up]: {
+      [breakpoints.medium.up]: {
         padding: theme.space(2)
       },
-      [theme.breakpoints.large.up]: {
+      [breakpoints.large.up]: {
         padding: `${theme.space(2)}px ${theme.space(4)}px`
       }
     },
@@ -31,7 +32,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
     optionLabel: {
       display: 'none',
 
-      [theme.breakpoints.medium.up]: {
+      [breakpoints.medium.up]: {
         display: 'inline-block',
         marginLeft: theme.space(2)
       }
@@ -40,18 +41,18 @@ const createStyles = (theme: NTTheme): NTStyles => {
       display: 'block',
       ...theme.typography.heading(2),
 
-      [theme.breakpoints.medium.up]: {
+      [breakpoints.medium.up]: {
         ...theme.typography.heading(0)
       }
     },
     logoMobile: {
-      [theme.breakpoints.medium.up]: {
+      [breakpoints.medium.up]: {
         display: 'none'
       }
     },
     logoDesktop: {
       display: 'none',
-      [theme.breakpoints.medium.up]: {
+      [breakpoints.medium.up]: {
         display: 'inline'
       }
     }

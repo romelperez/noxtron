@@ -28,6 +28,13 @@ module.exports = {
     // Allow dependencies as expressions. Required for @babel/standalone.
     exprContextCritical: false,
     rules: [
+      // Remove the need for Strict ESModules fully specified paths.
+      {
+        test: /\.m?js/,
+        resolve: {
+          fullySpecified: false
+        }
+      },
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
@@ -40,10 +47,6 @@ module.exports = {
             }
           }
         ]
-      },
-      {
-        test: /\.md$/i,
-        use: 'raw-loader'
       }
     ]
   },

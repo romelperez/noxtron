@@ -1,0 +1,22 @@
+{
+  "name": "e2e-webpack",
+  "private": true,
+  "engines": {
+    "node": "^16.14",
+    "npm": "^8.3"
+  },
+  "devDependencies": {
+    "empanada": "^0.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "motion": "^10.7.0",
+    "ts-loader": "^9.2.8",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  },
+  "scripts": {
+    "clean": "rm -rf ./build",
+    "build": "cross-env NODE_ENV=production webpack --progress",
+    "dev": "webpack serve"
+  }
+}

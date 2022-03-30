@@ -1,9 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import escape from 'lodash/escape';
 import uniqBy from 'lodash/uniqBy';
-import flatten from 'lodash/flatten';
-import * as empanada from 'empanada';
 
 import type {
   NTUserSandboxConfigDependency,
@@ -26,62 +22,61 @@ const getImportsRefsFragments = (
   dependencies: SandboxDependency[],
   importsLines: string[]
 ): SandboxImportsRef[] => {
-  const lists = importsLines.map((line) => {
-    // Types not needed.
-    if (line.trim().startsWith('import type ')) {
-      return [];
-    }
-
-    const fragments = line.trim().split(/(import|from)/);
-    const [, , namesProvided, , fromProvided] = fragments;
-    const names = namesProvided.trim().replace(/\s{1,}/g, ' ');
-    const from = fromProvided.trim().replace(/["';]/g, '');
-
-    const dependency = dependencies.find((dep) => dep.name === from);
-
-    if (!dependency) {
-      throw new Error(`Sandbox dependency "${from}" is not available.`);
-    }
-
-    const newNamesList: string[] = [];
-
-    // Format: "{ a, b, c }"
-    if (/^\{.+\}$/.test(names)) {
-      newNamesList.push(names.replace(' as ', ': '));
-    }
-    // Format: "a, { b, c }" and "a, { b as x, c }"
-    else if (/.+\,\s*\{.+\}/.test(names)) {
-      const [nameMainRaw] = names.match(/.+\,\s*\{/) || [];
-      const [nameDes] = names.match(/\{.+\}/) || [];
-      const nameMain = nameMainRaw.replace(/\,\s*\{/, '').trim();
-
-      // Remove if it has already been declared by the function.
-      if (nameMain !== dependency.slug) {
-        newNamesList.push(nameMain);
+  return importsLines
+    .map((line) => {
+      // Types not needed.
+      if (line.trim().startsWith('import type ')) {
+        return [];
       }
 
-      newNamesList.push(nameDes);
-    }
-    // Format: "* as a"
-    else if (/^\* as /.test(names)) {
-      // TODO: Check if this is the most compatible/standardized way to
-      // handle this use case.
-      newNamesList.push(names.replace('* as ', ''));
-    }
-    // Format: "a" and errors
-    else {
-      newNamesList.push(names);
-    }
+      const fragments = line.trim().split(/(import|from)/);
+      const [, , namesProvided, , fromProvided] = fragments;
+      const names = namesProvided.trim().replace(/\s{1,}/g, ' ');
+      const from = fromProvided.trim().replace(/["';]/g, '');
 
-    return newNamesList.map((newNamesItem) => {
-      return {
-        values: newNamesItem,
-        dependencyName: dependency.name,
-        dependencySlug: dependency.slug
-      } as SandboxImportsRef;
-    });
-  });
-  return flatten(lists);
+      const dependency = dependencies.find((dep) => dep.name === from);
+
+      if (!dependency) {
+        throw new Error(`Sandbox dependency "${from}" is not available.`);
+      }
+
+      const newNamesList: string[] = [];
+
+      // Format: "{ a, b, c }"
+      if (/^\{.+\}$/.test(names)) {
+        newNamesList.push(names.replace(' as ', ': '));
+      }
+      // Format: "a, { b, c }" and "a, { b as x, c }"
+      else if (/.+\,\s*\{.+\}/.test(names)) {
+        const [nameMainRaw] = names.match(/.+\,\s*\{/) || [];
+        const [nameDes] = names.match(/\{.+\}/) || [];
+        const nameMain = nameMainRaw.replace(/\,\s*\{/, '').trim();
+
+        // Remove if it has already been declared by the function.
+        if (nameMain !== dependency.slug) {
+          newNamesList.push(nameMain);
+        }
+
+        newNamesList.push(nameDes);
+      }
+      // Format: "* as a"
+      else if (/^\* as /.test(names)) {
+        newNamesList.push(names.replace('* as ', ''));
+      }
+      // Format: "a" and errors
+      else {
+        newNamesList.push(names);
+      }
+
+      return newNamesList.map((newNamesItem) => {
+        return {
+          values: newNamesItem,
+          dependencyName: dependency.name,
+          dependencySlug: dependency.slug
+        } as SandboxImportsRef;
+      });
+    })
+    .flat();
 };
 
 const getImportsRefsCode = (importsRefs: SandboxImportsRef[]): string => {
@@ -93,7 +88,7 @@ const getImportsRefsCode = (importsRefs: SandboxImportsRef[]): string => {
 };
 
 const setupSandbox = (settings: NTUserSandboxConfig = {}): void => {
-  const { dependencies: dependenciesProvided = [] } = settings;
+  const { dependencies: userDependenciesAvailable = [] } = settings;
 
   try {
     const parameters = convertLocationSearchToObject(window.location.search);
@@ -107,13 +102,6 @@ const setupSandbox = (settings: NTUserSandboxConfig = {}): void => {
     if (!codeRaw) {
       throw new Error('No valid source code provided.');
     }
-
-    const userDependenciesAvailable: NTUserSandboxConfigDependency[] = [
-      { name: 'react', pkg: React },
-      { name: 'react-dom', pkg: ReactDOM },
-      { name: 'empanada', pkg: empanada },
-      ...dependenciesProvided
-    ];
 
     // Dependencies available for the sandbox to use but not injected until
     // explicitely defined in the source code.
@@ -171,8 +159,7 @@ const setupSandbox = (settings: NTUserSandboxConfig = {}): void => {
         ? escape(String(error))
         : 'ERROR: Source code processing error.';
 
-    const rootElement = document.querySelector('#root') as HTMLElement;
-    rootElement.innerHTML = `
+    document.body.innerHTML = `
       <div style="overflow-x:auto;">
         <pre style="margin:0;padding:0 0 20px;">${errorMessage}</pre>
       </div>

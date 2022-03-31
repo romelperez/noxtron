@@ -5,7 +5,7 @@ import random from 'lodash/random';
 import * as emotionReact from '@emotion/react';
 import * as motion from 'motion';
 
-import { setupSandbox } from 'noxtron/build/sandbox';
+import { setupSandbox } from '../../../../build/sandbox';
 
 setupSandbox({
   dependencies: [

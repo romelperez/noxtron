@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import type { NTUserConfig } from 'noxtron';
-import { Playground } from 'noxtron/build/playground';
+import type { NTUserConfig } from '../../../../';
+import { Playground } from '../../../..//build/playground';
 
 const config: NTUserConfig = {
   basePath: '/play',
@@ -110,8 +110,8 @@ render(<Sandbox />, document.querySelector('#root'));
   theme: {
     typographyCommons: {
       heading: {
-        fontFamily: 'Jura, sans-serif',
-        fontWeight: '700',
+        fontFamily: '"Chakra Petch", sans-serif',
+        fontWeight: '600',
         textTransform: 'uppercase'
       },
       body: {
@@ -119,7 +119,7 @@ render(<Sandbox />, document.querySelector('#root'));
         fontWeight: '400'
       },
       cta: {
-        fontFamily: 'Jura, sans-serif',
+        fontFamily: '"Chakra Petch", sans-serif',
         fontWeight: '400',
         textTransform: 'uppercase'
       },

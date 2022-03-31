@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
-import { transform } from '@babel/standalone';
 
 import { cx } from '../../utils/cx';
+import { getBabel } from '../../utils/getBabel';
 import { useStore } from '../../utils/useStore';
 import { convertLocationSearchToString } from '../../../utils/convertLocationSearchToString';
 import { encodeURLParameter } from '../../../utils/encodeURLParameter';
@@ -34,7 +34,6 @@ const Preview = (props: PreviewProps): ReactElement => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const store = useStore();
 
-  // TODO: Refactor to store to get global visibility on sandbox data.
   const [sandboxSearchParams, setSandboxSearchParams] =
     useState<SandboxSearchParams>(sandboxSearchParamsInitial);
 
@@ -57,7 +56,8 @@ const Preview = (props: PreviewProps): ReactElement => {
       convertCodeImportsToRefs(rawCode);
 
     try {
-      const transformation = transform(codeWithRefs, {
+      const Babel = getBabel();
+      const transformation = Babel.transform(codeWithRefs, {
         filename: 'sandbox.tsx',
         presets: ['env', 'react', 'typescript']
       });

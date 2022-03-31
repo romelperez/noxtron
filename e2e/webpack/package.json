@@ -6,6 +6,7 @@
     "npm": ">=8.3"
   },
   "devDependencies": {
+    "copy-webpack-plugin": "^10.2.4",
     "empanada": "^0.2.2",
     "html-webpack-plugin": "^5.5.0",
     "motion": "^10.7.0",
@@ -17,6 +18,7 @@
   "scripts": {
     "clean": "rm -rf ./build",
     "build": "cross-env NODE_ENV=production webpack --progress",
-    "dev": "webpack serve"
+    "dev": "webpack serve",
+    "start": "http-server ./build --port 4000 --gzip true -o /play"
   }
 }

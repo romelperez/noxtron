@@ -1,10 +1,12 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const { NODE_ENV } = process.env;
 
 const CWD = __dirname;
 const TSCONFIG_FILE_PATH = path.join(CWD, 'tsconfig.json');
+const REPO_PATH = path.join(CWD, '../../');
 const SRC_PATH = path.join(CWD, 'src');
 const BUILD_PATH = path.join(CWD, 'build');
 
@@ -25,8 +27,6 @@ module.exports = {
     clean: true
   },
   module: {
-    // Allow dependencies as expressions. Required for @babel/standalone.
-    exprContextCritical: false,
     rules: [
       {
         test: /\.tsx?$/,
@@ -55,11 +55,19 @@ module.exports = {
       template: path.join(SRC_PATH, 'sandbox/sandbox.html'),
       filename: path.join(BUILD_PATH, SANDBOX_PATH),
       chunks: ['sandbox']
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.join(REPO_PATH, 'static'),
+          to: BUILD_PATH
+        }
+      ]
     })
   ],
   devServer: {
     static: {
-      publicPath: BASE_PATH,
+      publicPath: '/',
       directory: BUILD_PATH,
       watch: true
     },

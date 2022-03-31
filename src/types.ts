@@ -149,6 +149,7 @@ export interface NTUserConfig {
   basePath: string;
   playgroundPath: string;
   sandboxPath: string;
+  language?: 'javascript' | 'typescript';
   sandboxes: NTSandbox[];
   theme?: NTUserConfigTheme;
   title?: {

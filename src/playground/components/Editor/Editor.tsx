@@ -8,10 +8,11 @@ import debounce from 'lodash/debounce';
 import type { NTStore } from '../../../types';
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 import { cx } from '../../utils/cx';
+import { useMediaQuery } from '../../utils/useMediaQuery';
 import { useRouterState } from '../../utils/useRouterState';
+import { useUserConfig } from '../../utils/useUserConfig';
 import { useStore } from '../../utils/useStore';
 import { createStyles } from './Editor.styles';
-import { useMediaQuery } from '../../utils/useMediaQuery';
 
 interface EditorProps {
   className?: string;
@@ -23,6 +24,7 @@ const Editor = (props: EditorProps): ReactElement => {
   const routerState = useRouterState();
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const config = useUserConfig();
   const store = useStore();
   const isBreakpointMediumUp = useMediaQuery(breakpoints.medium.up);
 
@@ -129,7 +131,10 @@ const Editor = (props: EditorProps): ReactElement => {
         width="100%"
         height="100%"
         theme="vs-dark"
-        defaultLanguage="typescript"
+        defaultPath={
+          config.language === 'javascript' ? 'sandbox.jsx' : 'sandbox.tsx'
+        }
+        defaultLanguage={config.language}
         onMount={onEditorMount}
         onChange={onEditorChange}
       />

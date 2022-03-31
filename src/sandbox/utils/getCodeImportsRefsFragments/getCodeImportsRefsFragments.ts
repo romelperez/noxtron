@@ -43,6 +43,8 @@ const getCodeImportsRefsFragments = (
       }
       // Format: "* as a"
       else if (/^\* as /.test(names)) {
+        // TODO: Process import.
+        // Example: const tslib = require('tslib'); const react = (0, tslib.__importStar)(require('react'));
         newNamesList.push(names.replace('* as ', ''));
       }
       // Format: "a" and errors

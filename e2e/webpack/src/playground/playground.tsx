@@ -8,6 +8,7 @@ const config: NTUserConfig = {
   basePath: '/play',
   playgroundPath: '/play',
   sandboxPath: '/play/sandbox.html',
+  language: 'typescript',
   sandboxes: [
     {
       name: '@org/project',
@@ -110,8 +111,8 @@ render(<Sandbox />, document.querySelector('#root'));
   theme: {
     typographyCommons: {
       heading: {
-        fontFamily: '"Chakra Petch", sans-serif',
-        fontWeight: '600',
+        fontFamily: 'Jura, sans-serif',
+        fontWeight: '700',
         textTransform: 'uppercase'
       },
       body: {
@@ -119,7 +120,7 @@ render(<Sandbox />, document.querySelector('#root'));
         fontWeight: '400'
       },
       cta: {
-        fontFamily: '"Chakra Petch", sans-serif',
+        fontFamily: 'Jura, sans-serif',
         fontWeight: '400',
         textTransform: 'uppercase'
       },

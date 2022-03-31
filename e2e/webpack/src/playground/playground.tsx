@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import type { NTUserConfig } from '../../../../build/cjs/apps';
-import { Playground } from '../../../../build/cjs/apps/playground';
+import type { NTUserConfig } from 'noxtron';
+import { Playground } from 'noxtron/build/playground';
 
 const config: NTUserConfig = {
   basePath: '/play',
@@ -13,7 +13,7 @@ const config: NTUserConfig = {
       name: '@org/project',
       children: [
         {
-          name: 'js-sandbox',
+          name: 'basic',
           code: `import React from 'react';
 import { render } from 'react-dom';
 
@@ -36,7 +36,7 @@ render(<Sandbox />, document.querySelector('#root'));
 `
         },
         {
-          name: 'ts-sandbox',
+          name: 'complex',
           code: `/** @jsx jsx */
 import { jsx } from '@emotion/react';
 import React, { useRef, useEffect, ReactElement } from 'react';

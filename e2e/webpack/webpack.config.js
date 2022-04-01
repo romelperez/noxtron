@@ -16,15 +16,23 @@ const SANDBOX_PATH = `${BASE_PATH}/sandbox.html`;
 
 module.exports = {
   mode: NODE_ENV || 'development',
+  devtool: false,
   entry: {
     playground: path.join(SRC_PATH, 'playground/playground.tsx'),
-    sandbox: path.join(SRC_PATH, 'sandbox/sandbox.tsx')
+    sandbox: path.join(SRC_PATH, 'sandbox/sandbox.tsx'),
+
+    // Monaco editor web workers.
+    'ts.worker': 'monaco-editor/esm/vs/language/typescript/ts.worker',
+    'editor.worker': 'monaco-editor/esm/vs/editor/editor.worker.js'
   },
   output: {
     path: path.join(BUILD_PATH, BASE_PATH),
     filename: '[name].js',
     publicPath: BASE_PATH,
     clean: true
+  },
+  resolve: {
+    extensions: ['.js', '.ts']
   },
   module: {
     rules: [
@@ -40,6 +48,14 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.txt$/i,
+        use: 'raw-loader'
       }
     ]
   },

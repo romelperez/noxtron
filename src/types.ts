@@ -151,6 +151,7 @@ export interface NTUserConfig {
   sandboxPath: string;
   language?: 'javascript' | 'typescript';
   sandboxes: NTSandbox[];
+  types: string;
   theme?: NTUserConfigTheme;
   title?: {
     mobile?: ReactNode;

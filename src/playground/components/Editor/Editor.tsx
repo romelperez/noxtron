@@ -2,7 +2,6 @@
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useEffect, useMemo, useRef, useCallback } from 'react';
 import * as monaco from 'monaco-editor';
-import MonacoEditor from '@monaco-editor/react';
 import debounce from 'lodash/debounce';
 
 import type { NTStore } from '../../../types';
@@ -28,57 +27,56 @@ const Editor = (props: EditorProps): ReactElement => {
   const store = useStore();
   const isBreakpointMediumUp = useMediaQuery(breakpoints.medium.up);
 
+  const editorElementRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
   const storeRef = useRef<NTStore>(store);
+  const onEditorChangeRef = useRef<monaco.IDisposable | null>(null);
 
   storeRef.current = store;
 
-  const onEditorMount = useCallback(
-    (newEditorRef: monaco.editor.IStandaloneCodeEditor) => {
-      editorRef.current = newEditorRef;
+  useEffect(() => {
+    const editorElement = editorElementRef.current as HTMLDivElement;
+    const codeInitial =
+      routerState.optionsControls.type === 'predefined'
+        ? storeRef.current.sandboxSelected?.code || ''
+        : routerState.optionsControls.code;
+    const { fontFamily, fontSize, fontWeight } = theme.typography.code(1);
 
-      const { fontFamily, fontSize, fontWeight } = theme.typography.code(1);
+    editorRef.current = monaco.editor.create(editorElement, {
+      language: config.language,
+      theme: theme.colorScheme === 'dark' ? 'vs-dark' : 'vs',
+      value: codeInitial,
+      readOnly: !isBreakpointMediumUp,
+      domReadOnly: !isBreakpointMediumUp,
+      tabSize: 2,
+      showDeprecated: true,
+      showUnused: true,
+      scrollBeyondLastLine: false,
+      autoDetectHighContrast: false,
+      padding: {
+        top: theme.space(4),
+        bottom: theme.space(4)
+      },
+      fontFamily,
+      // Assuming fontSize is in pixels, remove the unit name and convert to number.
+      fontSize: fontSize
+        ? Number(String(fontSize).replace(/[^\d]/g, ''))
+        : undefined,
+      fontWeight: fontWeight ? String(fontWeight) : undefined
+    });
 
-      newEditorRef.updateOptions({
-        readOnly: !isBreakpointMediumUp,
-        domReadOnly: !isBreakpointMediumUp,
-        tabSize: 2,
-        showDeprecated: true,
-        showUnused: true,
-        scrollBeyondLastLine: false,
-        autoDetectHighContrast: false,
-        padding: {
-          top: theme.space(4),
-          bottom: theme.space(4)
-        },
-        fontFamily,
-        // Assuming fontSize is in pixels, remove the unit name and convert to number.
-        fontSize: fontSize
-          ? Number(String(fontSize).replace(/[^\d]/g, ''))
-          : undefined,
-        fontWeight: fontWeight ? String(fontWeight) : undefined
-      });
+    onEditorChangeRef.current = editorRef.current.onDidChangeModelContent(
+      debounce(() => {
+        const code = editorRef.current?.getValue() || '';
+        storeRef.current.setSandboxCode(code);
+      }, 500)
+    );
 
-      const initialCode =
-        routerState.optionsControls.type === 'predefined'
-          ? storeRef.current.sandboxSelected?.code || ''
-          : routerState.optionsControls.code;
-      newEditorRef.setValue(initialCode);
-
-      editorRef.current?.updateOptions({
-        theme: theme.colorScheme === 'dark' ? 'vs-dark' : 'vs'
-      });
-    },
-    []
-  );
-
-  const onEditorChange = useCallback(
-    debounce(() => {
-      const code = editorRef.current?.getValue() || '';
-      storeRef.current.setSandboxCode(code);
-    }, 500),
-    []
-  );
+    return () => {
+      editorRef.current?.dispose();
+      onEditorChangeRef.current?.dispose();
+    };
+  }, []);
 
   useEffect(() => {
     editorRef.current?.setValue(store.sandboxSelected?.code || '');
@@ -125,18 +123,10 @@ const Editor = (props: EditorProps): ReactElement => {
 
   return (
     <div className={cx('editor', className)} css={styles.root}>
-      <MonacoEditor
+      <div
+        ref={editorElementRef}
         className="editor__monaco-editor"
         css={styles.editor}
-        width="100%"
-        height="100%"
-        theme="vs-dark"
-        defaultPath={
-          config.language === 'javascript' ? 'sandbox.jsx' : 'sandbox.tsx'
-        }
-        defaultLanguage={config.language}
-        onMount={onEditorMount}
-        onChange={onEditorChange}
       />
     </div>
   );

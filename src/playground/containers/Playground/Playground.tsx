@@ -1,6 +1,7 @@
 import React, { ReactElement, useMemo } from 'react';
 import { ThemeProvider, Theme } from '@emotion/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import * as monaco from 'monaco-editor';
 
 import type { NTUserConfig } from '../../../types';
 import { createTheme } from '../../utils/createTheme';
@@ -34,7 +35,48 @@ interface PlaygroundProps {
 
 const Playground = (props: PlaygroundProps): ReactElement => {
   const { config } = props;
-  const { basePath } = config;
+  const { basePath, types = '' } = config;
+
+  // @ts-ignore
+  window.MonacoEnvironment = {
+    getWorkerUrl: (moduleId: string, label: string) => {
+      const basePathPrefix = basePath.endsWith('/') ? basePath : `${basePath}/`;
+      if (label === 'typescript' || label === 'javascript') {
+        return `${basePathPrefix}ts.worker.js`;
+      }
+      return `${basePathPrefix}editor.worker.js`;
+    }
+  };
+
+  monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+    noSemanticValidation: true,
+    noSyntaxValidation: false
+  });
+
+  monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
+    module: monaco.languages.typescript.ModuleKind.ESNext,
+    moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
+    target: monaco.languages.typescript.ScriptTarget.ES2015,
+    jsx: monaco.languages.typescript.JsxEmit.React,
+    jsxFactory: 'React.createElement',
+    esModuleInterop: true,
+    allowNonTsExtensions: true,
+    allowSyntheticDefaultImports: true
+  });
+
+  const typesFileUri = 'ts:filename/global.d.ts';
+  const typesFileSrc = types;
+
+  monaco.languages.typescript.javascriptDefaults.addExtraLib(
+    typesFileSrc,
+    typesFileUri
+  );
+
+  monaco.editor.createModel(
+    typesFileSrc,
+    'typescript',
+    monaco.Uri.parse(typesFileUri)
+  );
 
   return (
     <BrowserRouter basename={basePath}>

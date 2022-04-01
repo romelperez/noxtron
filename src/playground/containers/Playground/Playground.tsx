@@ -36,11 +36,11 @@ interface PlaygroundProps {
 const Playground = (props: PlaygroundProps): ReactElement => {
   const { config } = props;
   const { basePath, typeDefinitions = [] } = config;
+  const basePathPrefix = basePath.endsWith('/') ? basePath : `${basePath}/`;
 
   // @ts-ignore
   window.MonacoEnvironment = {
     getWorkerUrl: (moduleId: string, label: string) => {
-      const basePathPrefix = basePath.endsWith('/') ? basePath : `${basePath}/`;
       if (label === 'typescript' || label === 'javascript') {
         return `${basePathPrefix}ts.worker.js`;
       }

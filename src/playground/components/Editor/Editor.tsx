@@ -27,6 +27,7 @@ const Editor = (props: EditorProps): ReactElement => {
   const store = useStore();
   const isBreakpointMediumUp = useMediaQuery(breakpoints.medium.up);
 
+  const editorContainerElementRef = useRef<HTMLDivElement>(null);
   const editorElementRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
   const storeRef = useRef<NTStore>(store);
@@ -45,6 +46,7 @@ const Editor = (props: EditorProps): ReactElement => {
     const filename = monaco.Uri.parse(
       language === 'typescript' ? 'sandbox.tsx' : 'sandbox.jsx'
     );
+    // TODO: Move model creation to provider.
     const model = monaco.editor.createModel(codeInitial, language, filename);
 
     editorRef.current = monaco.editor.create(editorElement, {
@@ -57,6 +59,7 @@ const Editor = (props: EditorProps): ReactElement => {
       showUnused: true,
       scrollBeyondLastLine: false,
       autoDetectHighContrast: false,
+      rulers: [80],
       padding: {
         top: theme.space(4),
         bottom: theme.space(4)
@@ -76,9 +79,21 @@ const Editor = (props: EditorProps): ReactElement => {
       }, 500)
     );
 
+    const onResize = debounce((): void => {
+      const containerElement =
+        editorContainerElementRef.current as HTMLDivElement;
+      editorRef.current?.layout({
+        width: containerElement.offsetWidth,
+        height: containerElement.offsetHeight
+      });
+    }, 50);
+
+    window.addEventListener('resize', onResize);
+
     return () => {
       editorRef.current?.dispose();
       onEditorChangeRef.current?.dispose();
+      window.removeEventListener('resize', onResize);
     };
   }, []);
 
@@ -126,7 +141,11 @@ const Editor = (props: EditorProps): ReactElement => {
   }, [routerState, store]);
 
   return (
-    <div className={cx('editor', className)} css={styles.root}>
+    <div
+      ref={editorContainerElementRef}
+      className={cx('editor', className)}
+      css={styles.root}
+    >
       <div
         ref={editorElementRef}
         className="editor__monaco-editor"

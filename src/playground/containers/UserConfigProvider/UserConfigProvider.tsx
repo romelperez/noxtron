@@ -14,8 +14,8 @@ const UserConfigProvider = (props: StoreProviderProps): ReactElement => {
       playgroundPath: '/',
       sandboxPath: '/sandbox/',
       language: 'javascript',
+      typeDefinitions: [],
       sandboxes: [],
-      types: '',
       ...(props.config as Partial<NTUserConfig>),
       basePath: (props.config.basePath || '').replace(/\/$/, '') || '/'
     };

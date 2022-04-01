@@ -23,7 +23,7 @@ const Editor = (props: EditorProps): ReactElement => {
   const routerState = useRouterState();
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const config = useUserConfig();
+  const { language } = useUserConfig();
   const store = useStore();
   const isBreakpointMediumUp = useMediaQuery(breakpoints.medium.up);
 
@@ -42,10 +42,14 @@ const Editor = (props: EditorProps): ReactElement => {
         : routerState.optionsControls.code;
     const { fontFamily, fontSize, fontWeight } = theme.typography.code(1);
 
+    const filename = monaco.Uri.parse(
+      language === 'typescript' ? 'sandbox.tsx' : 'sandbox.jsx'
+    );
+    const model = monaco.editor.createModel(codeInitial, language, filename);
+
     editorRef.current = monaco.editor.create(editorElement, {
-      language: config.language,
+      model,
       theme: theme.colorScheme === 'dark' ? 'vs-dark' : 'vs',
-      value: codeInitial,
       readOnly: !isBreakpointMediumUp,
       domReadOnly: !isBreakpointMediumUp,
       tabSize: 2,

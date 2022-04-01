@@ -145,13 +145,18 @@ export type NTUserConfigTheme = Partial<{
   }>;
 }>;
 
+export interface NTUserConfigTypeDefinition {
+  filename: string;
+  code: string;
+}
+
 export interface NTUserConfig {
   basePath: string;
   playgroundPath: string;
   sandboxPath: string;
-  language?: 'javascript' | 'typescript';
+  language: 'javascript' | 'typescript';
+  typeDefinitions: NTUserConfigTypeDefinition[];
   sandboxes: NTSandbox[];
-  types: string;
   theme?: NTUserConfigTheme;
   title?: {
     mobile?: ReactNode;

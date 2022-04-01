@@ -35,7 +35,7 @@ interface PlaygroundProps {
 
 const Playground = (props: PlaygroundProps): ReactElement => {
   const { config } = props;
-  const { basePath, types = '' } = config;
+  const { basePath, typeDefinitions = [] } = config;
 
   // @ts-ignore
   window.MonacoEnvironment = {
@@ -48,35 +48,35 @@ const Playground = (props: PlaygroundProps): ReactElement => {
     }
   };
 
-  monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
+  const { typescript } = monaco.languages;
+
+  // Disable type checking and syntax validation before adding type definitions.
+  typescript.typescriptDefaults.setDiagnosticsOptions({
     noSemanticValidation: true,
-    noSyntaxValidation: false
+    noSyntaxValidation: true
   });
 
-  monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
-    module: monaco.languages.typescript.ModuleKind.ESNext,
-    moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
-    target: monaco.languages.typescript.ScriptTarget.ES2015,
-    jsx: monaco.languages.typescript.JsxEmit.React,
-    jsxFactory: 'React.createElement',
+  typescript.typescriptDefaults.setCompilerOptions({
+    module: typescript.ModuleKind.ESNext,
+    moduleResolution: typescript.ModuleResolutionKind.NodeJs,
+    target: typescript.ScriptTarget.ES2015,
+    jsx: typescript.JsxEmit.React,
     esModuleInterop: true,
     allowNonTsExtensions: true,
-    allowSyntheticDefaultImports: true
+    allowSyntheticDefaultImports: true,
+    baseUrl: 'file:///',
+    paths: typescript.typescriptDefaults.getCompilerOptions().paths
   });
 
-  const typesFileUri = 'ts:filename/global.d.ts';
-  const typesFileSrc = types;
+  typeDefinitions.forEach(({ filename, code }) => {
+    typescript.typescriptDefaults.addExtraLib(code, filename);
+  });
 
-  monaco.languages.typescript.javascriptDefaults.addExtraLib(
-    typesFileSrc,
-    typesFileUri
-  );
-
-  monaco.editor.createModel(
-    typesFileSrc,
-    'typescript',
-    monaco.Uri.parse(typesFileUri)
-  );
+  // Re-enable type checking and syntax validation.
+  typescript.typescriptDefaults.setDiagnosticsOptions({
+    noSemanticValidation: false,
+    noSyntaxValidation: false
+  });
 
   return (
     <BrowserRouter basename={basePath}>

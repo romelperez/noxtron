@@ -9,78 +9,39 @@ const config: NTUserConfig = {
   playgroundPath: '/play',
   sandboxPath: '/play/sandbox.html',
   language: 'typescript',
+  typeDefinitions: [
+    {
+      filename: 'file:///node_modules/csstype/index.d.ts',
+      code: require('!raw-loader?esModule=false!csstype/index.d.ts')
+    },
+    {
+      filename: 'file:///node_modules/@types/prop-types/index.d.ts',
+      code: require('!raw-loader?esModule=false!@types/prop-types/index.d.ts')
+    },
+    {
+      filename: 'file:///node_modules/@types/react/index.d.ts',
+      code: require('!raw-loader?esModule=false!@types/react/index.d.ts')
+    },
+    {
+      filename: 'file:///node_modules/@types/react-dom/index.d.ts',
+      code: require('!raw-loader?esModule=false!@types/react-dom/index.d.ts')
+    },
+    {
+      filename: 'file:///node_modules/empanada/index.d.ts',
+      code: require('!raw-loader?esModule=false!./types/empanada.txt')
+    }
+  ],
   sandboxes: [
     {
       name: '@org/project',
       children: [
         {
           name: 'basic',
-          code: `import React from 'react';
-import { render } from 'react-dom';
-
-const Sandbox = () => {
-  return (
-    <div
-      className='sandbox'
-      style={{
-        padding: 20,
-        color: '#ee1',
-        background: '#171717'
-      }}
-    >
-      <h1>JavaScript Sandbox</h1>
-    </div>
-  );
-};
-
-render(<Sandbox />, document.querySelector('#root'));
-`
+          code: require('!raw-loader?esModule=false!./sandboxes/basic.txt')
         },
         {
           name: 'complex',
-          code: `/** @jsx jsx */
-import { jsx } from '@emotion/react';
-import React, { useRef, useEffect, ReactElement } from 'react';
-import { render } from 'react-dom';
-import random from 'lodash/random';
-import * as empanada from 'empanada';
-import { animate } from 'motion';
-
-const Sandbox = (): ReactElement => {
-  const elementRef = useRef();
-  const words = empanada.createRandomWords(random(5, 30));
-
-  useEffect(() => {
-    animate(
-      elementRef.current,
-      { x: [0, 50] },
-      { repeat: Infinity, direction: 'alternate', duration: 1 }
-    );
-  }, []);
-
-  return (
-    <div
-      ref={elementRef}
-      className='sandbox'
-      css={{
-        padding: 20,
-        width: '60%',
-        color: '#ee1',
-        background: '#171717'
-      }}
-    >
-      <h1>TypeScript Sandbox</h1>
-      <p
-        css={{ fontSize: '24px' }}
-      >
-        {words}
-      </p>
-    </div>
-  );
-};
-
-render(<Sandbox />, document.querySelector('#root'));
-`
+          code: require('!raw-loader?esModule=false!./sandboxes/complex.txt')
         }
       ]
     }

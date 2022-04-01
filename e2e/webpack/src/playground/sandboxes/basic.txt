@@ -1,0 +1,19 @@
+import React from 'react';
+import { render } from 'react-dom';
+
+const Sandbox = () => {
+  return (
+    <div
+      className='sandbox'
+      style={{
+        padding: 20,
+        color: '#ee1',
+        background: '#171717'
+      }}
+    >
+      <h1>JavaScript Sandbox</h1>
+    </div>
+  );
+};
+
+render(<Sandbox />, document.querySelector('#root'));

@@ -1,0 +1,20 @@
+declare module 'empanada/constants' {
+  export const LOREM_IPSUM = string;
+}
+declare module 'empanada/createRandomEmail/createRandomEmail' {
+  const createRandomEmail: () => string;
+  export { createRandomEmail };
+}
+declare module 'empanada/createRandomWords/createRandomWords' {
+  const createRandomWords: (length?: number) => string;
+  export { createRandomWords };
+}
+declare module 'empanada/index' {
+  export * from 'empanada/constants';
+  export * from 'empanada/createRandomWords/createRandomWords';
+  export * from 'empanada/createRandomEmail/createRandomEmail';
+}
+declare module 'empanada' {
+  import main = require('empanada/index');
+  export = main;
+}

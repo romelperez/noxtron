@@ -1,34 +1,13 @@
-import React, { ReactElement, useMemo } from 'react';
-import { ThemeProvider, Theme } from '@emotion/react';
+import React, { ReactElement } from 'react';
 import * as monaco from 'monaco-editor';
 
 import type { NTPlaygroundSettings } from '../../../types';
-import { createTheme } from '../../utils/createTheme';
-import { useRouterState } from '../../utils/useRouterState';
 import { PlaygroundSettingsProvider } from '../PlaygroundSettingsProvider';
-import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 import { RouterProvider } from '../RouterProvider';
 import { RouterStateProvider } from '../RouterStateProvider';
+import { ThemeProvider } from '../ThemeProvider';
 import { StoreProvider } from '../StoreProvider';
 import { App } from '../../components/App';
-
-const PlaygroundRouted = (): ReactElement => {
-  const routerState = useRouterState();
-  const settings = usePlaygroundSettings();
-
-  const theme: Theme = useMemo(() => {
-    const colorScheme = routerState.optionsBooleans.dark ? 'dark' : 'light';
-    return createTheme(colorScheme, settings.theme);
-  }, [routerState.optionsBooleans.dark, settings.theme]);
-
-  return (
-    <ThemeProvider theme={theme}>
-      <StoreProvider>
-        <App />
-      </StoreProvider>
-    </ThemeProvider>
-  );
-};
 
 interface PlaygroundProps {
   settings: NTPlaygroundSettings;
@@ -83,7 +62,11 @@ const Playground = (props: PlaygroundProps): ReactElement => {
     <PlaygroundSettingsProvider settings={settings}>
       <RouterProvider>
         <RouterStateProvider>
-          <PlaygroundRouted />
+          <ThemeProvider>
+            <StoreProvider>
+              <App />
+            </StoreProvider>
+          </ThemeProvider>
         </RouterStateProvider>
       </RouterProvider>
     </PlaygroundSettingsProvider>

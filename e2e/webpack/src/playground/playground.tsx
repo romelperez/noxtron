@@ -23,6 +23,14 @@ const config: NTUserConfig = {
       code: require('!raw-loader?esModule=false!@types/react/index.d.ts')
     },
     {
+      filename: 'file:///node_modules/@types/react/global.d.ts',
+      code: require('!raw-loader?esModule=false!@types/react/global.d.ts')
+    },
+    {
+      filename: 'file:///node_modules/@types/scheduler/tracing.d.ts',
+      code: require('!raw-loader?esModule=false!@types/scheduler/tracing.d.ts')
+    },
+    {
       filename: 'file:///node_modules/@types/react-dom/index.d.ts',
       code: require('!raw-loader?esModule=false!@types/react-dom/index.d.ts')
     },

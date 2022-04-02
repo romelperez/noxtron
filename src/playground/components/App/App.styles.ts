@@ -5,8 +5,8 @@ const createStyles = (theme: NTTheme): NTStyles => {
   const { primary } = theme.colors;
   const isDark = theme.colorScheme === 'dark';
 
-  const bgNeutral = isDark ? primary.bg(3) : primary.bg(1);
-  const bgFocus = isDark ? primary.bg(2) : primary.bg(0);
+  const bgNeutral = isDark ? primary.bg(2) : primary.bg(1);
+  const bgFocus = isDark ? primary.bg(4) : primary.bg(0);
   const line = isDark
     ? `1px solid ${primary.deco(8)}`
     : `1px solid ${primary.deco(12)}`;

@@ -6,7 +6,12 @@ const createStyles = (theme: NTTheme): NTStyles => {
       display: 'flex'
     },
     editor: {
-      flex: 1
+      flex: 1,
+
+      '.monaco-editor, .monaco-editor .margin, .monaco-editor-background, .monaco-editor .inputarea.ime-input':
+        {
+          backgroundColor: 'transparent !important'
+        }
     }
   };
 };

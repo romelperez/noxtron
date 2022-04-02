@@ -4,7 +4,7 @@ import { ReactElement, useCallback, useEffect, useMemo, useRef } from 'react';
 import * as monaco from 'monaco-editor';
 import throttle from 'lodash/throttle';
 
-import type { NTMonacoEditor, NTStore } from '../../../types';
+import type { NTMonacoEditor } from '../../../types';
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 import { cx } from '../../utils/cx';
 import { useMediaQuery } from '../../utils/useMediaQuery';
@@ -15,8 +15,6 @@ import { createStyles } from './Editor.styles';
 interface EditorProps {
   className?: string;
 }
-
-// TODO: Customize dark theme.
 
 const Editor = (props: EditorProps): ReactElement => {
   const { className } = props;

@@ -26,7 +26,7 @@ const Sandbox = (): ReactElement => {
         padding: 20,
         width: '60%',
         color: '#ee1',
-        background: '#171717'
+        background: '#222'
       }}
     >
       <h1>TypeScript Sandbox</h1>

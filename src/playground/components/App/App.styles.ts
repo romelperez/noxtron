@@ -5,11 +5,15 @@ const createStyles = (theme: NTTheme): NTStyles => {
   const { primary } = theme.colors;
   const isDark = theme.colorScheme === 'dark';
 
-  const bgNeutral = isDark ? primary.bg(2) : primary.bg(1);
-  const bgFocus = isDark ? primary.bg(4) : primary.bg(0);
-  const line = isDark
+  const bg1 = isDark ? primary.bg(2) : primary.bg(2);
+  const bg2 = isDark ? primary.bg(3) : primary.bg(1);
+  const bg3 = isDark ? primary.bg(4) : primary.bg(0);
+  const line1 = isDark
     ? `1px solid ${primary.deco(8)}`
     : `1px solid ${primary.deco(12)}`;
+  const line2 = isDark
+    ? `1px solid ${primary.deco(4)}`
+    : `1px solid ${primary.deco(8)}`;
 
   return {
     global: {
@@ -73,8 +77,8 @@ const createStyles = (theme: NTTheme): NTStyles => {
       flexDirection: 'column'
     },
     header: {
-      borderBottom: line,
-      backgroundColor: bgNeutral
+      borderBottom: line1,
+      backgroundColor: bg1
     },
     main: {
       flex: 1,
@@ -85,12 +89,12 @@ const createStyles = (theme: NTTheme): NTStyles => {
     explorer: {
       flex: 1,
       minHeight: 0, // Height overflow issue.
-      backgroundColor: bgNeutral,
+      backgroundColor: bg1,
 
       [breakpoints.medium.up]: {
         flex: 'none',
         width: 300,
-        borderRight: line
+        borderRight: line2
       }
     },
     workspace: {
@@ -102,8 +106,8 @@ const createStyles = (theme: NTTheme): NTStyles => {
     },
     toolbar: {
       display: 'none', // Hidden on mobile.
-      borderBottom: line,
-      backgroundColor: bgNeutral,
+      borderBottom: line2,
+      backgroundColor: bg2,
 
       [breakpoints.medium.up]: {
         display: 'flex'
@@ -119,7 +123,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
     panel: {
       flex: '1 1 50%',
       minWidth: 0, // Width overflow issue.
-      backgroundColor: bgFocus,
+      backgroundColor: bg3,
       transition: 'width 200ms ease-out'
     },
     panelEditor: {
@@ -128,14 +132,14 @@ const createStyles = (theme: NTTheme): NTStyles => {
     panelPreview: {
       [breakpoints.medium.up]: {
         '* + &': {
-          borderLeft: line
+          borderLeft: line2
         }
       }
     },
     desktopFooter: {
       display: 'none', // Hidden on mobile.
-      borderTop: line,
-      backgroundColor: bgNeutral,
+      borderTop: line1,
+      backgroundColor: bg1,
 
       [breakpoints.medium.up]: {
         display: 'flex'

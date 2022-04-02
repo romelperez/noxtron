@@ -8,7 +8,7 @@ const Sandbox = () => {
       style={{
         padding: 20,
         color: '#ee1',
-        background: '#171717'
+        background: '#222'
       }}
     >
       <h1>JavaScript Sandbox</h1>

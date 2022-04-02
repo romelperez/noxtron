@@ -1,6 +1,5 @@
 import React, { ReactElement, useMemo } from 'react';
 import { ThemeProvider, Theme } from '@emotion/react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import * as monaco from 'monaco-editor';
 
 import type { NTPlaygroundSettings } from '../../../types';
@@ -8,8 +7,10 @@ import { createTheme } from '../../utils/createTheme';
 import { useRouterState } from '../../utils/useRouterState';
 import { PlaygroundSettingsProvider } from '../PlaygroundSettingsProvider';
 import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
-import { App } from '../../components/App';
+import { RouterProvider } from '../RouterProvider';
+import { RouterStateProvider } from '../RouterStateProvider';
 import { StoreProvider } from '../StoreProvider';
+import { App } from '../../components/App';
 
 const PlaygroundRouted = (): ReactElement => {
   const routerState = useRouterState();
@@ -29,10 +30,13 @@ const PlaygroundRouted = (): ReactElement => {
   );
 };
 
-interface PlaygroundProps extends NTPlaygroundSettings {}
+interface PlaygroundProps {
+  settings: NTPlaygroundSettings;
+}
 
 const Playground = (props: PlaygroundProps): ReactElement => {
-  const { basePath, typeDefinitions = [] } = props;
+  const { settings } = props;
+  const { basePath, typeDefinitions = [] } = settings;
   const basePathPrefix = basePath.endsWith('/') ? basePath : `${basePath}/`;
 
   // @ts-ignore
@@ -76,18 +80,13 @@ const Playground = (props: PlaygroundProps): ReactElement => {
   });
 
   return (
-    <BrowserRouter basename={basePath}>
-      <Routes>
-        <Route
-          path="*"
-          element={
-            <PlaygroundSettingsProvider settings={props}>
-              <PlaygroundRouted />
-            </PlaygroundSettingsProvider>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+    <PlaygroundSettingsProvider settings={settings}>
+      <RouterProvider>
+        <RouterStateProvider>
+          <PlaygroundRouted />
+        </RouterStateProvider>
+      </RouterProvider>
+    </PlaygroundSettingsProvider>
   );
 };
 

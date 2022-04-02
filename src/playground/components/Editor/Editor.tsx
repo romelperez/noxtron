@@ -77,7 +77,7 @@ const Editor = (props: EditorProps): ReactElement => {
       showUnused: true,
       scrollBeyondLastLine: false,
       autoDetectHighContrast: false,
-      rulers: [80],
+      rulers: isBreakpointMediumUp ? [80] : [],
       padding: {
         top: theme.space(4),
         bottom: theme.space(4)

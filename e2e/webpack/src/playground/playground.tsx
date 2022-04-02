@@ -106,4 +106,4 @@ const settings: NTPlaygroundSettings = {
   }
 };
 
-render(<Playground {...settings} />, document.querySelector('#root'));
+render(<Playground settings={settings} />, document.querySelector('#root'));

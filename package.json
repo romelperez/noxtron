@@ -31,9 +31,10 @@
   ],
   "types": "./build/index.d.ts",
   "peerDependencies": {
+    "monaco-editor": "0.33",
+    "prop-types": "15",
     "react": "17",
-    "react-dom": "17",
-    "prop-types": "15"
+    "react-dom": "17"
   },
   "dependencies": {
     "@emotion/react": "^11.8.2",
@@ -42,7 +43,6 @@
     "@types/lodash": "^4.14.180",
     "@types/react-router-dom": "^5.3.3",
     "lodash": "^4.17.21",
-    "monaco-editor": "^0.33.0",
     "react-router-dom": "^6.2.2",
     "tslib": "^2.3.1"
   },
@@ -53,6 +53,7 @@
     "cross-env": "^7.0.3",
     "http-server": "^14.1.0",
     "jest": "^27.5.1",
+    "monaco-editor": "^0.33.0",
     "prettier": "^2.6.0",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",

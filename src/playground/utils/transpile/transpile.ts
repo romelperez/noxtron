@@ -68,9 +68,12 @@ function transpile(model: NTMonacoModel): Promise<NTStoreSandboxTranspilation> {
     error: ''
   };
   const filename = model.uri.toString();
+  const isTypeScript = filename.endsWith('.ts') || filename.endsWith('.tsx');
+  const worker = isTypeScript
+    ? monaco.languages.typescript.getTypeScriptWorker()
+    : monaco.languages.typescript.getJavaScriptWorker();
 
-  return monaco.languages.typescript
-    .getTypeScriptWorker()
+  return worker
     .then((getWorker: (uri: monaco.Uri) => Promise<any>) =>
       getWorker(model.uri)
     )

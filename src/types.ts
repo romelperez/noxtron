@@ -9,6 +9,8 @@ import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 
 export type NTMonacoEditor = monaco.editor.IStandaloneCodeEditor;
 export type NTMonacoModel = monaco.editor.ITextModel;
+export type NTMonacoCompilerOptions =
+  monaco.languages.typescript.CompilerOptions;
 
 // THEME
 

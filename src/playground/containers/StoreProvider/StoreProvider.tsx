@@ -9,6 +9,7 @@ import React, {
 import * as monaco from 'monaco-editor';
 
 import type {
+  NTMonacoCompilerOptions,
   NTSandbox,
   NTStoreEvent,
   NTStoreSubscriber,
@@ -124,7 +125,7 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
       noSyntaxValidation: true
     });
 
-    typescript.typescriptDefaults.setCompilerOptions({
+    const defaultCompilerOptions: NTMonacoCompilerOptions = {
       module: typescript.ModuleKind.ESNext,
       moduleResolution: typescript.ModuleResolutionKind.NodeJs,
       target: typescript.ScriptTarget.ES2015,
@@ -134,7 +135,10 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
       allowSyntheticDefaultImports: true,
       baseUrl: 'file:///',
       paths: typescript.typescriptDefaults.getCompilerOptions().paths
-    });
+    };
+
+    typescript.javascriptDefaults.setCompilerOptions(defaultCompilerOptions);
+    typescript.typescriptDefaults.setCompilerOptions(defaultCompilerOptions);
 
     typeDefinitions.forEach(({ filename, code }) => {
       typescript.typescriptDefaults.addExtraLib(code, filename);

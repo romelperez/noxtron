@@ -1,8 +1,9 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
-import { ReactElement, useEffect, useMemo, useRef, useCallback } from 'react';
+import { ReactElement, useEffect, useMemo, useRef } from 'react';
 import * as monaco from 'monaco-editor';
 import debounce from 'lodash/debounce';
+import throttle from 'lodash/throttle';
 
 import type { NTStore } from '../../../types';
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
@@ -16,6 +17,10 @@ import { createStyles } from './Editor.styles';
 interface EditorProps {
   className?: string;
 }
+
+// TODO: Move model creation to provider.
+// TODO: Customize dark theme.
+// TODO: Use TypeScript web worker to emit file instead of @babel/standalone.
 
 const Editor = (props: EditorProps): ReactElement => {
   const { className } = props;
@@ -35,6 +40,16 @@ const Editor = (props: EditorProps): ReactElement => {
 
   storeRef.current = store;
 
+  const onResize = throttle((): void => {
+    if (!editorRef.current || !editorContainerElementRef.current) {
+      return;
+    }
+    editorRef.current.layout({
+      width: editorContainerElementRef.current.offsetWidth,
+      height: editorContainerElementRef.current.offsetHeight
+    });
+  }, 50);
+
   useEffect(() => {
     const editorElement = editorElementRef.current as HTMLDivElement;
     const codeInitial =
@@ -46,7 +61,6 @@ const Editor = (props: EditorProps): ReactElement => {
     const filename = monaco.Uri.parse(
       language === 'typescript' ? 'sandbox.tsx' : 'sandbox.jsx'
     );
-    // TODO: Move model creation to provider.
     const model = monaco.editor.createModel(codeInitial, language, filename);
 
     editorRef.current = monaco.editor.create(editorElement, {
@@ -64,6 +78,9 @@ const Editor = (props: EditorProps): ReactElement => {
         top: theme.space(4),
         bottom: theme.space(4)
       },
+      minimap: {
+        enabled: isBreakpointMediumUp
+      },
       fontFamily,
       // Assuming fontSize is in pixels, remove the unit name and convert to number.
       fontSize: fontSize
@@ -78,15 +95,6 @@ const Editor = (props: EditorProps): ReactElement => {
         storeRef.current.setSandboxCode(code);
       }, 500)
     );
-
-    const onResize = debounce((): void => {
-      const containerElement =
-        editorContainerElementRef.current as HTMLDivElement;
-      editorRef.current?.layout({
-        width: containerElement.offsetWidth,
-        height: containerElement.offsetHeight
-      });
-    }, 50);
 
     window.addEventListener('resize', onResize);
 
@@ -115,9 +123,7 @@ const Editor = (props: EditorProps): ReactElement => {
     });
   }, [theme]);
 
-  useEffect(() => {
-    editorRef.current?.layout();
-  }, [routerState]);
+  useEffect(() => onResize(), [routerState]);
 
   useEffect(() => {
     const onCopy = (): void => {

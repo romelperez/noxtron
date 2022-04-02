@@ -3,7 +3,7 @@ import { ThemeProvider, Theme } from '@emotion/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import * as monaco from 'monaco-editor';
 
-import type { NTUserConfig } from '../../../types';
+import type { NTPlaygroundSettings } from '../../../types';
 import { createTheme } from '../../utils/createTheme';
 import { useRouterState } from '../../utils/useRouterState';
 import { UserConfigProvider } from '../UserConfigProvider';
@@ -29,13 +29,10 @@ const PlaygroundRouted = (): ReactElement => {
   );
 };
 
-interface PlaygroundProps {
-  config: NTUserConfig;
-}
+interface PlaygroundProps extends NTPlaygroundSettings {}
 
 const Playground = (props: PlaygroundProps): ReactElement => {
-  const { config } = props;
-  const { basePath, typeDefinitions = [] } = config;
+  const { basePath, typeDefinitions = [] } = props;
   const basePathPrefix = basePath.endsWith('/') ? basePath : `${basePath}/`;
 
   // @ts-ignore
@@ -84,7 +81,7 @@ const Playground = (props: PlaygroundProps): ReactElement => {
         <Route
           path="*"
           element={
-            <UserConfigProvider config={config}>
+            <UserConfigProvider config={props}>
               <PlaygroundRouted />
             </UserConfigProvider>
           }

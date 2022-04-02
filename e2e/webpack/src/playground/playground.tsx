@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import type { NTUserConfig } from '../../../../';
+import type { NTPlaygroundSettings } from '../../../../';
 import { Playground } from '../../../..//build/playground';
 
-const config: NTUserConfig = {
+const settings: NTPlaygroundSettings = {
   basePath: '/play',
   playgroundPath: '/play',
   sandboxPath: '/play/sandbox.html',
@@ -106,4 +106,4 @@ const config: NTUserConfig = {
   }
 };
 
-render(<Playground config={config} />, document.querySelector('#root'));
+render(<Playground {...settings} />, document.querySelector('#root'));

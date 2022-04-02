@@ -62,19 +62,22 @@ export type NTStyles = Record<string, NTStyle>;
 // ROUTER
 
 export type NTRouterURLOptionControl = 'type' | 'sandbox' | 'code';
+
 export type NTRouterURLOptionBoolean =
   | 'explorer'
   | 'editor'
   | 'preview'
   | 'dark';
+
 export type NTRouterURLOption =
   | NTRouterURLOptionControl
   | NTRouterURLOptionBoolean;
+
 export type NTRouterStateSetOptionsUpdate = {
   type?: 'predefined' | 'custom';
-} & {
   sandbox?: string[];
-} & { code?: string } & { [name in NTRouterURLOptionBoolean]?: boolean };
+  code?: string;
+} & { [name in NTRouterURLOptionBoolean]?: boolean };
 
 export type NTRouterStateOptions = Record<
   NTRouterURLOption,
@@ -100,7 +103,9 @@ export interface NTSandbox {
   children?: NTSandbox[];
 }
 
-export interface NTSandboxDependency extends NTUserSandboxConfigDependency {
+export interface NTSandboxDependency {
+  name: string;
+  pkg: unknown;
   slug: string;
 }
 
@@ -130,9 +135,9 @@ export interface NTStore {
   trigger: (event: NTStoreEvent) => void;
 }
 
-// CONFIGS
+// PLAYGROUND SETTINGS
 
-export type NTUserConfigTheme = Partial<{
+export type NTPlaygroundSettingsTheme = Partial<{
   typographyCommons: {
     heading: CSSProperties;
     body: CSSProperties;
@@ -145,19 +150,19 @@ export type NTUserConfigTheme = Partial<{
   }>;
 }>;
 
-export interface NTUserConfigTypeDefinition {
+export interface NTPlaygroundSettingsTypeDefinition {
   filename: string;
   code: string;
 }
 
-export interface NTUserConfig {
+export interface NTPlaygroundSettings {
   basePath: string;
   playgroundPath: string;
   sandboxPath: string;
   language: 'javascript' | 'typescript';
-  typeDefinitions: NTUserConfigTypeDefinition[];
+  typeDefinitions: NTPlaygroundSettingsTypeDefinition[];
   sandboxes: NTSandbox[];
-  theme?: NTUserConfigTheme;
+  theme?: NTPlaygroundSettingsTheme;
   title?: {
     mobile?: ReactNode;
     desktop?: ReactNode;
@@ -168,11 +173,13 @@ export interface NTUserConfig {
   };
 }
 
-export interface NTUserSandboxConfigDependency {
+// SANBOX SETTINGS
+
+export interface NTSandboxSettingsDependency {
   name: string;
   pkg: unknown;
 }
 
-export interface NTUserSandboxConfig {
-  dependencies?: NTUserSandboxConfigDependency[];
+export interface NTSandboxSettings {
+  dependencies?: NTSandboxSettingsDependency[];
 }

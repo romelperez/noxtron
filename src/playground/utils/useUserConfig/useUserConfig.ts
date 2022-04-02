@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 
-import type { NTUserConfig } from '../../../types';
+import type { NTPlaygroundSettings } from '../../../types';
 import { UserConfigContext } from '../UserConfigContext';
 
-const useUserConfig = (): NTUserConfig => {
+const useUserConfig = (): NTPlaygroundSettings => {
   return useContext(UserConfigContext);
 };
 

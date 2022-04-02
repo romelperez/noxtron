@@ -3,7 +3,7 @@ import mapValues from 'lodash/mapValues';
 import type {
   NTThemeColorScheme,
   NTTheme,
-  NTUserConfigTheme
+  NTPlaygroundSettingsTheme
 } from '../../../types';
 import { createThemeMultiplier } from './createThemeMultiplier';
 import { createThemeStyle } from './createThemeStyle';
@@ -11,7 +11,7 @@ import { createThemeColorPalette } from './createThemeColorPalette';
 
 const createTheme = (
   colorScheme: NTThemeColorScheme,
-  userSettings: NTUserConfigTheme = {}
+  userSettings: NTPlaygroundSettingsTheme = {}
 ): NTTheme => {
   const userTypo = { ...userSettings.typographyCommons };
   const typography = mapValues(

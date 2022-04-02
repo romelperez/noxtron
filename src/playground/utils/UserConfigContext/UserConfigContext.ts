@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
-import type { NTUserConfig } from '../../../types';
+import type { NTPlaygroundSettings } from '../../../types';
 
-const UserConfigContext = createContext<NTUserConfig>(null as any);
+const UserConfigContext = createContext<NTPlaygroundSettings>(null as any);
 
 export { UserConfigContext };

@@ -6,19 +6,19 @@ import * as monaco from 'monaco-editor';
 import type { NTPlaygroundSettings } from '../../../types';
 import { createTheme } from '../../utils/createTheme';
 import { useRouterState } from '../../utils/useRouterState';
-import { UserConfigProvider } from '../UserConfigProvider';
-import { useUserConfig } from '../../utils/useUserConfig';
+import { PlaygroundSettingsProvider } from '../PlaygroundSettingsProvider';
+import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 import { App } from '../../components/App';
 import { StoreProvider } from '../StoreProvider';
 
 const PlaygroundRouted = (): ReactElement => {
   const routerState = useRouterState();
-  const userConfig = useUserConfig();
+  const settings = usePlaygroundSettings();
 
   const theme: Theme = useMemo(() => {
     const colorScheme = routerState.optionsBooleans.dark ? 'dark' : 'light';
-    return createTheme(colorScheme, userConfig.theme);
-  }, [routerState.optionsBooleans.dark, userConfig.theme]);
+    return createTheme(colorScheme, settings.theme);
+  }, [routerState.optionsBooleans.dark, settings.theme]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -81,9 +81,9 @@ const Playground = (props: PlaygroundProps): ReactElement => {
         <Route
           path="*"
           element={
-            <UserConfigProvider config={props}>
+            <PlaygroundSettingsProvider settings={props}>
               <PlaygroundRouted />
-            </UserConfigProvider>
+            </PlaygroundSettingsProvider>
           }
         />
       </Routes>

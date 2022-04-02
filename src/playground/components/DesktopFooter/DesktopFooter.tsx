@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
-import { Fragment, ReactElement, useMemo } from 'react';
+import { ReactElement, useMemo } from 'react';
 
-import { useUserConfig } from '../../utils/useUserConfig';
+import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 import { createStyles } from './DesktopFooter.styles';
 
 interface DesktopFooterProps {
@@ -14,7 +14,7 @@ const DesktopFooter = (props: DesktopFooterProps): ReactElement => {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const { links = {} } = useUserConfig();
+  const { links = {} } = usePlaygroundSettings();
 
   const { desktop = [] } = links;
 

@@ -8,7 +8,7 @@ import { useStore } from '../../utils/useStore';
 import { convertLocationSearchToString } from '../../../utils/convertLocationSearchToString';
 import { encodeURLParameter } from '../../../utils/encodeURLParameter';
 import { convertCodeImportsToRefs } from '../../utils/convertCodeImportsToRefs';
-import { useUserConfig } from '../../utils/useUserConfig';
+import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 import { createStyles } from './Preview.styles';
 
 interface SandboxSearchParams {
@@ -48,7 +48,7 @@ const Preview = (props: PreviewProps): ReactElement => {
     });
   }, [sandboxSearchParams]);
 
-  const { sandboxPath } = useUserConfig();
+  const { sandboxPath } = usePlaygroundSettings();
 
   useEffect(() => {
     const rawCode = store?.sandboxCode || '';

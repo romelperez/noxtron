@@ -10,7 +10,7 @@ import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 import { cx } from '../../utils/cx';
 import { useMediaQuery } from '../../utils/useMediaQuery';
 import { useRouterState } from '../../utils/useRouterState';
-import { useUserConfig } from '../../utils/useUserConfig';
+import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 import { useStore } from '../../utils/useStore';
 import { createStyles } from './Editor.styles';
 
@@ -28,7 +28,7 @@ const Editor = (props: EditorProps): ReactElement => {
   const routerState = useRouterState();
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const { language } = useUserConfig();
+  const { codeLanguage } = usePlaygroundSettings();
   const store = useStore();
   const isBreakpointMediumUp = useMediaQuery(breakpoints.medium.up);
 
@@ -59,9 +59,13 @@ const Editor = (props: EditorProps): ReactElement => {
     const { fontFamily, fontSize, fontWeight } = theme.typography.code(1);
 
     const filename = monaco.Uri.parse(
-      language === 'typescript' ? 'sandbox.tsx' : 'sandbox.jsx'
+      codeLanguage === 'typescript' ? 'sandbox.tsx' : 'sandbox.jsx'
     );
-    const model = monaco.editor.createModel(codeInitial, language, filename);
+    const model = monaco.editor.createModel(
+      codeInitial,
+      codeLanguage,
+      filename
+    );
 
     editorRef.current = monaco.editor.create(editorElement, {
       model,

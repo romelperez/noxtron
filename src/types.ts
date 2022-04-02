@@ -159,7 +159,7 @@ export interface NTPlaygroundSettings {
   basePath: string;
   playgroundPath: string;
   sandboxPath: string;
-  language: 'javascript' | 'typescript';
+  codeLanguage: 'javascript' | 'typescript';
   typeDefinitions: NTPlaygroundSettingsTypeDefinition[];
   sandboxes: NTSandbox[];
   theme?: NTPlaygroundSettingsTheme;

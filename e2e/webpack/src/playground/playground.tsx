@@ -8,7 +8,7 @@ const settings: NTPlaygroundSettings = {
   basePath: '/play',
   playgroundPath: '/play',
   sandboxPath: '/play/sandbox.html',
-  language: 'typescript',
+  codeLanguage: 'typescript',
   typeDefinitions: [
     {
       filename: 'file:///node_modules/csstype/index.d.ts',

@@ -5,7 +5,7 @@ import { ReactElement, useMemo } from 'react';
 import type { NTStyles, NTSandbox } from '../../../types';
 import { cx } from '../../utils/cx';
 import { useRouterState } from '../../utils/useRouterState';
-import { useUserConfig } from '../../utils/useUserConfig';
+import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 import { createStyles } from './Explorer.styles';
 
 interface ExplorerNavListProps {
@@ -74,7 +74,7 @@ const Explorer = (props: ExplorerProps): ReactElement => {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const { sandboxes } = useUserConfig();
+  const { sandboxes } = usePlaygroundSettings();
 
   return (
     <aside className={cx('explorer', className)} css={styles.root}>

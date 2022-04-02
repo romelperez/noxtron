@@ -5,7 +5,7 @@ import Icon from '@mdi/react';
 import { mdiXml, mdiMenu, mdiChartBubble, mdiInvertColors } from '@mdi/js';
 
 import { useRouterState } from '../../utils/useRouterState';
-import { useUserConfig } from '../../utils/useUserConfig';
+import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 import { Button } from '../Button';
 import { createStyles } from './Header.styles';
 
@@ -20,7 +20,7 @@ const Header = (props: HeaderProps): ReactElement => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { optionsBooleans, setOptions } = useRouterState();
 
-  const { title, playgroundPath } = useUserConfig();
+  const { title, playgroundPath } = usePlaygroundSettings();
 
   return (
     <header className={className} css={styles.root}>

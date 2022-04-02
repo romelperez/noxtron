@@ -1,27 +1,14 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
-import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactElement, useEffect, useMemo, useRef } from 'react';
 
-import { cx } from '../../utils/cx';
-import { getBabel } from '../../utils/getBabel';
-import { useStore } from '../../utils/useStore';
 import { convertLocationSearchToString } from '../../../utils/convertLocationSearchToString';
 import { encodeURLParameter } from '../../../utils/encodeURLParameter';
-import { convertCodeImportsToRefs } from '../../utils/convertCodeImportsToRefs';
+
+import { cx } from '../../utils/cx';
+import { useStore } from '../../utils/useStore';
 import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 import { createStyles } from './Preview.styles';
-
-interface SandboxSearchParams {
-  importsLines: string[];
-  code: string;
-  error: string;
-}
-
-const sandboxSearchParamsInitial: SandboxSearchParams = {
-  importsLines: [],
-  code: '',
-  error: ''
-};
 
 interface PreviewProps {
   className?: string;
@@ -33,51 +20,17 @@ const Preview = (props: PreviewProps): ReactElement => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const store = useStore();
-
-  const [sandboxSearchParams, setSandboxSearchParams] =
-    useState<SandboxSearchParams>(sandboxSearchParamsInitial);
-
+  const { sandboxPath } = usePlaygroundSettings();
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const sandboxURLSearch: string = useMemo(() => {
-    const { importsLines, code, error } = sandboxSearchParams;
+    const { importsLines, code, error } = store.sandboxTranspilation;
     return convertLocationSearchToString({
       importsLines: encodeURLParameter(JSON.stringify(importsLines)),
       code: encodeURLParameter(code),
       error: encodeURLParameter(error)
     });
-  }, [sandboxSearchParams]);
-
-  const { sandboxPath } = usePlaygroundSettings();
-
-  useEffect(() => {
-    const rawCode = store?.sandboxCode || '';
-    const { importsLines, code: codeWithRefs } =
-      convertCodeImportsToRefs(rawCode);
-
-    try {
-      const Babel = getBabel();
-      const transformation = Babel.transform(codeWithRefs, {
-        filename: 'sandbox.tsx',
-        presets: ['env', 'react', 'typescript']
-      });
-      const codeProcessed = transformation?.code || '';
-
-      setSandboxSearchParams({
-        importsLines,
-        code: codeProcessed,
-        error: ''
-      });
-    } catch (error: unknown) {
-      setSandboxSearchParams({
-        importsLines: [],
-        code: '',
-        error: String(error)
-      });
-
-      console.error(error);
-    }
-  }, [store?.sandboxCode]);
+  }, [store.sandboxTranspilation]);
 
   useEffect(() => {
     const onReload = (): void => {

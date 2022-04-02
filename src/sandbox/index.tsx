@@ -66,8 +66,12 @@ const setupSandbox = (settings: NTSandboxSettings = {}): void => {
     fn(...dependenciesPackages);
   } catch (error: unknown) {
     Object.assign(document.body.style, {
+      boxSizing: 'border-box',
+      overflow: 'auto',
       margin: '0px',
       padding: '20px',
+      width: '100%',
+      minHeight: '100vh',
       fontFamily: 'monospace',
       fontSize: '16px',
       color: '#f44',
@@ -80,9 +84,12 @@ const setupSandbox = (settings: NTSandboxSettings = {}): void => {
         : 'ERROR: Source code processing error.';
 
     document.body.innerHTML = `
-      <div style="overflow-x:auto;">
-        <pre style="margin:0;padding:0 0 20px;">${errorMessage}</pre>
-      </div>
+      <pre style="
+        display: block;
+        border: 0px;
+        margin: 0px;
+        padding: 0px;
+      ">${errorMessage}</pre>
     `;
 
     // Still throw the error in case it is not shown properly in the UI.

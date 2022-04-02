@@ -1,6 +1,15 @@
 import type { ReactNode, CSSProperties } from 'react';
 import type { CSSObject } from '@emotion/react';
 
+// This import MUST be from the API file (not the root) to prevent Monaco from
+// being pulled into the main bundle.
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+
+// MONACO
+
+export type NTMonacoEditor = monaco.editor.IStandaloneCodeEditor;
+export type NTMonacoModel = monaco.editor.ITextModel;
+
 // THEME
 
 export type NTThemeSettingsMultiplier = number;
@@ -126,10 +135,22 @@ export type NTStoreEvent =
 
 export type NTStoreSubscriber = () => void;
 
+export interface NTStoreEditorModel {
+  model: NTMonacoModel;
+  getValue: () => string;
+  setValue: (newValue: string) => void;
+}
+
+export interface NTStoreSandboxTranspilation {
+  importsLines: string[];
+  code: string;
+  error: string;
+}
+
 export interface NTStore {
+  editorModel: NTStoreEditorModel;
   sandboxSelected: NTSandbox | null;
-  sandboxCode: string;
-  setSandboxCode: (code: string) => void;
+  sandboxTranspilation: NTStoreSandboxTranspilation;
   subscribe: (event: NTStoreEvent, subscriber: NTStoreSubscriber) => void;
   unsubscribe: (event: NTStoreEvent, subscriber: NTStoreSubscriber) => void;
   trigger: (event: NTStoreEvent) => void;

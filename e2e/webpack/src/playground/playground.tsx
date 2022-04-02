@@ -5,9 +5,9 @@ import type { NTPlaygroundSettings } from '../../../../';
 import { Playground } from '../../../..//build/playground';
 
 const settings: NTPlaygroundSettings = {
-  basePath: '/play',
-  playgroundPath: '/play',
-  sandboxPath: '/play/sandbox.html',
+  basePath: '/noxtron/',
+  playgroundPath: '/noxtron',
+  sandboxPath: '/noxtron/sandbox.html',
   codeLanguage: 'typescript',
   typeDefinitions: [
     {

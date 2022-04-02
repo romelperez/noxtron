@@ -9,9 +9,10 @@ const TSCONFIG_FILE_PATH = path.join(CWD, 'tsconfig.json');
 const SRC_PATH = path.join(CWD, 'src');
 const BUILD_PATH = path.join(CWD, 'build');
 
-const BASE_PATH = '/play/'; // Must end with "/".
-const PLAYGROUND_HTML_PATH = `${BASE_PATH}/index.html`;
-const SANDBOX_HTML_PATH = `${BASE_PATH}/sandbox.html`;
+// Serve the Noxtron application in the URL base path of "/noxtron/".
+// Must be the same as the playground setting "basePath".
+// Must end with "/".
+const BASE_PATH = '/noxtron/';
 
 module.exports = {
   mode: NODE_ENV || 'development',
@@ -62,13 +63,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       publicPath: BASE_PATH,
       template: path.join(SRC_PATH, 'playground/playground.html'),
-      filename: path.join(BUILD_PATH, PLAYGROUND_HTML_PATH),
+      filename: path.join(BUILD_PATH, BASE_PATH, 'index.html'),
       chunks: ['playground']
     }),
     new HtmlWebpackPlugin({
       publicPath: BASE_PATH,
       template: path.join(SRC_PATH, 'sandbox/sandbox.html'),
-      filename: path.join(BUILD_PATH, SANDBOX_HTML_PATH),
+      filename: path.join(BUILD_PATH, BASE_PATH, 'sandbox.html'),
       chunks: ['sandbox']
     })
   ],

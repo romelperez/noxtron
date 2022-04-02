@@ -11,6 +11,8 @@ import { Preview } from '../Preview';
 import { DesktopFooter } from '../DesktopFooter';
 import { createStyles } from './App.styles';
 
+// TODO: Support footer links on mobile.
+
 const App = (): ReactElement => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);

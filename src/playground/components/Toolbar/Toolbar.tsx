@@ -33,6 +33,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
     optionsControls.type === 'predefined'
       ? optionsControls.sandbox.join(' / ')
       : '';
+  const hasErrors = !!store.sandboxTranspilation.error;
 
   return (
     <nav className={cx('toolbar', className)} css={styles.root}>
@@ -41,12 +42,13 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           css={styles.option}
           size="small"
           title="Reload preview"
-          disabled={!optionsBooleans.preview}
+          disabled={!optionsBooleans.preview || hasErrors}
           onClick={() => store?.trigger('reload')}
         >
           <Icon css={styles.optionIcon} path={mdiReload} />
           <span css={styles.optionLabel}>Reload</span>
         </Button>
+
         <Button
           css={styles.option}
           size="small"
@@ -57,6 +59,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           <Icon css={styles.optionIcon} path={mdiBackupRestore} />
           <span css={styles.optionLabel}>Reset</span>
         </Button>
+
         <Button
           css={styles.option}
           size="small"
@@ -67,15 +70,18 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           <Icon css={styles.optionIcon} path={mdiPencil} />
           <span css={styles.optionLabel}>Custom Sandbox</span>
         </Button>
+
         <Button
           css={styles.option}
           size="small"
           title="Open preview in an independent isolated window"
+          disabled={hasErrors}
           onClick={() => store?.trigger('openIsolated')}
         >
           <Icon css={styles.optionIcon} path={mdiTestTube} />
           <span css={styles.optionLabel}>Open Isolated</span>
         </Button>
+
         <Button
           css={styles.option}
           size="small"
@@ -85,6 +91,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           <Icon css={styles.optionIcon} path={mdiContentCopy} />
           <span css={styles.optionLabel}>Copy Code</span>
         </Button>
+
         <Button
           css={styles.option}
           size="small"
@@ -97,6 +104,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           <span css={styles.optionLabel}>Copy URL</span>
         </Button>
       </div>
+
       {!!location && <code css={styles.location}>{location}</code>}
     </nav>
   );

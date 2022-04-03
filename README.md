@@ -51,8 +51,9 @@ Webpack in [e2e/webpack](https://github.com/romelperez/noxtron/tree/main/e2e/web
 - The playground app will persist in the browser URL the state of the controls
   and the source code of the sandbox so it can be easily shared with more people.
 - The editor is not available in mobile browsers.
-- The final bundles can have 5MB or more due to the JavaScript and TypeScript
-  transpilers, the type definitions, and provided sandboxes source code.
+- The playground app final bundles can have 5MB or more due to the JavaScript
+  and TypeScript transpilers, the type definitions, and provided sandboxes source code.
+  The sandbox app will depend only on user setup.
 
 ## Example Use Case
 
@@ -240,8 +241,7 @@ render(
 
 ### Sandbox Setup
 
-The sandbox app executes the actual code. Only a HTML element with id "root"
-is required.
+The sandbox app executes the actual code.
 
 ```html
 <!-- src/sandbox.html -->
@@ -255,6 +255,7 @@ is required.
     <title>Noxtron Sandbox</title>
   </head>
   <body>
+    <!-- Since the sandboxes are going to use React, create a root element. -->
     <div id="root"></div>
   </body>
 </html>
@@ -271,6 +272,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 setupSandbox({
+  // Only the packages dependencies provided here can be used in the sandboxes
+  // source code as `import`s.
   dependencies: [
     { name: 'react', pkg: React },
     { name: 'react-dom', pkg: ReactDOM }

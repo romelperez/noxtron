@@ -4,13 +4,16 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "Real-Time JavaScript/TypeScript UI playground application",
+  "description": "Real-Time JavaScript/TypeScript UI playground",
   "keywords": [
+    "javascript",
     "typescript",
-    "ui",
     "sandbox",
     "playground",
-    "application"
+    "ui",
+    "application",
+    "real-time",
+    "realtime"
   ],
   "homepage": "https://github.com/romelperez/noxtron",
   "repository": {

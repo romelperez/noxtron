@@ -1,6 +1,6 @@
-# Noxtron
+![Noxtron](https://raw.githubusercontent.com/romelperez/noxtron/main/noxtron.jpg)
 
-Real-Time JavaScript/TypeScript UI playground.
+# Noxtron
 
 [![version](https://img.shields.io/npm/v/noxtron.svg)](https://npmjs.org/package/noxtron)
 [![ci](https://github.com/romelperez/noxtron/workflows/ci/badge.svg)](https://github.com/romelperez/noxtron/actions)
@@ -8,24 +8,23 @@ Real-Time JavaScript/TypeScript UI playground.
 [![github stars](https://img.shields.io/github/stars/romelperez/noxtron.svg?style=social&label=stars)](https://github.com/romelperez/noxtron)
 [![license](https://img.shields.io/github/license/romelperez/noxtron.svg?maxAge=2592000)](https://github.com/romelperez/noxtron/blob/main/LICENSE)
 
-## Get Started
+Real-Time JavaScript/TypeScript UI playground.
 
 Noxtron is a web tool to explore, preview, and test JavaScript and TypeScript
-components as isolated sandboxes in realtime in browser.
+components as isolated sandboxes in realtime in browser. It is composed by two
+applications, a playground app with the interface to explore and control the
+configured sandboxes, and a sandbox app to execute the sandboxes source code.
 
-It is composed by two applications, a playground app with the interface to explore
-and control the configured sandboxes, and a sandbox app to execute the sandboxes
-source code.
+![Noxtron Preview](https://raw.githubusercontent.com/romelperez/noxtron/main/preview.jpg)
 
-It uses the [monaco-editor](https://microsoft.github.io/monaco-editor), and it
-requires different HTML and JavaScript files, so it needs to be configured with
-a module bundler like [webpack](https://webpack.js.org) or [esbuild](https://esbuild.github.io).
+There is a complete end-to-end example use case using TypeScript, React, and
+Webpack in [e2e/webpack](https://github.com/romelperez/noxtron/tree/main/e2e/webpack).
 
-There is a complete end-to-end example use case using TypeScript and Webpack in
-[e2e/webpack](https://github.com/romelperez/noxtron/tree/main/e2e/webpack).
+## Specifications
 
-## Features and specifications
-
+- It uses the [monaco-editor](https://microsoft.github.io/monaco-editor), and it
+  requires different HTML and JavaScript files, so it needs to be configured with
+  a module bundler like [webpack](https://webpack.js.org) or [esbuild](https://esbuild.github.io).
 - Only the playground app requires [React](https://reactjs.org). The sandbox app
   does not require any library or framework.
 - The sandboxes source code should be written in ES modules. The sandbox app can
@@ -55,7 +54,7 @@ There is a complete end-to-end example use case using TypeScript and Webpack in
 - The final bundles can have 5MB or more due to the JavaScript and TypeScript
   transpilers, the type definitions, and provided sandboxes source code.
 
-## Example Setup
+## Example Use Case
 
 Noxtron use case with plain JavaScript and Webpack.
 
@@ -289,11 +288,10 @@ can be used.
 npm i http-server
 ```
 
-```json
-// package.json
+`package.json` scripts:
 
+```json
 {
-  // ...
   "scripts": {
     "clean": "rm -rf ./build",
     "build": "NODE_ENV=production webpack --progress",
@@ -312,3 +310,11 @@ npm run clean
 npm run build
 npm run start
 ```
+
+There is a complete end-to-end example use case using TypeScript, React, and
+Webpack in [e2e/webpack](https://github.com/romelperez/noxtron/tree/main/e2e/webpack).
+
+## About
+
+Noxtron's logo is a photo of a bird named Ninfa Coronada endemic from Colombia.
+Source: [birdsofcolombia.com](https://birdsofcolombia.com).

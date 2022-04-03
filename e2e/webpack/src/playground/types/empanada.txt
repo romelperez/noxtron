@@ -1,3 +1,5 @@
+// Mock Types
+
 declare module 'empanada/constants' {
   export const LOREM_IPSUM = string;
 }

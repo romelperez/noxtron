@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { render } from 'react-dom';
 
-const Sandbox = () => {
+const Sandbox = (): ReactElement => {
   return (
     <div
       className='sandbox'
@@ -11,7 +11,8 @@ const Sandbox = () => {
         background: '#222'
       }}
     >
-      <h1>JavaScript Sandbox</h1>
+      <h1>Basic Sandbox</h1>
+      <p>Simple React component render.</p>
     </div>
   );
 };

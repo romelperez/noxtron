@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 
 import type { NTPlaygroundSettings } from '../../../../';
-import { Playground } from '../../../..//build/playground';
+import { Playground } from '../../../../build/playground';
 
 const settings: NTPlaygroundSettings = {
   basePath: '/noxtron/',
@@ -10,6 +10,7 @@ const settings: NTPlaygroundSettings = {
   sandboxPath: '/noxtron/sandbox.html',
   codeLanguage: 'typescript',
   typeDefinitions: [
+    // react and react-dom
     {
       filename: 'file:///node_modules/csstype/index.d.ts',
       code: require('!raw-loader?esModule=false!csstype/index.d.ts')
@@ -34,18 +35,62 @@ const settings: NTPlaygroundSettings = {
       filename: 'file:///node_modules/@types/react-dom/index.d.ts',
       code: require('!raw-loader?esModule=false!@types/react-dom/index.d.ts')
     },
+
+    // @emotion/react
+    {
+      filename: 'file:///node_modules/@emotion/react/index.d.ts',
+      code: require('!raw-loader?esModule=false!@emotion/react/types/index.d.ts')
+    },
+    {
+      filename: 'file:///node_modules/@emotion/react/jsx-namespace.d.ts',
+      code: require('!raw-loader?esModule=false!@emotion/react/types/jsx-namespace.d.ts')
+    },
+    {
+      filename: 'file:///node_modules/@emotion/react/theming.d.ts',
+      code: require('!raw-loader?esModule=false!@emotion/react/types/theming.d.ts')
+    },
+    {
+      filename: 'file:///node_modules/@emotion/react/helper.d.ts',
+      code: require('!raw-loader?esModule=false!@emotion/react/types/helper.d.ts')
+    },
+    {
+      filename: 'file:///node_modules/@emotion/serialize/index.d.ts',
+      code: require('!raw-loader?esModule=false!@emotion/serialize/types/index.d.ts')
+    },
+    {
+      filename: 'file:///node_modules/@emotion/utils/index.d.ts',
+      code: require('!raw-loader?esModule=false!@emotion/utils/types/index.d.ts')
+    },
+
+    // empanada (Mock)
     {
       filename: 'file:///node_modules/empanada/index.d.ts',
       code: require('!raw-loader?esModule=false!./types/empanada.txt')
+    },
+
+    // lodash (Mock)
+    {
+      filename: 'file:///node_modules/lodash/index.d.ts',
+      code: require('!raw-loader?esModule=false!./types/lodash.txt')
+    },
+
+    // motion (Mock)
+    {
+      filename: 'file:///node_modules/motion/index.d.ts',
+      code: require('!raw-loader?esModule=false!./types/motion.txt')
     }
   ],
   sandboxes: [
     {
-      name: '@org/project',
+      name: 'MyComponent',
       children: [
         {
           name: 'basic',
           code: require('!raw-loader?esModule=false!./sandboxes/basic.txt')
+        },
+        {
+          name: 'intermediate',
+          code: require('!raw-loader?esModule=false!./sandboxes/intermediate.txt')
         },
         {
           name: 'complex',
@@ -56,13 +101,13 @@ const settings: NTPlaygroundSettings = {
   ],
   title: {
     mobile: <h1>Noxtron</h1>,
-    desktop: <h1>Noxtron E2E</h1>
+    desktop: <h1>Noxtron</h1>
   },
   links: {
-    mobile: [<span>v1.2.3 22-12-31</span>],
+    mobile: [<span>v1.2.3 00-12-31</span>],
     desktop: [
       [
-        <span>v1.2.3 22-12-31</span>,
+        <span>v1.2.3 00-12-31</span>,
         <a href="https://github.com/romelperez/noxtron" target="Website">
           Website
         </a>
@@ -100,8 +145,8 @@ const settings: NTPlaygroundSettings = {
       }
     },
     colorHues: {
-      primary: 190,
-      secondary: 70
+      primary: 190, // Cyan
+      secondary: 70 // Yellow
     }
   }
 };

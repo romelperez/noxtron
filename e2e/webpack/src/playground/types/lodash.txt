@@ -1,0 +1,6 @@
+// Mock Types
+
+declare module 'lodash/random' {
+  const random: (from: number, to: number) => number;
+  export = random;
+}

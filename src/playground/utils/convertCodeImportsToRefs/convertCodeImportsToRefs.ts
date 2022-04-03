@@ -12,7 +12,8 @@ const convertCodeImportsToRefs = (
       return line;
     })
     .filter((line) => line !== '__NOXTRON_DEAD_LINE__')
-    .join('\n');
+    .join('\n')
+    .trim();
   return { code, importsLines };
 };
 

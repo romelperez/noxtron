@@ -19,7 +19,8 @@ const getCodeImportsRefsFragments = (
       const dependency = dependencies.find((dep) => dep.name === from);
 
       if (!dependency) {
-        throw new Error(`Sandbox dependency "${from}" is not available.`);
+        throw new Error(`[Noxtron] Sandbox dependency "${from}" is not available.
+It needs to be setup in the sandbox application.`);
       }
 
       const newNamesList: string[] = [];

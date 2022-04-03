@@ -136,14 +136,9 @@ const createStyles = (theme: NTTheme): NTStyles => {
         }
       }
     },
-    desktopFooter: {
-      display: 'none', // Hidden on mobile.
+    footer: {
       borderTop: line1,
-      backgroundColor: bg1,
-
-      [breakpoints.medium.up]: {
-        display: 'flex'
-      }
+      backgroundColor: bg1
     }
   };
 };

@@ -2,21 +2,23 @@
 import { jsx, useTheme, Global } from '@emotion/react';
 import { Fragment, ReactElement, useMemo } from 'react';
 
+import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 import { useRouterState } from '../../utils/useRouterState';
+import { useMediaQuery } from '../../utils/useMediaQuery';
+
 import { Header } from '../Header';
 import { Explorer } from '../Explorer';
 import { Toolbar } from '../Toolbar';
 import { Editor } from '../Editor';
 import { Preview } from '../Preview';
-import { DesktopFooter } from '../DesktopFooter';
+import { Footer } from '../Footer';
 import { createStyles } from './App.styles';
-
-// TODO: Support footer links on mobile.
 
 const App = (): ReactElement => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { optionsBooleans } = useRouterState();
+  const isMDMediumUp = useMediaQuery(breakpoints.medium.up);
 
   return (
     <Fragment>
@@ -41,7 +43,9 @@ const App = (): ReactElement => {
             </div>
           )}
         </main>
-        <DesktopFooter css={styles.desktopFooter} />
+        {(isMDMediumUp || optionsBooleans.explorer) && (
+          <Footer css={styles.footer} />
+        )}
       </div>
     </Fragment>
   );

@@ -191,7 +191,7 @@ export interface NTPlaygroundSettings {
     desktop?: ReactNode;
   };
   links?: {
-    mobile?: ReactNode[];
+    mobile?: ReactNode[][];
     desktop?: ReactNode[][];
   };
 }

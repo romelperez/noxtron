@@ -100,11 +100,18 @@ const settings: NTPlaygroundSettings = {
     }
   ],
   title: {
-    mobile: <h1>Noxtron</h1>,
-    desktop: <h1>Noxtron</h1>
+    mobile: 'Noxtron',
+    desktop: 'Noxtron'
   },
   links: {
-    mobile: [<span>v1.2.3 00-12-31</span>],
+    mobile: [
+      [
+        <span>v1.2.3 00-12-31</span>,
+        <a href="https://github.com/romelperez/noxtron" target="Website">
+          Website
+        </a>
+      ]
+    ],
     desktop: [
       [
         <span>v1.2.3 00-12-31</span>,

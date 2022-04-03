@@ -9,6 +9,8 @@ import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 import { Button } from '../Button';
 import { createStyles } from './Header.styles';
 
+// TODO: In theme color scheme light, it should have color inverted.
+
 interface HeaderProps {
   className?: string;
 }
@@ -66,12 +68,12 @@ const Header = (props: HeaderProps): ReactElement => {
           </span>
         </Button>
       </nav>
-      <div css={styles.logo}>
+      <h1 css={styles.logo}>
         <a href={playgroundPath}>
           <span css={styles.logoMobile}>{title?.mobile || 'Noxtron'}</span>
           <span css={styles.logoDesktop}>{title?.desktop || 'Noxtron'}</span>
         </a>
-      </div>
+      </h1>
     </header>
   );
 };

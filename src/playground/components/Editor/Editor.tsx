@@ -44,7 +44,9 @@ const Editor = (props: EditorProps): ReactElement => {
 
   useEffect(() => {
     const editorElement = editorElementRef.current as HTMLDivElement;
-    const { fontFamily, fontSize, fontWeight } = theme.typography.code(1);
+    const { fontFamily, fontSize, fontWeight } = theme.typography.code(
+      isBreakpointMediumUp ? 1 : 2
+    );
 
     editorRef.current = monaco.editor.create(editorElement, {
       model: store.editorModel.model,

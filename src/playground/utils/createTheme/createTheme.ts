@@ -13,24 +13,29 @@ const createTheme = (
   colorScheme: NTThemeColorScheme,
   userSettings: NTPlaygroundSettingsTheme = {}
 ): NTTheme => {
+  const commonTypo = { fontFamily: 'Menlo, Monaco, "Courier New", monospace' };
   const userTypo = { ...userSettings.typographyCommons };
   const typography = mapValues(
     {
       heading: [
-        { ...userTypo.heading, fontSize: '24px' },
-        { ...userTypo.heading, fontSize: '21px' }
+        { ...commonTypo, ...userTypo.heading, fontSize: '24px' },
+        { ...commonTypo, ...userTypo.heading, fontSize: '21px' },
+        { ...commonTypo, ...userTypo.heading, fontSize: '18px' }
       ],
       body: [
-        { ...userTypo.body, fontSize: '18px' },
-        { ...userTypo.body, fontSize: '16px' }
+        { ...commonTypo, ...userTypo.body, fontSize: '18px' },
+        { ...commonTypo, ...userTypo.body, fontSize: '16px' },
+        { ...commonTypo, ...userTypo.body, fontSize: '14px' }
       ],
       cta: [
-        { ...userTypo.cta, fontSize: '16px' },
-        { ...userTypo.cta, fontSize: '14px' }
+        { ...commonTypo, ...userTypo.cta, fontSize: '16px' },
+        { ...commonTypo, ...userTypo.cta, fontSize: '14px' },
+        { ...commonTypo, ...userTypo.cta, fontSize: '12px' }
       ],
       code: [
-        { ...userTypo.code, fontSize: '16px' },
-        { ...userTypo.code, fontSize: '14px' }
+        { ...commonTypo, ...userTypo.code, fontSize: '16px' },
+        { ...commonTypo, ...userTypo.code, fontSize: '14px' },
+        { ...commonTypo, ...userTypo.code, fontSize: '12px' }
       ]
     },
     (styles) => createThemeStyle(styles || [])

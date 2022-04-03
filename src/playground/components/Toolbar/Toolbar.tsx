@@ -75,7 +75,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           css={styles.option}
           size="small"
           title="Open preview in an independent isolated window"
-          disabled={hasErrors}
+          disabled={!optionsBooleans.preview || hasErrors}
           onClick={() => store?.trigger('openIsolated')}
         >
           <Icon css={styles.optionIcon} path={mdiTestTube} />

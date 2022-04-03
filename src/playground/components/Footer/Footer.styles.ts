@@ -12,7 +12,6 @@ const createStyles = (theme: NTTheme, hasLinks: boolean): NTStyles => {
       padding: theme.space(3),
 
       [breakpoints.medium.up]: {
-        ...theme.typography.body(1),
         padding: theme.space(4),
         flexDirection: 'row',
         justifyContent: 'space-between'

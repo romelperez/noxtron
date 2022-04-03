@@ -125,6 +125,8 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
       noSyntaxValidation: true
     });
 
+    // TODO: Allow user to configure compiler.
+
     const defaultCompilerOptions: NTMonacoCompilerOptions = {
       module: typescript.ModuleKind.ESNext,
       moduleResolution: typescript.ModuleResolutionKind.NodeJs,

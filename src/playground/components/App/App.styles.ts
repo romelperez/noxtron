@@ -14,6 +14,8 @@ const createStyles = (theme: NTTheme): NTStyles => {
   const line2 = isDark
     ? `1px solid ${primary.deco(4)}`
     : `1px solid ${primary.deco(8)}`;
+  const scrollbarBg = primary.bg(8);
+  const scrollbarThumb = primary.bg(12);
 
   return {
     global: {
@@ -29,16 +31,16 @@ const createStyles = (theme: NTTheme): NTStyles => {
         ...theme.typography.body(0),
         backgroundColor: primary.bg(1),
         scrollbarWidth: 'thin',
-        scrollbarColor: 'red blue'
+        scrollbarColor: `${scrollbarThumb} ${scrollbarBg}`
       },
       '::-webkit-scrollbar': {
         width: 8
       },
       '::-webkit-scrollbar-track': {
-        background: 'red'
+        background: scrollbarBg
       },
       '::-webkit-scrollbar-thumb': {
-        background: 'red'
+        background: scrollbarThumb
       },
       '::selection': {
         backgroundColor: primary.text(4),

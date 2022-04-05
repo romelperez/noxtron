@@ -1,3 +1,5 @@
+// TODO: Runtime errors are not shown in the interface.
+
 import escape from 'lodash/escape';
 import uniqBy from 'lodash/uniqBy';
 

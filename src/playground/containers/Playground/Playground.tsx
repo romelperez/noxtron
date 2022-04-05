@@ -1,3 +1,6 @@
+// TODO: Allow to decouple typeDefinitions and sandboxes in different bundles
+// programatically, instead of the same one, to fasten loading time.
+
 import React, { ReactElement } from 'react';
 
 import type { NTPlaygroundSettings } from '../../../types';

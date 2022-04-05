@@ -1,3 +1,6 @@
+// TODO: On sandbox change, it should send scrollbar to top=0 and left=0.
+// TODO: Only show editor minimap on large viewport.
+
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useCallback, useEffect, useMemo, useRef } from 'react';

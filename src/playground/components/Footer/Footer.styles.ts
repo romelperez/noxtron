@@ -4,17 +4,20 @@ import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 const createStyles = (theme: NTTheme, hasLinks: boolean): NTStyles => {
   return {
     root: {
-      ...theme.typography.body(2),
       display: hasLinks ? 'flex' : 'none',
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
       padding: theme.space(3),
+      ...theme.typography.body(3),
 
       [breakpoints.medium.up]: {
         padding: theme.space(4),
         flexDirection: 'row',
         justifyContent: 'space-between'
+      },
+      [breakpoints.large.up]: {
+        ...theme.typography.body(2)
       }
     },
     section: {

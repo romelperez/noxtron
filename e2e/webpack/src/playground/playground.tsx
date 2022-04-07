@@ -155,9 +155,6 @@ const settings: NTPlaygroundSettings = {
       primary: 190, // Cyan
       secondary: 70 // Yellow
     }
-  },
-  onSandboxChange: (sandbox) => {
-    console.log('on sandbox change', sandbox);
   }
 };
 

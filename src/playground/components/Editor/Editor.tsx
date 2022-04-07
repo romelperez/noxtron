@@ -1,5 +1,4 @@
 // TODO: On sandbox change, it should send scrollbar to top=0 and left=0.
-// TODO: Only show editor minimap on large viewport.
 
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
@@ -27,6 +26,9 @@ const Editor = (props: EditorProps): ReactElement => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const store = useStore();
   const isBreakpointMediumUp = useMediaQuery(breakpoints.medium.up);
+  const isBreakpointLargeUp = useMediaQuery(breakpoints.large.up);
+  const isBreakpointXLargeUp = useMediaQuery(breakpoints.xlarge.up);
+  const isBreakpointXXLargeUp = useMediaQuery(breakpoints.xxlarge.up);
 
   const editorContainerElementRef = useRef<HTMLDivElement>(null);
   const editorElementRef = useRef<HTMLDivElement>(null);
@@ -48,7 +50,7 @@ const Editor = (props: EditorProps): ReactElement => {
   useEffect(() => {
     const editorElement = editorElementRef.current as HTMLDivElement;
     const { fontFamily, fontSize, fontWeight } = theme.typography.code(
-      isBreakpointMediumUp ? 1 : 2
+      isBreakpointLargeUp ? 2 : 3
     );
 
     editorRef.current = monaco.editor.create(editorElement, {
@@ -61,13 +63,13 @@ const Editor = (props: EditorProps): ReactElement => {
       showUnused: true,
       scrollBeyondLastLine: false,
       autoDetectHighContrast: false,
-      rulers: isBreakpointMediumUp ? [80] : [],
+      rulers: isBreakpointXLargeUp ? [80] : [],
       padding: {
         top: theme.space(4),
         bottom: theme.space(4)
       },
       minimap: {
-        enabled: isBreakpointMediumUp
+        enabled: isBreakpointXXLargeUp
       },
       fontFamily,
       // Assuming fontSize is in pixels, remove the unit name and convert to number.

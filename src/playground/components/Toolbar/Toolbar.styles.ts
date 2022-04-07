@@ -21,7 +21,12 @@ const createStyles = (theme: NTTheme): NTStyles => {
       display: 'inline-flex',
       justifyContent: 'center',
       alignItems: 'center',
-      marginRight: theme.space(2)
+      marginRight: theme.space(2),
+      ...theme.typography.cta(3),
+
+      [breakpoints.large.up]: {
+        ...theme.typography.cta(2)
+      }
     },
     optionIcon: {
       width: '1em',
@@ -33,12 +38,16 @@ const createStyles = (theme: NTTheme): NTStyles => {
     },
     location: {
       flex: 1,
-      ...theme.typography.code(1),
+      ...theme.typography.code(2),
       overflow: 'hidden',
-      marginLeft: theme.space(2),
+      marginLeft: theme.space(3),
       whiteSpace: 'nowrap',
       textOverflow: 'ellipsis',
-      letterSpacing: '-1px'
+      letterSpacing: '-1px',
+
+      [breakpoints.large.up]: {
+        ...theme.typography.code(2)
+      }
     }
   };
 };

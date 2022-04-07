@@ -1,4 +1,5 @@
 import type { NTTheme, NTStyles } from '../../../types';
+import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 
 const createStyles = (theme: NTTheme): NTStyles => {
   const isDark = theme.colorScheme === 'dark';
@@ -28,13 +29,18 @@ const createStyles = (theme: NTTheme): NTStyles => {
     item: {
       display: 'block',
       padding: theme.space(2),
-      ...theme.typography.cta(1),
+      ...theme.typography.cta(3),
       textTransform: 'none',
       wordBreak: 'break-all',
       color: isDark ? primary.text(12) : primary.text(18),
       transitionProperty: 'color, background-color',
       transitionTimingFunction: 'ease-out',
-      transitionDuration: '0.2s'
+      transitionDuration: '0.2s',
+
+      [breakpoints.large.up]: {
+        ...theme.typography.cta(2),
+        textTransform: 'none'
+      }
     },
     itemActive: {
       color: isDark ? secondary.text(12) : secondary.text(18),

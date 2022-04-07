@@ -20,14 +20,15 @@ const createStyles = (theme: NTTheme): NTStyles => {
       justifyContent: 'center',
       alignItems: 'center',
       marginRight: theme.space(3),
-      padding: `${theme.space(1)}px ${theme.space(2)}px`,
+      padding: theme.space(2),
+      ...theme.typography.cta(2),
 
       [breakpoints.medium.up]: {
-        marginRight: theme.space(4),
-        padding: theme.space(2)
+        marginRight: theme.space(4)
       },
       [breakpoints.large.up]: {
-        padding: `${theme.space(2)}px ${theme.space(4)}px`
+        padding: `${theme.space(2)}px ${theme.space(4)}px`,
+        ...theme.typography.cta(1)
       }
     },
     optionIcon: {

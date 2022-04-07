@@ -63,6 +63,14 @@ export interface NTBreakpoints {
     down: string;
     up: string;
   };
+  xlarge: {
+    down: string;
+    up: string;
+  };
+  xxlarge: {
+    down: string;
+    up: string;
+  };
 }
 
 // STYLES

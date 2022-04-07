@@ -1,6 +1,3 @@
-// TODO: Don't show error sandbox result when the browser URL is new in
-// custom with empty source code.
-
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useEffect, useMemo, useRef } from 'react';

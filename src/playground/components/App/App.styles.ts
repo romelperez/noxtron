@@ -91,7 +91,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
     explorer: {
       flex: 1,
       minHeight: 0, // Height overflow issue.
-      backgroundColor: bg1,
+      backgroundColor: bg2,
 
       [breakpoints.medium.up]: {
         flex: 'none',

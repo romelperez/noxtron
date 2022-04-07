@@ -43,6 +43,8 @@ const sandboxTranspilationInitial: NTStoreSandboxTranspilation = {
   error: ''
 };
 
+const newCustomSandboxMsg = '// Select a sandbox or create a custom one...\n';
+
 const StoreProvider = (props: StoreProviderProps): ReactElement => {
   const { children } = props;
 
@@ -177,12 +179,12 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
       else {
         routerState.setOptions({
           type: 'custom',
-          code: '// Custom sandbox...\n'
+          code: newCustomSandboxMsg
         });
         setSandboxSelected(null);
       }
     } else if (type === 'custom') {
-      editorModel.setValue(code || '// Custom sandbox...\n');
+      editorModel.setValue(code || newCustomSandboxMsg);
       setSandboxSelected(null);
     }
   }, [routerState, sandboxes, sandboxSelected]);

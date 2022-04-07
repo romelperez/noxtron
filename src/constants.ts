@@ -30,5 +30,13 @@ export const NT_BREAKPOINTS: NTBreakpoints = {
   large: {
     down: '@media (max-width: 1023px)',
     up: '@media (min-width: 1024px)'
+  },
+  xlarge: {
+    down: '@media (max-width: 1443px)',
+    up: '@media (min-width: 1444px)'
+  },
+  xxlarge: {
+    down: '@media (max-width: 1919px)',
+    up: '@media (min-width: 1920px)'
   }
 };

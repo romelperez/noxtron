@@ -186,6 +186,13 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
 
   useEffect(() => {
     const onTranspile = (): void => {
+      // If transpilation takes too long, show an empty preview meanwhile.
+      setSandboxTranspilation({
+        importsLines: [],
+        code: '// NOT READY',
+        error: ''
+      });
+
       transpile(editorModel.model).then((compilation) => {
         setSandboxTranspilation(compilation);
 

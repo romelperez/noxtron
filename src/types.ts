@@ -194,6 +194,8 @@ export interface NTPlaygroundSettings {
     mobile?: ReactNode[][];
     desktop?: ReactNode[][];
   };
+  onRouteChange?: () => void;
+  onSandboxChange?: (sandbox: NTSandbox | null) => void;
 }
 
 // SANBOX SETTINGS

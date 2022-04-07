@@ -18,6 +18,7 @@ import { decodeURLParameter } from '../../../utils/decodeURLParameter';
 
 import { useMediaQuery } from '../../utils/useMediaQuery';
 import { RouterStateContext } from '../../utils/RouterStateContext';
+import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 
 interface RouterStateProviderProps {
   children: ReactNode;
@@ -43,6 +44,7 @@ const RouterStateProvider = (props: RouterStateProviderProps): ReactElement => {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const playgroundSettings = usePlaygroundSettings();
   const isMQMediumUp = useMediaQuery(NT_BREAKPOINTS.medium.up);
 
   const routerState = useMemo(() => {
@@ -181,6 +183,10 @@ const RouterStateProvider = (props: RouterStateProviderProps): ReactElement => {
 
     setOptions({ explorer, editor, preview, dark });
   }, [isMQMediumUp]);
+
+  useEffect(() => {
+    playgroundSettings.onRouteChange?.();
+  }, [playgroundSettings, location]);
 
   return (
     <RouterStateContext.Provider value={routerState}>

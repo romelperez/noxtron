@@ -46,8 +46,13 @@ const sandboxTranspilationInitial: NTStoreSandboxTranspilation = {
 const StoreProvider = (props: StoreProviderProps): ReactElement => {
   const { children } = props;
 
-  const { basePath, codeLanguage, typeDefinitions, sandboxes } =
-    usePlaygroundSettings();
+  const {
+    basePath,
+    codeLanguage,
+    typeDefinitions,
+    sandboxes,
+    onSandboxChange
+  } = usePlaygroundSettings();
   const routerState = useRouterState();
 
   const [sandboxSelected, setSandboxSelected] = useState<NTSandbox | null>(
@@ -171,9 +176,11 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
       // user is redirected to a custom sandbox since none can be visually shown.
       else {
         routerState.setOptions({ type: 'custom' });
+        setSandboxSelected(null);
       }
     } else if (type === 'custom') {
       editorModel.setValue(code);
+      setSandboxSelected(null);
     }
   }, [routerState, sandboxes, sandboxSelected]);
 
@@ -224,6 +231,10 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
       );
     };
   }, [routerState, store]);
+
+  useEffect(() => {
+    onSandboxChange?.(sandboxSelected);
+  }, [sandboxSelected]);
 
   return (
     <StoreContext.Provider value={store}>{children}</StoreContext.Provider>

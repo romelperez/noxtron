@@ -175,11 +175,14 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
       // If it is type=predefined and the provided sandbox path is not found,
       // user is redirected to a custom sandbox since none can be visually shown.
       else {
-        routerState.setOptions({ type: 'custom' });
+        routerState.setOptions({
+          type: 'custom',
+          code: '// Custom sandbox...\n'
+        });
         setSandboxSelected(null);
       }
     } else if (type === 'custom') {
-      editorModel.setValue(code);
+      editorModel.setValue(code || '// Custom sandbox...\n');
       setSandboxSelected(null);
     }
   }, [routerState, sandboxes, sandboxSelected]);

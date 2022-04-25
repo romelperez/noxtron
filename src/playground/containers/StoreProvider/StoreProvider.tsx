@@ -36,7 +36,7 @@ interface StoreProviderProps {
 }
 
 const sandboxTranspilationInitial: NTStoreSandboxTranspilation = {
-  isTranspiling: true,
+  isTranspiling: false,
   importsLines: [],
   code: '// NOT READY',
   error: ''
@@ -188,7 +188,19 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
   }, [routerState, sandboxes, sandboxSelected]);
 
   useEffect(() => {
+    const setTranspilationProcessingState = (): void => {
+      const isEditorEmpty = editorModel.getValue() !== editorCustomSandboxMsg;
+      setSandboxTranspilation(() => ({
+        isTranspiling: isEditorEmpty,
+        importsLines: [],
+        code: '//',
+        error: ''
+      }));
+    };
+
     const onTranspile = (): void => {
+      setTranspilationProcessingState();
+
       transpile(editorModel.model).then((compilation) => {
         setSandboxTranspilation(() => compilation);
 
@@ -208,13 +220,7 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
 
     const onTranspileDebounce = debounce(onTranspile, 500);
     const onChangeSubscription = editorModel.model.onDidChangeContent(() => {
-      // If transpilation takes too long, show an empty preview meanwhile.
-      setSandboxTranspilation(() => ({
-        isTranspiling: true,
-        importsLines: [],
-        code: '// NOT READY',
-        error: ''
-      }));
+      setTranspilationProcessingState();
       onTranspileDebounce();
     });
 

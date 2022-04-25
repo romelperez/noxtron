@@ -6,10 +6,6 @@
 
 // TODO: In mobile, the default panel should be the explorer.
 
-// TODO: On first default render, when transitioning from light mode to dark mode,
-// it is blinking. The color scheme should be rendered only after router options
-// are setup.
-
 import React, { ReactElement } from 'react';
 
 import type { NTPlaygroundSettings } from '../../../types';

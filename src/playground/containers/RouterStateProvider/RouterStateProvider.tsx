@@ -1,4 +1,10 @@
-import React, { ReactElement, ReactNode, useEffect, useMemo } from 'react';
+import React, {
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useState,
+  useMemo
+} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import type {
@@ -46,6 +52,10 @@ const RouterStateProvider = (props: RouterStateProviderProps): ReactElement => {
   const navigate = useNavigate();
   const playgroundSettings = usePlaygroundSettings();
   const isMQMediumUp = useMediaQuery(NT_BREAKPOINTS.medium.up);
+
+  // Since the router state will be processed on the first render, define a
+  // variable to know when it is ready.
+  const [isRouterStateReady, setIsRouterStateReady] = useState(false);
 
   const routerState = useMemo(() => {
     const options = getLocationOptions();
@@ -185,12 +195,17 @@ const RouterStateProvider = (props: RouterStateProviderProps): ReactElement => {
   }, [isMQMediumUp]);
 
   useEffect(() => {
+    // Wait until the router state is setup to indicate it is ready.
+    setTimeout(() => setIsRouterStateReady(() => true), 0);
+  }, []);
+
+  useEffect(() => {
     playgroundSettings.onRouteChange?.();
   }, [playgroundSettings, location]);
 
   return (
     <RouterStateContext.Provider value={routerState}>
-      {children}
+      {isRouterStateReady ? children : null}
     </RouterStateContext.Provider>
   );
 };

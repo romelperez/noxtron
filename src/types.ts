@@ -152,6 +152,7 @@ export interface NTStoreEditorModel {
 }
 
 export interface NTStoreSandboxTranspilation {
+  isTranspiling: boolean;
   importsLines: string[];
   code: string;
   error: string;

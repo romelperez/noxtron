@@ -36,10 +36,8 @@ interface StoreProviderProps {
 }
 
 const sandboxTranspilationInitial: NTStoreSandboxTranspilation = {
+  isTranspiling: true,
   importsLines: [],
-  // Include an empty piece of code so the sandbox receives something valid
-  // to execute until the first real compilation occurs. Otherwise, it will
-  // throw an error for empty editor code.
   code: '// NOT READY',
   error: ''
 };
@@ -212,6 +210,7 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
     const onChangeSubscription = editorModel.model.onDidChangeContent(() => {
       // If transpilation takes too long, show an empty preview meanwhile.
       setSandboxTranspilation(() => ({
+        isTranspiling: true,
         importsLines: [],
         code: '// NOT READY',
         error: ''

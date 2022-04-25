@@ -66,6 +66,7 @@ function getTranspileFirstErrorMessage(
 
 function transpile(model: NTMonacoModel): Promise<NTStoreSandboxTranspilation> {
   const transpiledOutput: NTStoreSandboxTranspilation = {
+    isTranspiling: false,
     importsLines: [],
     code: '',
     error: ''

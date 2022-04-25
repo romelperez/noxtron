@@ -61,12 +61,17 @@ const Preview = (props: PreviewProps): ReactElement => {
 
   return (
     <div className={cx('preview', className)} css={styles.root}>
-      <iframe
-        className="preview__iframe"
-        ref={iframeRef}
-        css={styles.sandbox}
-        src={`${sandboxPath}?${sandboxURLSearch}`}
-      />
+      {store.sandboxTranspilation.isTranspiling && (
+        <div css={styles.transpilationInProgress} />
+      )}
+      {!store.sandboxTranspilation.isTranspiling && (
+        <iframe
+          className="preview__iframe"
+          ref={iframeRef}
+          css={styles.sandbox}
+          src={`${sandboxPath}?${sandboxURLSearch}`}
+        />
+      )}
     </div>
   );
 };

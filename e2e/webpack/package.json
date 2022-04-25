@@ -2,8 +2,8 @@
   "name": "e2e-webpack",
   "private": true,
   "engines": {
-    "node": ">=16.14",
-    "npm": ">=8.3"
+    "node": "^16.14",
+    "npm": "^8.3"
   },
   "dependencies": {
     "css-loader": "^6.7.1",

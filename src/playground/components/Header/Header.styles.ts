@@ -8,24 +8,17 @@ const createStyles = (theme: NTTheme): NTStyles => {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      padding: theme.space(3),
-
-      [breakpoints.medium.up]: {
-        padding: theme.space(4)
-      }
+      padding: theme.space(2)
     },
     options: {},
     option: {
       display: 'inline-flex',
       justifyContent: 'center',
       alignItems: 'center',
-      marginRight: theme.space(3),
+      marginRight: theme.space(2),
       padding: theme.space(2),
       ...theme.typography.cta(2),
 
-      [breakpoints.medium.up]: {
-        marginRight: theme.space(4)
-      },
       [breakpoints.large.up]: {
         padding: `${theme.space(2)}px ${theme.space(4)}px`,
         ...theme.typography.cta(1)

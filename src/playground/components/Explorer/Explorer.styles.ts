@@ -10,7 +10,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
       display: 'flex',
       flexDirection: 'column',
       overflowY: 'auto',
-      padding: theme.space(4)
+      padding: theme.space(2)
     },
     nav: {
       flex: 1,

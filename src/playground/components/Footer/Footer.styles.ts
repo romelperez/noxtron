@@ -8,11 +8,11 @@ const createStyles = (theme: NTTheme, hasLinks: boolean): NTStyles => {
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      padding: theme.space(3),
+      padding: theme.space(2),
       ...theme.typography.body(3),
 
       [breakpoints.medium.up]: {
-        padding: theme.space(4),
+        padding: theme.space(2),
         flexDirection: 'row',
         justifyContent: 'space-between'
       },
@@ -36,7 +36,7 @@ const createStyles = (theme: NTTheme, hasLinks: boolean): NTStyles => {
     item: {
       display: 'inline-block',
       '& + &': {
-        marginLeft: theme.space(4)
+        marginLeft: theme.space(2)
       }
     }
   };

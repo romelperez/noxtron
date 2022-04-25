@@ -63,8 +63,8 @@ const Editor = (props: EditorProps): ReactElement => {
       autoDetectHighContrast: false,
       rulers: isBreakpointXLargeUp ? [80] : [],
       padding: {
-        top: theme.space(4),
-        bottom: theme.space(4)
+        top: theme.space(2),
+        bottom: theme.space(2)
       },
       minimap: {
         enabled: isBreakpointXXLargeUp

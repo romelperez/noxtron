@@ -5,7 +5,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
   return {
     root: {
       display: 'block',
-      padding: theme.space(4),
+      padding: theme.space(2),
 
       [breakpoints.medium.up]: {
         display: 'flex',

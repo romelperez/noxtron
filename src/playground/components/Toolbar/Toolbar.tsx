@@ -74,7 +74,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
         <Button
           css={styles.option}
           size="small"
-          title="Open preview in an independent isolated window"
+          title="Make a copy of the current sandbox and open preview in an independent isolated window"
           disabled={!optionsBooleans.preview || hasErrors}
           onClick={() => store?.trigger('openIsolated')}
         >

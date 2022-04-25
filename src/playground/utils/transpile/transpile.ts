@@ -1,3 +1,6 @@
+// TODO: Allow user to configure if sematic/type errors prevent from
+// executing code.
+
 import * as monaco from 'monaco-editor';
 
 import type {

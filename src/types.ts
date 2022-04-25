@@ -193,6 +193,7 @@ export interface NTPlaygroundSettings {
   codeLanguage: 'javascript' | 'typescript';
   typeDefinitions: NTPlaygroundSettingsTypeDefinition[];
   sandboxes: NTSandbox[];
+  editorCustomSandboxMsg?: string;
   theme?: NTPlaygroundSettingsTheme;
   title?: {
     mobile?: ReactNode;

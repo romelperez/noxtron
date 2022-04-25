@@ -7,6 +7,7 @@ import React, {
   useRef
 } from 'react';
 import * as monaco from 'monaco-editor';
+import debounce from 'lodash/debounce';
 
 import type {
   NTMonacoCompilerOptions,
@@ -43,8 +44,6 @@ const sandboxTranspilationInitial: NTStoreSandboxTranspilation = {
   error: ''
 };
 
-const newCustomSandboxMsg = '// Select a sandbox or create a custom one...\n';
-
 const StoreProvider = (props: StoreProviderProps): ReactElement => {
   const { children } = props;
 
@@ -53,6 +52,7 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
     codeLanguage,
     typeDefinitions,
     sandboxes,
+    editorCustomSandboxMsg,
     onSandboxChange
   } = usePlaygroundSettings();
   const routerState = useRouterState();
@@ -179,27 +179,20 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
       else {
         routerState.setOptions({
           type: 'custom',
-          code: newCustomSandboxMsg
+          code: editorCustomSandboxMsg
         });
         setSandboxSelected(null);
       }
     } else if (type === 'custom') {
-      editorModel.setValue(code || newCustomSandboxMsg);
+      editorModel.setValue(code || (editorCustomSandboxMsg as string));
       setSandboxSelected(null);
     }
   }, [routerState, sandboxes, sandboxSelected]);
 
   useEffect(() => {
     const onTranspile = (): void => {
-      // If transpilation takes too long, show an empty preview meanwhile.
-      setSandboxTranspilation({
-        importsLines: [],
-        code: '// NOT READY',
-        error: ''
-      });
-
       transpile(editorModel.model).then((compilation) => {
-        setSandboxTranspilation(compilation);
+        setSandboxTranspilation(() => compilation);
 
         if (routerState.optionsControls.type === 'custom') {
           // A ref to the routerState is used to prevent a loop in updates.
@@ -215,8 +208,16 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
       });
     };
 
-    const onChangeSubscription =
-      editorModel.model.onDidChangeContent(onTranspile);
+    const onTranspileDebounce = debounce(onTranspile, 500);
+    const onChangeSubscription = editorModel.model.onDidChangeContent(() => {
+      // If transpilation takes too long, show an empty preview meanwhile.
+      setSandboxTranspilation(() => ({
+        importsLines: [],
+        code: '// NOT READY',
+        error: ''
+      }));
+      onTranspileDebounce();
+    });
 
     // Transpile initial source code.
     onTranspile();

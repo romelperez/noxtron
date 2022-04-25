@@ -1,5 +1,3 @@
-// TODO: On sandbox change, it should send scrollbar to top=0 and left=0.
-
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useCallback, useEffect, useMemo, useRef } from 'react';
@@ -90,6 +88,13 @@ const Editor = (props: EditorProps): ReactElement => {
   useEffect(() => {
     onResize();
   }, [routerState]);
+
+  useEffect(() => {
+    editorRef.current?.setScrollPosition({
+      scrollLeft: 0,
+      scrollTop: 0
+    });
+  }, [routerState.optionsControls.type, routerState.optionsControls.sandbox]);
 
   useEffect(() => {
     editorRef.current?.updateOptions({

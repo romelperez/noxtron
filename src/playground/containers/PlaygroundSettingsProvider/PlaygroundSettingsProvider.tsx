@@ -18,6 +18,8 @@ const PlaygroundSettingsProvider = (
       codeLanguage: 'javascript',
       typeDefinitions: [],
       sandboxes: [],
+      editorCustomSandboxMsg:
+        '// Select a sandbox or continue editing this custom one...\n',
       ...(props.settings as Partial<NTPlaygroundSettings>),
       basePath: (props.settings.basePath || '').replace(/\/$/, '') || '/'
     };

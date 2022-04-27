@@ -17,10 +17,13 @@ configured sandboxes, and a sandbox app to execute the sandboxes source code.
 
 ![Noxtron Preview](https://raw.githubusercontent.com/romelperez/noxtron/main/preview.jpg)
 
-There is a complete end-to-end example use case using TypeScript, React, and
-Webpack in [e2e/webpack](https://github.com/romelperez/noxtron/tree/main/e2e/webpack).
+## Demos
 
-## Specifications
+- [e2e/webpack](https://github.com/romelperez/noxtron/tree/main/e2e/webpack) -
+  Webpack, TypeScript, React.
+- [Arwes Playground](https://next.arwes.dev/play) - Webpack, TypeScript, React.
+
+## Features
 
 - It uses the [monaco-editor](https://microsoft.github.io/monaco-editor), and it
   requires different HTML and JavaScript files, so it needs to be configured with

@@ -3,10 +3,12 @@ const convertLocationSearchToString = (
 ): string => {
   return Object.keys(locationSearch)
     .filter((optionName: string) => locationSearch[optionName] !== undefined)
-    .map(
-      (optionName: string) =>
-        `${optionName}=${String(locationSearch[optionName])}`
-    )
+    .map((optionName: string) => {
+      const optionValue = window.encodeURIComponent(
+        String(locationSearch[optionName])
+      );
+      return `${optionName}=${optionValue}`;
+    })
     .join('&');
 };
 

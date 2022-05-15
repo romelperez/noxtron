@@ -2,12 +2,13 @@ const convertLocationSearchToObject = (
   locationSearch: string
 ): Record<string, string> => {
   return locationSearch
-    .replace('?', '')
+    .replace(/^\?/, '')
     .split('&')
     .filter(Boolean)
     .reduce((allOptions, option) => {
       const [optionName, optionValue] = option.split('=').slice(0, 2);
-      return { ...allOptions, [optionName]: optionValue };
+      const value = window.decodeURIComponent(optionValue);
+      return { ...allOptions, [optionName]: value };
     }, {});
 };
 

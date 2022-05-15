@@ -1,6 +1,6 @@
 const decodeURLParameter = (parameter: string | undefined | null): string => {
   try {
-    return window.atob(window.decodeURI(parameter || ''));
+    return window.atob(parameter || '');
   } catch (error) {
     console.error(error);
     return '';

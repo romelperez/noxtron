@@ -1,6 +1,6 @@
 {
   "name": "noxtron",
-  "version": "0.7.0-alpha.1",
+  "version": "0.7.0-next.1",
   "publishConfig": {
     "access": "public"
   },

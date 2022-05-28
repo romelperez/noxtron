@@ -20,7 +20,7 @@ import type {
 } from '../../../types';
 import { StoreContext } from '../../utils/StoreContext';
 import { useRouterState } from '../../utils/useRouterState';
-import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
+import { usePlaygroundSetup } from '../../utils/usePlaygroundSetup';
 import { findSandboxByPath } from '../../utils/findSandboxByPath';
 import { transpile } from '../../utils/transpile';
 
@@ -52,7 +52,7 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
     sandboxes,
     editorCustomSandboxMsg,
     onSandboxChange
-  } = usePlaygroundSettings();
+  } = usePlaygroundSetup();
   const routerState = useRouterState();
 
   const [sandboxSelected, setSandboxSelected] = useState<NTSandbox | null>(

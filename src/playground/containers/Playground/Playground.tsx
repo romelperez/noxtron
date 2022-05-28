@@ -1,6 +1,3 @@
-// TODO: Allow to decouple typeDefinitions and sandboxes in different bundles
-// programatically, instead of the same one, to fasten loading time.
-
 // TODO: Show loading indicator for editor and preview panels when they are
 // working/processing the sandbox data.
 
@@ -9,7 +6,7 @@
 import React, { ReactElement } from 'react';
 
 import type { NTPlaygroundSettings } from '../../../types';
-import { PlaygroundSettingsProvider } from '../PlaygroundSettingsProvider';
+import { PlaygroundSetupProvider } from '../PlaygroundSetupProvider';
 import { RouterProvider } from '../RouterProvider';
 import { RouterStateProvider } from '../RouterStateProvider';
 import { ThemeProvider } from '../ThemeProvider';
@@ -24,7 +21,7 @@ const Playground = (props: PlaygroundProps): ReactElement => {
   const { settings } = props;
 
   return (
-    <PlaygroundSettingsProvider settings={settings}>
+    <PlaygroundSetupProvider settings={settings}>
       <RouterProvider>
         <RouterStateProvider>
           <ThemeProvider>
@@ -34,7 +31,7 @@ const Playground = (props: PlaygroundProps): ReactElement => {
           </ThemeProvider>
         </RouterStateProvider>
       </RouterProvider>
-    </PlaygroundSettingsProvider>
+    </PlaygroundSetupProvider>
   );
 };
 

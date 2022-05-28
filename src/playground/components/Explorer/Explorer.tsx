@@ -5,7 +5,7 @@ import { ReactElement, useMemo } from 'react';
 import type { NTStyles, NTSandbox } from '../../../types';
 import { cx } from '../../utils/cx';
 import { useRouterState } from '../../utils/useRouterState';
-import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
+import { usePlaygroundSetup } from '../../utils/usePlaygroundSetup';
 import { createStyles } from './Explorer.styles';
 
 interface ExplorerNavListProps {
@@ -74,16 +74,30 @@ const Explorer = (props: ExplorerProps): ReactElement => {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const { sandboxes } = usePlaygroundSettings();
+  const { isSandboxesLoading, hasSandboxesError, sandboxes } =
+    usePlaygroundSetup();
+
+  const noSandboxes =
+    !isSandboxesLoading && !hasSandboxesError && !sandboxes.length;
 
   return (
     <aside className={cx('explorer', className)} css={styles.root}>
       <nav css={styles.nav}>
-        <ExplorerNavList
-          styles={styles}
-          items={sandboxes}
-          currentSandboxPath={[]}
-        />
+        {isSandboxesLoading && <p css={styles.status}>Loading sandboxes...</p>}
+
+        {hasSandboxesError && (
+          <p css={styles.status}>Error loading sandboxes.</p>
+        )}
+
+        {noSandboxes && <p css={styles.status}>No sandboxes available.</p>}
+
+        {!!sandboxes.length && (
+          <ExplorerNavList
+            styles={styles}
+            items={sandboxes}
+            currentSandboxPath={[]}
+          />
+        )}
       </nav>
     </aside>
   );

@@ -1,7 +1,7 @@
 import React, { ReactElement, ReactNode } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
+import { usePlaygroundSetup } from '../../utils/usePlaygroundSetup';
 
 interface RouterProviderProps {
   children: ReactNode;
@@ -10,7 +10,7 @@ interface RouterProviderProps {
 const RouterProvider = (props: RouterProviderProps): ReactElement => {
   const { children } = props;
 
-  const { basePath } = usePlaygroundSettings();
+  const { basePath } = usePlaygroundSetup();
 
   return (
     <BrowserRouter basename={basePath}>

@@ -7,7 +7,7 @@ import { encodeURLParameter } from '../../../utils/encodeURLParameter';
 
 import { cx } from '../../utils/cx';
 import { useStore } from '../../utils/useStore';
-import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
+import { usePlaygroundSetup } from '../../utils/usePlaygroundSetup';
 import { createStyles } from './Preview.styles';
 
 interface PreviewProps {
@@ -20,7 +20,7 @@ const Preview = (props: PreviewProps): ReactElement => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const store = useStore();
-  const { sandboxPath } = usePlaygroundSettings();
+  const { sandboxPath } = usePlaygroundSetup();
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const sandboxURLSearch: string = useMemo(() => {

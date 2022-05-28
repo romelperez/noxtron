@@ -3,7 +3,7 @@ import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
-import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
+import { usePlaygroundSetup } from '../../utils/usePlaygroundSetup';
 import { useMediaQuery } from '../../utils/useMediaQuery';
 import { createStyles } from './Footer.styles';
 
@@ -16,7 +16,7 @@ const Footer = (props: FooterProps): ReactElement => {
 
   const theme = useTheme();
   const isMDMediumUp = useMediaQuery(breakpoints.medium.up);
-  const { links = {} } = usePlaygroundSettings();
+  const { links = {} } = usePlaygroundSetup();
 
   const { mobile = [], desktop = [] } = links;
   const viewportLinks = isMDMediumUp ? desktop : mobile;

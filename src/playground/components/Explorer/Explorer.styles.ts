@@ -68,6 +68,12 @@ const createStyles = (theme: NTTheme): NTStyles => {
       '&:hover, &:focus': {
         color: isDark ? secondary.textHigh(14) : secondary.textHigh(20)
       }
+    },
+    status: {
+      marginTop: theme.space(1),
+      marginBottom: theme.space(1),
+      ...theme.typography.body(2),
+      textAlign: 'center'
     }
   };
 };

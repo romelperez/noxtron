@@ -191,9 +191,7 @@ export interface NTPlaygroundSettings {
   basePath: string;
   playgroundPath: string;
   sandboxPath: string;
-  codeLanguage: 'javascript' | 'typescript';
-  typeDefinitions: NTPlaygroundSettingsTypeDefinition[];
-  sandboxes: NTSandbox[];
+  codeLanguage?: 'javascript' | 'typescript';
   editorCustomSandboxMsg?: string;
   theme?: NTPlaygroundSettingsTheme;
   title?: {
@@ -204,8 +202,22 @@ export interface NTPlaygroundSettings {
     mobile?: ReactNode[][];
     desktop?: ReactNode[][];
   };
+  getSandboxes: () => Promise<NTSandbox[]>;
+  getTypeDefinitions?: () => Promise<NTPlaygroundSettingsTypeDefinition[]>;
   onRouteChange?: () => void;
   onSandboxChange?: (sandbox: NTSandbox | null) => void;
+}
+
+// PLAYGROUND SETUP
+
+export interface NTPlaygroundSetup
+  extends Omit<NTPlaygroundSettings, 'getTypeDefinitions' | 'getSandboxes'> {
+  codeLanguage: 'javascript' | 'typescript';
+  editorCustomSandboxMsg: string;
+  isSandboxesLoading: boolean;
+  hasSandboxesError: boolean;
+  sandboxes: NTSandbox[];
+  typeDefinitions: NTPlaygroundSettingsTypeDefinition[];
 }
 
 // SANBOX SETTINGS

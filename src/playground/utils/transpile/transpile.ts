@@ -1,12 +1,6 @@
-// TODO: Allow user to configure if sematic/type errors prevent from
-// executing code.
-
 import * as monaco from 'monaco-editor';
 
-import type {
-  NTStoreSandboxTranspilation,
-  NTMonacoModel
-} from '../../../types';
+import type { NTStoreTranspilation, NTMonacoModel } from '../../../types';
 import { convertCodeImportsToRefs } from '../../utils/convertCodeImportsToRefs';
 
 interface TranspileDiagnostic {
@@ -64,9 +58,9 @@ function getTranspileFirstErrorMessage(
     .join('\n\n');
 }
 
-function transpile(model: NTMonacoModel): Promise<NTStoreSandboxTranspilation> {
-  const transpiledOutput: NTStoreSandboxTranspilation = {
-    isTranspiling: false,
+function transpile(model: NTMonacoModel): Promise<NTStoreTranspilation> {
+  const transpiledOutput: NTStoreTranspilation = {
+    isLoading: false,
     importsLines: [],
     code: '',
     error: ''

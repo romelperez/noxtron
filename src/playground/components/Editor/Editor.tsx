@@ -10,6 +10,7 @@ import { cx } from '../../utils/cx';
 import { useMediaQuery } from '../../utils/useMediaQuery';
 import { useRouterState } from '../../utils/useRouterState';
 import { useStore } from '../../utils/useStore';
+import { Loading } from '../Loading';
 import { createStyles } from './Editor.styles';
 
 interface EditorProps {
@@ -22,7 +23,11 @@ const Editor = (props: EditorProps): ReactElement => {
   const routerState = useRouterState();
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const store = useStore();
+  const exploration = useStore((state) => state.exploration);
+  const editorState = useStore((state) => state.editor);
+  const subscribe = useStore((state) => state.subscribe);
+  const unsubscribe = useStore((state) => state.unsubscribe);
+
   const isBreakpointMediumUp = useMediaQuery(breakpoints.medium.up);
   const isBreakpointLargeUp = useMediaQuery(breakpoints.large.up);
   const isBreakpointXLargeUp = useMediaQuery(breakpoints.xlarge.up);
@@ -31,6 +36,8 @@ const Editor = (props: EditorProps): ReactElement => {
   const editorContainerElementRef = useRef<HTMLDivElement>(null);
   const editorElementRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<NTMonacoEditor | null>(null);
+
+  const isLoading = !editorState.model || exploration.isLoading;
 
   const onResize = useCallback(
     throttle((): void => {
@@ -46,13 +53,17 @@ const Editor = (props: EditorProps): ReactElement => {
   );
 
   useEffect(() => {
+    if (isLoading || editorRef.current) {
+      return;
+    }
+
     const editorElement = editorElementRef.current as HTMLDivElement;
     const { fontFamily, fontSize, fontWeight } = theme.typography.code(
       isBreakpointLargeUp ? 2 : 3
     );
 
     editorRef.current = monaco.editor.create(editorElement, {
-      model: store.editorModel.model,
+      model: editorState.model,
       theme: theme.colorScheme === 'dark' ? 'vs-dark' : 'vs',
       readOnly: !isBreakpointMediumUp,
       domReadOnly: !isBreakpointMediumUp,
@@ -83,7 +94,7 @@ const Editor = (props: EditorProps): ReactElement => {
       editorRef.current?.dispose();
       window.removeEventListener('resize', onResize);
     };
-  }, []);
+  }, [isLoading]);
 
   useEffect(() => {
     onResize();
@@ -104,24 +115,24 @@ const Editor = (props: EditorProps): ReactElement => {
 
   useEffect(() => {
     const onCopy = (): void => {
-      window.navigator.clipboard.writeText(store.editorModel.getValue());
+      window.navigator.clipboard.writeText(editorState.getValue());
     };
 
     const onCustomSandbox = (): void => {
       routerState.setOptions({
         type: 'custom',
-        code: store.editorModel.getValue()
+        code: editorState.getValue()
       });
     };
 
-    store.subscribe('copyCode', onCopy);
-    store.subscribe('customSandbox', onCustomSandbox);
+    subscribe('copyCode', onCopy);
+    subscribe('customSandbox', onCustomSandbox);
 
     return () => {
-      store.unsubscribe('copyCode', onCopy);
-      store.unsubscribe('customSandbox', onCustomSandbox);
+      unsubscribe('copyCode', onCopy);
+      unsubscribe('customSandbox', onCustomSandbox);
     };
-  }, [routerState, store]);
+  }, [routerState, editorState]);
 
   return (
     <div
@@ -129,6 +140,7 @@ const Editor = (props: EditorProps): ReactElement => {
       className={cx('editor', className)}
       css={styles.root}
     >
+      {isLoading && <Loading full={false} />}
       <div
         ref={editorElementRef}
         className="editor__monaco-editor"

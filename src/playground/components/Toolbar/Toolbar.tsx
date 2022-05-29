@@ -27,13 +27,14 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
   const { optionsControls, optionsBooleans } = useRouterState();
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const store = useStore();
+  const transpilation = useStore((state) => state.transpilation);
+  const trigger = useStore((state) => state.trigger);
 
   const location =
     optionsControls.type === 'predefined'
       ? optionsControls.sandbox.join(' / ')
       : '';
-  const hasErrors = !!store.sandboxTranspilation.error;
+  const hasErrors = !!transpilation.error;
 
   return (
     <nav className={cx('toolbar', className)} css={styles.root}>
@@ -43,7 +44,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           size="small"
           title="Reload preview"
           disabled={!optionsBooleans.preview || hasErrors}
-          onClick={() => store?.trigger('reload')}
+          onClick={() => trigger('reload')}
         >
           <Icon css={styles.optionIcon} path={mdiReload} />
           <span css={styles.optionLabel}>Reload</span>
@@ -54,7 +55,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           size="small"
           title="Reset predefined sandbox source code"
           disabled={optionsControls.type === 'custom'}
-          onClick={() => store?.trigger('resetPredefinedSandboxCode')}
+          onClick={() => trigger('resetPredefinedSandboxCode')}
         >
           <Icon css={styles.optionIcon} path={mdiBackupRestore} />
           <span css={styles.optionLabel}>Reset</span>
@@ -65,7 +66,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           size="small"
           disabled={optionsControls.type === 'custom'}
           title="Make custom sandbox from current source code"
-          onClick={() => store?.trigger('customSandbox')}
+          onClick={() => trigger('customSandbox')}
         >
           <Icon css={styles.optionIcon} path={mdiPencil} />
           <span css={styles.optionLabel}>Custom Sandbox</span>
@@ -76,7 +77,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           size="small"
           title="Make a copy of the current sandbox and open preview in an independent isolated window"
           disabled={!optionsBooleans.preview || hasErrors}
-          onClick={() => store?.trigger('openIsolated')}
+          onClick={() => trigger('openIsolated')}
         >
           <Icon css={styles.optionIcon} path={mdiTestTube} />
           <span css={styles.optionLabel}>Open Isolated</span>
@@ -86,7 +87,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           css={styles.option}
           size="small"
           title="Copy source code"
-          onClick={() => store?.trigger('copyCode')}
+          onClick={() => trigger('copyCode')}
         >
           <Icon css={styles.optionIcon} path={mdiContentCopy} />
           <span css={styles.optionLabel}>Copy Code</span>

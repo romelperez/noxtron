@@ -134,48 +134,15 @@ export interface NTSandboxImportRef {
   dependencySlug: string;
 }
 
-// STORE
-
-export type NTStoreEvent =
-  | 'reload'
-  | 'resetPredefinedSandboxCode'
-  | 'copyCode'
-  | 'customSandbox'
-  | 'openIsolated';
-
-export type NTStoreSubscriber = () => void;
-
-export interface NTStoreEditorModel {
-  model: NTMonacoModel;
-  getValue: () => string;
-  setValue: (newValue: string) => void;
-}
-
-export interface NTStoreSandboxTranspilation {
-  isTranspiling: boolean;
-  importsLines: string[];
-  code: string;
-  error: string;
-}
-
-export interface NTStore {
-  editorModel: NTStoreEditorModel;
-  sandboxSelected: NTSandbox | null;
-  sandboxTranspilation: NTStoreSandboxTranspilation;
-  subscribe: (event: NTStoreEvent, subscriber: NTStoreSubscriber) => void;
-  unsubscribe: (event: NTStoreEvent, subscriber: NTStoreSubscriber) => void;
-  trigger: (event: NTStoreEvent) => void;
-}
-
 // PLAYGROUND SETTINGS
 
 export type NTPlaygroundSettingsTheme = Partial<{
-  typographyCommons: {
+  typographyCommons: Partial<{
     heading: CSSProperties;
     body: CSSProperties;
     cta: CSSProperties;
     code: CSSProperties;
-  };
+  }>;
   colorHues: Partial<{
     primary: number;
     secondary: number;
@@ -208,22 +175,6 @@ export interface NTPlaygroundSettings {
   onSandboxChange?: (sandbox: NTSandbox | null) => void;
 }
 
-// PLAYGROUND SETUP
-
-export interface NTPlaygroundSetup
-  extends Omit<NTPlaygroundSettings, 'getTypeDefinitions' | 'getSandboxes'> {
-  codeLanguage: 'javascript' | 'typescript';
-  editorCustomSandboxMsg: string;
-
-  sandboxes: NTSandbox[];
-  isSandboxesLoading: boolean;
-  isSandboxesError: boolean;
-
-  typeDefinitions: NTPlaygroundSettingsTypeDefinition[];
-  isTypeDefinitionsLoading: boolean;
-  isTypeDefinitionsError: boolean;
-}
-
 // SANBOX SETTINGS
 
 export interface NTSandboxSettingsDependency {
@@ -233,4 +184,50 @@ export interface NTSandboxSettingsDependency {
 
 export interface NTSandboxSettings {
   dependencies?: NTSandboxSettingsDependency[];
+}
+
+// STORE
+
+export interface NTStoreExploration {
+  isLoading: boolean;
+  isError: boolean;
+  sandboxes: NTSandbox[];
+  sandboxSelected: NTSandbox | null;
+}
+
+export interface NTStoreEditor {
+  isTypeDefinitionsLoading: boolean;
+  isTypeDefinitionsError: boolean;
+  typeDefinitions: NTPlaygroundSettingsTypeDefinition[];
+  model: NTMonacoModel | null;
+  getValue: () => string;
+  setValue: (newValue: string) => void;
+}
+
+export interface NTStoreTranspilation {
+  isLoading: boolean;
+  importsLines: string[];
+  code: string;
+  error: string;
+}
+
+export type NTStoreEvent =
+  | 'reload'
+  | 'resetPredefinedSandboxCode'
+  | 'copyCode'
+  | 'customSandbox'
+  | 'openIsolated';
+
+export type NTStoreSubscriber = () => void;
+
+export interface NTStore {
+  exploration: NTStoreExploration;
+  editor: NTStoreEditor;
+  transpilation: NTStoreTranspilation;
+  updateExploration: (exploration: Partial<NTStoreExploration>) => void;
+  updateEditor: (editor: Partial<NTStoreEditor>) => void;
+  updateTranspilation: (transpilation: Partial<NTStoreTranspilation>) => void;
+  subscribe: (event: NTStoreEvent, subscriber: NTStoreSubscriber) => void;
+  unsubscribe: (event: NTStoreEvent, subscriber: NTStoreSubscriber) => void;
+  trigger: (event: NTStoreEvent) => void;
 }

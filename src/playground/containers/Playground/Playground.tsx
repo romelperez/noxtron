@@ -1,16 +1,13 @@
-// TODO: Show loading indicator for editor and preview panels when they are
-// working/processing the sandbox data.
-
-// TODO: In mobile, the default panel should be the explorer.
-
 import React, { ReactElement } from 'react';
 
 import type { NTPlaygroundSettings } from '../../../types';
-import { PlaygroundSetupProvider } from '../PlaygroundSetupProvider';
+import { PlaygroundSettingsProvider } from '../PlaygroundSettingsProvider';
 import { RouterProvider } from '../RouterProvider';
 import { RouterStateProvider } from '../RouterStateProvider';
 import { ThemeProvider } from '../ThemeProvider';
-import { StoreProvider } from '../StoreProvider';
+import { ExplorationSetup } from '../ExplorationSetup';
+import { EditorSetup } from '../EditorSetup';
+import { TranspilationSetup } from '../TranspilationSetup';
 import { App } from '../../components/App';
 
 interface PlaygroundProps {
@@ -21,17 +18,18 @@ const Playground = (props: PlaygroundProps): ReactElement => {
   const { settings } = props;
 
   return (
-    <PlaygroundSetupProvider settings={settings}>
+    <PlaygroundSettingsProvider settings={settings}>
       <RouterProvider>
         <RouterStateProvider>
           <ThemeProvider>
-            <StoreProvider>
-              <App />
-            </StoreProvider>
+            <ExplorationSetup />
+            <EditorSetup />
+            <TranspilationSetup />
+            <App />
           </ThemeProvider>
         </RouterStateProvider>
       </RouterProvider>
-    </PlaygroundSetupProvider>
+    </PlaygroundSettingsProvider>
   );
 };
 

@@ -5,11 +5,9 @@ import Icon from '@mdi/react';
 import { mdiXml, mdiMenu, mdiChartBubble, mdiInvertColors } from '@mdi/js';
 
 import { useRouterState } from '../../utils/useRouterState';
-import { usePlaygroundSetup } from '../../utils/usePlaygroundSetup';
+import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 import { Button } from '../Button';
 import { createStyles } from './Header.styles';
-
-// TODO: In theme color scheme light, it should have color inverted.
 
 interface HeaderProps {
   className?: string;
@@ -20,9 +18,8 @@ const Header = (props: HeaderProps): ReactElement => {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const { title, playgroundPath } = usePlaygroundSettings();
   const { optionsBooleans, setOptions } = useRouterState();
-
-  const { title, playgroundPath } = usePlaygroundSetup();
 
   return (
     <header className={className} css={styles.root}>

@@ -1,0 +1,40 @@
+import React, { ReactNode, ReactElement, useMemo } from 'react';
+
+import type { NTPlaygroundSettings } from '../../../types';
+import { PlaygroundSettingsContext } from '../../utils/PlaygroundSettingsContext';
+
+interface PlaygroundSettingsProviderProps {
+  settings: NTPlaygroundSettings;
+  children: ReactNode;
+}
+
+const settingsDefault: Partial<NTPlaygroundSettings> = {
+  playgroundPath: '/',
+  sandboxPath: '/sandbox/',
+  codeLanguage: 'javascript',
+  editorCustomSandboxMsg:
+    '// Select a sandbox in the explorer...\n// Or continue editing this custom sandbox...\n'
+};
+
+const PlaygroundSettingsProvider = (
+  props: PlaygroundSettingsProviderProps
+): ReactElement => {
+  const { settings, children } = props;
+
+  const settingsProvided: NTPlaygroundSettings = useMemo(() => {
+    return {
+      ...settingsDefault,
+      ...settings,
+      basePath: (settings.basePath || '').replace(/\/$/, '') || '/'
+    };
+  }, [settings]);
+
+  return (
+    <PlaygroundSettingsContext.Provider value={settingsProvided}>
+      {children}
+    </PlaygroundSettingsContext.Provider>
+  );
+};
+
+export type { PlaygroundSettingsProviderProps };
+export { PlaygroundSettingsProvider };

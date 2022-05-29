@@ -1,10 +1,4 @@
-import React, {
-  ReactElement,
-  ReactNode,
-  useEffect,
-  useState,
-  useMemo
-} from 'react';
+import React, { ReactElement, ReactNode, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import type {
@@ -24,7 +18,7 @@ import { decodeURLParameter } from '../../../utils/decodeURLParameter';
 
 import { useMediaQuery } from '../../utils/useMediaQuery';
 import { RouterStateContext } from '../../utils/RouterStateContext';
-import { usePlaygroundSetup } from '../../utils/usePlaygroundSetup';
+import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 
 interface RouterStateProviderProps {
   children: ReactNode;
@@ -50,12 +44,8 @@ const RouterStateProvider = (props: RouterStateProviderProps): ReactElement => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const setup = usePlaygroundSetup();
+  const settings = usePlaygroundSettings();
   const isMQMediumUp = useMediaQuery(NT_BREAKPOINTS.medium.up);
-
-  // Since the router state will be processed on the first render, define a
-  // variable to know when it is ready.
-  const [isRouterStateReady, setIsRouterStateReady] = useState(false);
 
   const routerState = useMemo(() => {
     const options = getLocationOptions();
@@ -80,9 +70,26 @@ const RouterStateProvider = (props: RouterStateProviderProps): ReactElement => {
         {}
       ) as NTRouterState['optionsBooleans'];
 
-    const setOptionsDelayed: NTRouterState['setOptions'] = (
-      optionsToUpdate
-    ) => {
+    if (options.editor === undefined) {
+      optionsBooleans.editor = isMQMediumUp;
+    }
+
+    if (options.preview === undefined) {
+      optionsBooleans.preview = isMQMediumUp;
+    }
+
+    if (options.dark === undefined) {
+      optionsBooleans.dark = true;
+    }
+
+    if (
+      options.explorer === undefined ||
+      (!optionsBooleans.editor && !optionsBooleans.preview)
+    ) {
+      optionsBooleans.explorer = true;
+    }
+
+    const setOptions: NTRouterState['setOptions'] = (optionsToUpdate) => {
       if (optionsToUpdate.type === 'predefined') {
         optionsToUpdate.code = '';
       } else if (optionsToUpdate.type === 'custom') {
@@ -164,48 +171,26 @@ const RouterStateProvider = (props: RouterStateProviderProps): ReactElement => {
       navigate(`${location.pathname}?${newLocationSearch}`);
     };
 
-    const setOptions: NTRouterState['setOptions'] = (optionsToUpdate) => {
-      // If simultaneous calls are made, wait until "window.location" is updated.
-      setTimeout(() => setOptionsDelayed(optionsToUpdate), 0);
-    };
-
     const routerState: NTRouterState = Object.freeze({
       options,
       optionsControls,
       optionsBooleans,
-      setOptions
+      setOptions: (optionsToUpdate) => {
+        // If simultaneous calls are made, wait until "window.location" is updated.
+        setTimeout(() => setOptions(optionsToUpdate), 0);
+      }
     });
 
     return routerState;
-  }, [location]);
-
-  const { options, optionsBooleans, setOptions } = routerState;
+  }, [location, isMQMediumUp]);
 
   useEffect(() => {
-    const editor = isMQMediumUp ? optionsBooleans.editor ?? true : false;
-    const preview = !options.preview ? true : optionsBooleans.preview;
-    const dark = !options.dark ? true : optionsBooleans.dark;
-
-    let explorer = isMQMediumUp ? optionsBooleans.explorer ?? true : false;
-    if (!(editor || preview)) {
-      explorer = true;
-    }
-
-    setOptions({ explorer, editor, preview, dark });
-  }, [isMQMediumUp]);
-
-  useEffect(() => {
-    // Wait until the router state is setup to indicate it is ready.
-    setTimeout(() => setIsRouterStateReady(() => true), 0);
-  }, []);
-
-  useEffect(() => {
-    setup.onRouteChange?.();
-  }, [setup, location]);
+    settings.onRouteChange?.();
+  }, [settings.onRouteChange, location]);
 
   return (
     <RouterStateContext.Provider value={routerState}>
-      {isRouterStateReady ? children : null}
+      {children}
     </RouterStateContext.Provider>
   );
 };

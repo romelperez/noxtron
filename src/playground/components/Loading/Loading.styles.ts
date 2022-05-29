@@ -19,9 +19,7 @@ const lineMovementKeyframe = keyframes`
 const createStyles = (theme: NTTheme): NTStyles => {
   return {
     root: {
-      position: 'absolute',
-      left: 0,
-      top: 0,
+      position: 'relative',
       alignSelf: 'flex-start',
       width: '100%',
       borderBottomWidth: 2,
@@ -39,6 +37,11 @@ const createStyles = (theme: NTTheme): NTStyles => {
         borderBottomColor: theme.colors.secondary.decoHigh(12),
         animation: `${lineMovementKeyframe} 0.5s ease-in-out infinite alternate`
       }
+    },
+    full: {
+      position: 'absolute',
+      left: 0,
+      top: 0
     }
   };
 };

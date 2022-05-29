@@ -26,32 +26,41 @@ const PlaygroundSetupProvider = (
 
   const [sandboxes, setSandboxes] = useState<NTSandbox[]>([]);
   const [isSandboxesLoading, setIsSandboxesLoading] = useState(true);
-  const [hasSandboxesError, setHasSandboxesError] = useState(false);
+  const [isSandboxesError, setIsSandboxesError] = useState(false);
 
   const [typeDefinitions, setTypeDefinitions] = useState<
     NTPlaygroundSettingsTypeDefinition[]
   >([]);
+  const [isTypeDefinitionsLoading, setIsTypeDefinitionsLoading] =
+    useState(true);
+  const [isTypeDefinitionsError, setIsTypeDefinitionsError] = useState(false);
 
   const setup: NTPlaygroundSetup = useMemo(() => {
     return {
-      sandboxes,
-      isSandboxesLoading,
-      hasSandboxesError,
-      typeDefinitions,
       playgroundPath: '/',
       sandboxPath: '/sandbox/',
       codeLanguage: 'javascript',
       editorCustomSandboxMsg:
         '// Select a sandbox in the explorer...\n// Or continue editing this custom sandbox...\n',
+
+      sandboxes,
+      isSandboxesLoading,
+      isSandboxesError,
+
+      typeDefinitions,
+      isTypeDefinitionsLoading,
+      isTypeDefinitionsError,
       ...(settings as Partial<NTPlaygroundSettings>),
       basePath: (settings.basePath || '').replace(/\/$/, '') || '/'
     };
   }, [
     settings,
-    isSandboxesLoading,
-    hasSandboxesError,
     sandboxes,
-    typeDefinitions
+    isSandboxesLoading,
+    isSandboxesError,
+    typeDefinitions,
+    isTypeDefinitionsLoading,
+    isTypeDefinitionsError
   ]);
 
   useEffect(() => {
@@ -59,20 +68,20 @@ const PlaygroundSetupProvider = (
 
     settings
       .getSandboxes()
-      .then((sandboxes) => {
-        setSandboxes(sandboxes);
-      })
-      .catch(() => {
-        setHasSandboxesError(true);
-      })
-      .finally(() => {
-        setIsSandboxesLoading(false);
-      });
+      .then(setSandboxes)
+      .catch(() => setIsSandboxesError(true))
+      .finally(() => setIsSandboxesLoading(false));
 
     if (settings.getTypeDefinitions) {
-      settings.getTypeDefinitions().then((typeDefinitions) => {
-        setTypeDefinitions(typeDefinitions);
-      });
+      setIsTypeDefinitionsLoading(true);
+
+      settings
+        .getTypeDefinitions()
+        .then(setTypeDefinitions)
+        .catch(() => setIsTypeDefinitionsError(true))
+        .finally(() => setIsTypeDefinitionsLoading(false));
+    } else {
+      setIsTypeDefinitionsLoading(false);
     }
   }, []);
 

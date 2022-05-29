@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, useTheme } from '@emotion/react';
+import { jsx } from '@emotion/react';
 import { ReactElement, useEffect, useMemo, useRef } from 'react';
 
 import { convertLocationSearchToString } from '../../../utils/convertLocationSearchToString';
@@ -9,6 +9,7 @@ import { cx } from '../../utils/cx';
 import { useStore } from '../../utils/useStore';
 import { usePlaygroundSetup } from '../../utils/usePlaygroundSetup';
 import { createStyles } from './Preview.styles';
+import { Loading } from '../Loading';
 
 interface PreviewProps {
   className?: string;
@@ -17,8 +18,7 @@ interface PreviewProps {
 const Preview = (props: PreviewProps): ReactElement => {
   const { className } = props;
 
-  const theme = useTheme();
-  const styles = useMemo(() => createStyles(theme), [theme]);
+  const styles = useMemo(() => createStyles(), []);
   const store = useStore();
   const { sandboxPath } = usePlaygroundSetup();
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -61,9 +61,7 @@ const Preview = (props: PreviewProps): ReactElement => {
 
   return (
     <div className={cx('preview', className)} css={styles.root}>
-      {store.sandboxTranspilation.isTranspiling && (
-        <div css={styles.transpilationInProgress} />
-      )}
+      {store.sandboxTranspilation.isTranspiling && <Loading />}
       {!store.sandboxTranspilation.isTranspiling && (
         <iframe
           className="preview__iframe"

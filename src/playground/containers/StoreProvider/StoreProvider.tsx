@@ -131,6 +131,7 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
     });
 
     // TODO: Allow user to configure compiler.
+    // TODO: Type definitions have to be added when they are loaded.
 
     const defaultCompilerOptions: NTMonacoCompilerOptions = {
       module: typescript.ModuleKind.ESNext,
@@ -158,6 +159,7 @@ const StoreProvider = (props: StoreProviderProps): ReactElement => {
     });
   }, []);
 
+  // TODO: Wait until sandboxes are loaded to set it up.
   useEffect(() => {
     const { type, sandbox, code } = routerState.optionsControls;
 

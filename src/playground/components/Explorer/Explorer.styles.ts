@@ -7,6 +7,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
 
   return {
     root: {
+      position: 'relative',
       display: 'flex',
       flexDirection: 'column',
       overflowY: 'auto',

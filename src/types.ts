@@ -214,10 +214,14 @@ export interface NTPlaygroundSetup
   extends Omit<NTPlaygroundSettings, 'getTypeDefinitions' | 'getSandboxes'> {
   codeLanguage: 'javascript' | 'typescript';
   editorCustomSandboxMsg: string;
-  isSandboxesLoading: boolean;
-  hasSandboxesError: boolean;
+
   sandboxes: NTSandbox[];
+  isSandboxesLoading: boolean;
+  isSandboxesError: boolean;
+
   typeDefinitions: NTPlaygroundSettingsTypeDefinition[];
+  isTypeDefinitionsLoading: boolean;
+  isTypeDefinitionsError: boolean;
 }
 
 // SANBOX SETTINGS

@@ -2,15 +2,8 @@
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 import Icon from '@mdi/react';
-import {
-  mdiReload,
-  mdiBackupRestore,
-  mdiPencil,
-  mdiTestTube,
-  mdiContentCopy,
-  mdiShareVariant
-} from '@mdi/js';
 
+import { NT_ICONS } from '../../../constants';
 import { cx } from '../../utils/cx';
 import { useRouterState } from '../../utils/useRouterState';
 import { useStore } from '../../utils/useStore';
@@ -20,6 +13,15 @@ import { createStyles } from './Toolbar.styles';
 interface ToolbarProps {
   className?: string;
 }
+
+const {
+  mdiReload,
+  mdiBackupRestore,
+  mdiPencil,
+  mdiTestTube,
+  mdiContentCopy,
+  mdiShareVariant
+} = NT_ICONS;
 
 const Toolbar = (props: ToolbarProps): ReactElement => {
   const { className } = props;

@@ -2,8 +2,8 @@
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 import Icon from '@mdi/react';
-import { mdiXml, mdiMenu, mdiChartBubble, mdiInvertColors } from '@mdi/js';
 
+import { NT_ICONS } from '../../../constants';
 import { useRouterState } from '../../utils/useRouterState';
 import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 import { Button } from '../Button';
@@ -12,6 +12,8 @@ import { createStyles } from './Header.styles';
 interface HeaderProps {
   className?: string;
 }
+
+const { mdiXml, mdiMenu, mdiChartBubble, mdiInvertColors } = NT_ICONS;
 
 const Header = (props: HeaderProps): ReactElement => {
   const { className } = props;

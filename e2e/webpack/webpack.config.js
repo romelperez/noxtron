@@ -16,7 +16,7 @@ const BASE_PATH = '/noxtron/';
 
 module.exports = {
   mode: NODE_ENV || 'development',
-  devtool: false,
+  devtool: NODE_ENV === 'production' ? false : 'eval-source-map',
   entry: {
     playground: path.join(SRC_PATH, 'playground/playground.tsx'),
     sandbox: path.join(SRC_PATH, 'sandbox/sandbox.tsx')

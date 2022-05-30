@@ -7,6 +7,9 @@ import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 
 // MONACO
 
+export type NTMonaco = typeof monaco;
+export type NTMonacoLanguage = typeof monaco.languages.typescript;
+export type NTMonacoUri = monaco.Uri;
 export type NTMonacoEditor = monaco.editor.IStandaloneCodeEditor;
 export type NTMonacoModel = monaco.editor.ITextModel;
 export type NTMonacoCompilerOptions =
@@ -169,6 +172,7 @@ export interface NTPlaygroundSettings {
     mobile?: ReactNode[][];
     desktop?: ReactNode[][];
   };
+  getMonaco: () => Promise<NTMonaco>;
   getSandboxes: () => Promise<NTSandbox[]>;
   getTypeDefinitions?: () => Promise<NTPlaygroundSettingsTypeDefinition[]>;
   onRouteChange?: () => void;
@@ -188,22 +192,6 @@ export interface NTSandboxSettings {
 
 // STORE
 
-export interface NTStoreExploration {
-  isLoading: boolean;
-  isError: boolean;
-  sandboxes: NTSandbox[];
-  sandboxSelected: NTSandbox | null;
-}
-
-export interface NTStoreEditor {
-  isTypeDefinitionsLoading: boolean;
-  isTypeDefinitionsError: boolean;
-  typeDefinitions: NTPlaygroundSettingsTypeDefinition[];
-  model: NTMonacoModel | null;
-  getValue: () => string;
-  setValue: (newValue: string) => void;
-}
-
 export interface NTStoreTranspilation {
   isLoading: boolean;
   importsLines: string[];
@@ -221,12 +209,25 @@ export type NTStoreEvent =
 export type NTStoreSubscriber = () => void;
 
 export interface NTStore {
-  exploration: NTStoreExploration;
-  editor: NTStoreEditor;
+  isLoading: boolean;
+  error: string;
+  monaco: NTMonaco;
+  model: NTMonacoModel;
+  typeDefinitions: NTPlaygroundSettingsTypeDefinition[];
+  sandboxes: NTSandbox[];
+  sandboxSelected: NTSandbox | null;
   transpilation: NTStoreTranspilation;
-  updateExploration: (exploration: Partial<NTStoreExploration>) => void;
-  updateEditor: (editor: Partial<NTStoreEditor>) => void;
+
+  setStatus: (status: Partial<{ isLoading: boolean; error: string }>) => void;
+  setDependencies: (dependencies: {
+    monaco: NTMonaco;
+    model: NTMonacoModel;
+    sandboxes: NTSandbox[];
+    typeDefinitions: NTPlaygroundSettingsTypeDefinition[];
+  }) => void;
+  setSandboxSelected: (sandbox: NTSandbox | null) => void;
   updateTranspilation: (transpilation: Partial<NTStoreTranspilation>) => void;
+
   subscribe: (event: NTStoreEvent, subscriber: NTStoreSubscriber) => void;
   unsubscribe: (event: NTStoreEvent, subscriber: NTStoreSubscriber) => void;
   trigger: (event: NTStoreEvent) => void;

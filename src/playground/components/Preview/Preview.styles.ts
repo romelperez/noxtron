@@ -3,8 +3,9 @@ import type { NTStyles } from '../../../types';
 const createStyles = (): NTStyles => {
   return {
     root: {
+      position: 'relative',
       display: 'flex',
-      position: 'relative'
+      flexDirection: 'column'
     },
     sandbox: {
       flex: 1,

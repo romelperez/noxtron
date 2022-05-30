@@ -19,14 +19,11 @@ const Preview = (props: PreviewProps): ReactElement => {
   const { className } = props;
 
   const styles = useMemo(() => createStyles(), []);
-  const exploration = useStore((state) => state.exploration);
+  const { sandboxPath } = usePlaygroundSettings();
   const transpilation = useStore((state) => state.transpilation);
   const subscribe = useStore((state) => state.subscribe);
   const unsubscribe = useStore((state) => state.unsubscribe);
-  const { sandboxPath } = usePlaygroundSettings();
   const iframeRef = useRef<HTMLIFrameElement>(null);
-
-  const isLoading = exploration.isLoading || transpilation.isLoading;
 
   const sandboxURLSearch: string = useMemo(() => {
     const { importsLines, code, error } = transpilation;
@@ -66,8 +63,9 @@ const Preview = (props: PreviewProps): ReactElement => {
 
   return (
     <div className={cx('preview', className)} css={styles.root}>
-      {isLoading && <Loading />}
-      {!isLoading && (
+      {transpilation.isLoading && <Loading full />}
+
+      {!transpilation.isLoading && (
         <iframe
           className="preview__iframe"
           ref={iframeRef}

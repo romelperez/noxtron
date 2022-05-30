@@ -10,7 +10,7 @@ interface LoadingProps {
 }
 
 const Loading = (props: LoadingProps): ReactElement => {
-  const { full = true, className } = props;
+  const { full, className } = props;
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);

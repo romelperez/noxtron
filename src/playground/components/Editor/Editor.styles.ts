@@ -3,7 +3,8 @@ import type { NTTheme, NTStyles } from '../../../types';
 const createStyles = (theme: NTTheme): NTStyles => {
   return {
     root: {
-      display: 'flex'
+      display: 'flex',
+      flexDirection: 'column'
     },
     editor: {
       flex: 1,

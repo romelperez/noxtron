@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useCallback, useEffect, useMemo, useRef } from 'react';
-import * as monaco from 'monaco-editor';
 import throttle from 'lodash/throttle';
 
 import type { NTMonacoEditor } from '../../../types';
@@ -10,7 +9,6 @@ import { cx } from '../../utils/cx';
 import { useMediaQuery } from '../../utils/useMediaQuery';
 import { useRouterState } from '../../utils/useRouterState';
 import { useStore } from '../../utils/useStore';
-import { Loading } from '../Loading';
 import { createStyles } from './Editor.styles';
 
 interface EditorProps {
@@ -23,8 +21,9 @@ const Editor = (props: EditorProps): ReactElement => {
   const routerState = useRouterState();
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const exploration = useStore((state) => state.exploration);
-  const editorState = useStore((state) => state.editor);
+
+  const monaco = useStore((state) => state.monaco);
+  const model = useStore((state) => state.model);
   const subscribe = useStore((state) => state.subscribe);
   const unsubscribe = useStore((state) => state.unsubscribe);
 
@@ -36,8 +35,6 @@ const Editor = (props: EditorProps): ReactElement => {
   const editorContainerElementRef = useRef<HTMLDivElement>(null);
   const editorElementRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<NTMonacoEditor | null>(null);
-
-  const isLoading = !editorState.model || exploration.isLoading;
 
   const onResize = useCallback(
     throttle((): void => {
@@ -53,17 +50,13 @@ const Editor = (props: EditorProps): ReactElement => {
   );
 
   useEffect(() => {
-    if (isLoading || editorRef.current) {
-      return;
-    }
-
     const editorElement = editorElementRef.current as HTMLDivElement;
     const { fontFamily, fontSize, fontWeight } = theme.typography.code(
       isBreakpointLargeUp ? 2 : 3
     );
 
     editorRef.current = monaco.editor.create(editorElement, {
-      model: editorState.model,
+      model: model,
       theme: theme.colorScheme === 'dark' ? 'vs-dark' : 'vs',
       readOnly: !isBreakpointMediumUp,
       domReadOnly: !isBreakpointMediumUp,
@@ -94,7 +87,7 @@ const Editor = (props: EditorProps): ReactElement => {
       editorRef.current?.dispose();
       window.removeEventListener('resize', onResize);
     };
-  }, [isLoading]);
+  }, []);
 
   useEffect(() => {
     onResize();
@@ -115,13 +108,13 @@ const Editor = (props: EditorProps): ReactElement => {
 
   useEffect(() => {
     const onCopy = (): void => {
-      window.navigator.clipboard.writeText(editorState.getValue());
+      window.navigator.clipboard.writeText(model.getValue());
     };
 
     const onCustomSandbox = (): void => {
       routerState.setOptions({
         type: 'custom',
-        code: editorState.getValue()
+        code: model.getValue()
       });
     };
 
@@ -132,7 +125,7 @@ const Editor = (props: EditorProps): ReactElement => {
       unsubscribe('copyCode', onCopy);
       unsubscribe('customSandbox', onCustomSandbox);
     };
-  }, [routerState, editorState]);
+  }, []);
 
   return (
     <div
@@ -140,7 +133,6 @@ const Editor = (props: EditorProps): ReactElement => {
       className={cx('editor', className)}
       css={styles.root}
     >
-      {isLoading && <Loading full={false} />}
       <div
         ref={editorElementRef}
         className="editor__monaco-editor"

@@ -9,43 +9,31 @@ type StoreSubscriptions = {
 const subscriptions: StoreSubscriptions = {};
 
 const useStore = createStore<NTStore>((set, get) => ({
-  exploration: {
-    isLoading: true,
-    isError: false,
-    sandboxes: [],
-    sandboxSelected: null
-  },
-  editor: {
-    isTypeDefinitionsLoading: true,
-    isTypeDefinitionsError: false,
-    typeDefinitions: [],
-    model: null,
-    getValue: () => {
-      const { editor } = get();
-      return editor.model ? editor.model.getValue() : '';
-    },
-    setValue: (code: string) => {
-      const { editor } = get();
-      if (editor.model && code !== editor.model.getValue()) {
-        editor.model.setValue(code);
-      }
-    }
-  },
+  isLoading: true,
+  error: '',
+
+  // Store will not be available to components until these dependencies are resolved.
+  monaco: null as any,
+  model: null as any,
+
+  typeDefinitions: [],
+  sandboxes: [],
+  sandboxSelected: null,
   transpilation: {
     isLoading: true,
     importsLines: [],
     code: '// NOT READY',
     error: ''
   },
-  updateExploration: (exploration) => {
-    set({ exploration: { ...get().exploration, ...exploration } });
-  },
-  updateEditor: (editor) => {
-    set({ editor: { ...get().editor, ...editor } });
-  },
+
+  setStatus: (status) => set({ ...get(), ...status }),
+  setDependencies: ({ monaco, model, sandboxes, typeDefinitions }) =>
+    set({ monaco, model, sandboxes, typeDefinitions }),
+  setSandboxSelected: (sandboxSelected) => set({ sandboxSelected }),
   updateTranspilation: (transpilation) => {
     set({ transpilation: { ...get().transpilation, ...transpilation } });
   },
+
   subscribe: (event, subscriber) => {
     subscriptions[event] = subscriptions[event] || new Set();
     subscriptions[event]?.add(subscriber);

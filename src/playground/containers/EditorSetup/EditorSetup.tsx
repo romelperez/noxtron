@@ -1,5 +1,4 @@
 import React, { ReactElement, useEffect } from 'react';
-import * as monaco from 'monaco-editor';
 
 import { NTMonacoCompilerOptions } from '../../../types';
 import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
@@ -9,25 +8,10 @@ import { useStore } from '../../utils/useStore';
 const EditorSetup = (): ReactElement => {
   const settings = usePlaygroundSettings();
   const routerState = useRouterState();
-  const exploration = useStore((state) => state.exploration);
-  const editor = useStore((state) => state.editor);
-  const updateEditor = useStore((state) => state.updateEditor);
-
-  useEffect(() => {
-    const { getTypeDefinitions } = settings;
-
-    if (getTypeDefinitions) {
-      updateEditor({ isTypeDefinitionsLoading: true });
-
-      Promise.resolve()
-        .then(() => getTypeDefinitions())
-        .then((typeDefinitions) => updateEditor({ typeDefinitions }))
-        .catch(() => updateEditor({ isTypeDefinitionsError: true }))
-        .finally(() => updateEditor({ isTypeDefinitionsLoading: false }));
-    } else {
-      updateEditor({ isTypeDefinitionsLoading: false });
-    }
-  }, []);
+  const monaco = useStore((state) => state.monaco);
+  const model = useStore((state) => state.model);
+  const typeDefinitions = useStore((state) => state.typeDefinitions);
+  const sandboxSelected = useStore((state) => state.sandboxSelected);
 
   useEffect(() => {
     const { basePath } = settings;
@@ -65,6 +49,13 @@ const EditorSetup = (): ReactElement => {
     typescript.javascriptDefaults.setCompilerOptions(defaultCompilerOptions);
     typescript.typescriptDefaults.setCompilerOptions(defaultCompilerOptions);
 
+    typeDefinitions.forEach(({ filename, code }) => {
+      monaco.languages.typescript.typescriptDefaults.addExtraLib(
+        code,
+        filename
+      );
+    });
+
     // Re-enable type checking and syntax validation.
     typescript.typescriptDefaults.setDiagnosticsOptions({
       noSemanticValidation: false,
@@ -73,51 +64,18 @@ const EditorSetup = (): ReactElement => {
   }, []);
 
   useEffect(() => {
-    const { typeDefinitions } = editor;
-    const { typescript } = monaco.languages;
-
-    typeDefinitions.forEach(({ filename, code }) => {
-      typescript.typescriptDefaults.addExtraLib(code, filename);
-    });
-  }, [editor.typeDefinitions]);
-
-  useEffect(() => {
-    const { codeLanguage } = settings;
-
-    const codeInitial = '';
-    const filename = monaco.Uri.parse(
-      codeLanguage === 'typescript' ? 'sandbox.tsx' : 'sandbox.jsx'
-    );
-    const model = monaco.editor.createModel(
-      codeInitial,
-      codeLanguage,
-      filename
-    );
-    const getValue = (): string => model.getValue();
-    const setValue = (newValue: string): void => {
-      if (newValue !== model.getValue()) {
-        model.setValue(newValue);
-      }
-    };
-
-    updateEditor({ model, getValue, setValue });
-  }, []);
-
-  useEffect(() => {
-    const { sandboxSelected } = exploration;
-
     if (sandboxSelected) {
       const newSandboxCode = sandboxSelected.code || '';
-      editor.setValue(newSandboxCode);
+      model.setValue(newSandboxCode);
     }
-  }, [exploration.sandboxSelected]);
+  }, [sandboxSelected]);
 
   useEffect(() => {
     const { editorCustomSandboxMsg } = settings;
     const { type, code } = routerState.optionsControls;
 
     if (type === 'custom') {
-      editor.setValue(code || (editorCustomSandboxMsg as string));
+      model.setValue(code || (editorCustomSandboxMsg as string));
     }
   }, [routerState.optionsControls.type, routerState.optionsControls.code]);
 

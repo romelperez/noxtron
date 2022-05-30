@@ -1,6 +1,9 @@
-import * as monaco from 'monaco-editor';
-
-import type { NTStoreTranspilation, NTMonacoModel } from '../../../types';
+import type {
+  NTMonacoModel,
+  NTMonacoLanguage,
+  NTMonacoUri,
+  NTStoreTranspilation
+} from '../../../types';
 import { convertCodeImportsToRefs } from '../../utils/convertCodeImportsToRefs';
 
 interface TranspileDiagnostic {
@@ -58,7 +61,10 @@ function getTranspileFirstErrorMessage(
     .join('\n\n');
 }
 
-function transpile(model: NTMonacoModel): Promise<NTStoreTranspilation> {
+function transpile(
+  typescript: NTMonacoLanguage,
+  model: NTMonacoModel
+): Promise<NTStoreTranspilation> {
   const transpiledOutput: NTStoreTranspilation = {
     isLoading: false,
     importsLines: [],
@@ -68,11 +74,11 @@ function transpile(model: NTMonacoModel): Promise<NTStoreTranspilation> {
   const filename = model.uri.toString();
   const isTypeScript = filename.endsWith('.ts') || filename.endsWith('.tsx');
   const worker = isTypeScript
-    ? monaco.languages.typescript.getTypeScriptWorker()
-    : monaco.languages.typescript.getJavaScriptWorker();
+    ? typescript.getTypeScriptWorker()
+    : typescript.getJavaScriptWorker();
 
   return worker
-    .then((getWorker: (uri: monaco.Uri) => Promise<any>) =>
+    .then((getWorker: (uri: NTMonacoUri) => Promise<any>) =>
       getWorker(model.uri)
     )
     .then((worker) => {

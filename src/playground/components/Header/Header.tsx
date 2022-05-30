@@ -6,6 +6,7 @@ import Icon from '@mdi/react';
 import { NT_ICONS } from '../../../constants';
 import { useRouterState } from '../../utils/useRouterState';
 import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
+import { useStore } from '../../utils/useStore';
 import { Button } from '../Button';
 import { createStyles } from './Header.styles';
 
@@ -22,6 +23,10 @@ const Header = (props: HeaderProps): ReactElement => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { title, playgroundPath } = usePlaygroundSettings();
   const { optionsBooleans, setOptions } = useRouterState();
+  const isLoading = useStore((state) => state.isLoading);
+  const error = useStore((state) => state.error);
+
+  const disabled = isLoading || !!error;
 
   return (
     <header className={className} css={styles.root}>
@@ -30,6 +35,7 @@ const Header = (props: HeaderProps): ReactElement => {
           css={styles.option}
           title="Toggle explorer panel"
           color={optionsBooleans.explorer ? 'secondary' : 'primary'}
+          disabled={disabled}
           onClick={() => setOptions({ explorer: !optionsBooleans.explorer })}
         >
           <Icon css={styles.optionIcon} path={mdiMenu} />
@@ -40,6 +46,7 @@ const Header = (props: HeaderProps): ReactElement => {
           css={styles.option}
           title="Toggle editor panel"
           color={optionsBooleans.editor ? 'secondary' : 'primary'}
+          disabled={disabled}
           onClick={() => setOptions({ editor: !optionsBooleans.editor })}
         >
           <Icon css={styles.optionIcon} path={mdiXml} />
@@ -50,6 +57,7 @@ const Header = (props: HeaderProps): ReactElement => {
           css={styles.option}
           title="Toggle preview panel"
           color={optionsBooleans.preview ? 'secondary' : 'primary'}
+          disabled={disabled}
           onClick={() => setOptions({ preview: !optionsBooleans.preview })}
         >
           <Icon css={styles.optionIcon} path={mdiChartBubble} />
@@ -59,11 +67,12 @@ const Header = (props: HeaderProps): ReactElement => {
         <Button
           css={styles.option}
           title="Toggle theme color scheme"
+          disabled={disabled}
           onClick={() => setOptions({ dark: !optionsBooleans.dark })}
         >
           <Icon css={styles.optionIcon} path={mdiInvertColors} />
           <span css={styles.optionLabel}>
-            Color: {optionsBooleans.dark ? 'Dark' : 'Light'}
+            {optionsBooleans.dark ? 'Dark' : 'Light'}
           </span>
         </Button>
       </nav>

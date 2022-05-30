@@ -15,5 +15,7 @@
 // TODO: Allow user to configure if sematic/type errors prevent from
 // executing code.
 // TODO: In theme color scheme light, Header and Footer should have color inverted.
+// TODO: Memoize components.
+// TODO: Add panels width sliders.
 
 export * from './containers/Playground';

@@ -66,9 +66,10 @@ const settings: NTPlaygroundSettings = {
       secondary: 70 // Yellow
     }
   },
+  getMonaco: () => import('monaco-editor'),
+  getSandboxes: () => import('./sandboxes/sandboxes').then((m) => m.sandboxes),
   getTypeDefinitions: () =>
-    import('./typeDefinitions/typeDefinitions').then((m) => m.typeDefinitions),
-  getSandboxes: () => import('./sandboxes/sandboxes').then((m) => m.sandboxes)
+    import('./typeDefinitions/typeDefinitions').then((m) => m.typeDefinitions)
 };
 
 render(<Playground settings={settings} />, document.querySelector('#root'));

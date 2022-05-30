@@ -5,9 +5,7 @@ import { PlaygroundSettingsProvider } from '../PlaygroundSettingsProvider';
 import { RouterProvider } from '../RouterProvider';
 import { RouterStateProvider } from '../RouterStateProvider';
 import { ThemeProvider } from '../ThemeProvider';
-import { ExplorationSetup } from '../ExplorationSetup';
-import { EditorSetup } from '../EditorSetup';
-import { TranspilationSetup } from '../TranspilationSetup';
+import { PlaygroundSetup } from '../PlaygroundSetup';
 import { App } from '../../components/App';
 
 interface PlaygroundProps {
@@ -22,9 +20,7 @@ const Playground = (props: PlaygroundProps): ReactElement => {
       <RouterProvider>
         <RouterStateProvider>
           <ThemeProvider>
-            <ExplorationSetup />
-            <EditorSetup />
-            <TranspilationSetup />
+            <PlaygroundSetup />
             <App />
           </ThemeProvider>
         </RouterStateProvider>

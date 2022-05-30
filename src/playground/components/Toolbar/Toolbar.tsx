@@ -36,7 +36,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
     optionsControls.type === 'predefined'
       ? optionsControls.sandbox.join(' / ')
       : '';
-  const hasErrors = !!transpilation.error;
+  const hasEditorError = !!transpilation.error;
 
   return (
     <nav className={cx('toolbar', className)} css={styles.root}>
@@ -45,7 +45,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           css={styles.option}
           size="small"
           title="Reload preview"
-          disabled={!optionsBooleans.preview || hasErrors}
+          disabled={!optionsBooleans.preview || hasEditorError}
           onClick={() => trigger('reload')}
         >
           <Icon css={styles.optionIcon} path={mdiReload} />
@@ -78,7 +78,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           css={styles.option}
           size="small"
           title="Make a copy of the current sandbox and open preview in an independent isolated window"
-          disabled={!optionsBooleans.preview || hasErrors}
+          disabled={!optionsBooleans.preview || hasEditorError}
           onClick={() => trigger('openIsolated')}
         >
           <Icon css={styles.optionIcon} path={mdiTestTube} />

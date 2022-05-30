@@ -71,7 +71,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           onClick={() => trigger('customSandbox')}
         >
           <Icon css={styles.optionIcon} path={mdiPencil} />
-          <span css={styles.optionLabel}>Custom Sandbox</span>
+          <span css={styles.optionLabel}>Custom</span>
         </Button>
 
         <Button
@@ -82,7 +82,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           onClick={() => trigger('openIsolated')}
         >
           <Icon css={styles.optionIcon} path={mdiTestTube} />
-          <span css={styles.optionLabel}>Open Isolated</span>
+          <span css={styles.optionLabel}>Isolated</span>
         </Button>
 
         <Button
@@ -92,7 +92,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           onClick={() => trigger('copyCode')}
         >
           <Icon css={styles.optionIcon} path={mdiContentCopy} />
-          <span css={styles.optionLabel}>Copy Code</span>
+          <span css={styles.optionLabel}>Code</span>
         </Button>
 
         <Button
@@ -104,7 +104,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           }}
         >
           <Icon css={styles.optionIcon} path={mdiShareVariant} />
-          <span css={styles.optionLabel}>Copy URL</span>
+          <span css={styles.optionLabel}>URL</span>
         </Button>
       </div>
 

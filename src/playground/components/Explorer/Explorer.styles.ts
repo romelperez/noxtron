@@ -55,20 +55,23 @@ const createStyles = (theme: NTTheme): NTStyles => {
       border: 'none',
       width: '100%',
       textAlign: 'left',
-      color: primary.textHigh(12),
+      color: primary.textHigh(14),
       background: 'transparent',
       cursor: 'pointer',
 
       '&:hover, &:focus': {
-        color: primary.textHigh(14)
+        color: primary.textHigh(18)
       }
     },
     linkActive: {
-      color: secondary.textHigh(12),
+      borderRightWidth: 2,
+      borderRightStyle: 'solid',
+      borderRightColor: secondary.levelHigh(14),
+      color: secondary.textHigh(14),
       backgroundColor: secondary.levelHigh(1),
 
       '&:hover, &:focus': {
-        color: secondary.textHigh(14)
+        color: secondary.textHigh(18)
       }
     }
   };

@@ -5,8 +5,8 @@ const createStyles = (theme: NTTheme): NTStyles => {
   const { primary } = theme.colors;
   const isDark = theme.colorScheme === 'dark';
 
-  const bg1 = isDark ? primary.bg(2) : primary.bg(5);
-  const bg2 = isDark ? primary.bg(3) : primary.bg(6);
+  const bg1 = isDark ? primary.bg(2) : primary.bg(6);
+  const bg2 = isDark ? primary.bg(3) : primary.bg(8);
   const bg3 = isDark ? primary.bg(4) : '#fff';
   const line1 = `1px solid ${primary.deco(8)}`;
   const line2 = `1px solid ${primary.deco(4)}`;
@@ -53,12 +53,12 @@ const createStyles = (theme: NTTheme): NTStyles => {
       h5: { ...theme.typography.heading(4) },
       h6: { ...theme.typography.heading(5) },
       a: {
-        color: primary.textHigh(14),
+        color: primary.textHigh(10),
         textDecoration: 'none',
-        transition: 'color 200ms ease-out',
+        transition: 'color 0.2s ease-out',
 
-        '&:hover': {
-          color: primary.textHigh(12)
+        '&:hover, &:focus': {
+          color: primary.textHigh(14)
         }
       },
       'code, pre': {
@@ -78,7 +78,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
       borderBottom: line1,
       backgroundColor: bg1,
       transitionProperty: 'background-color',
-      transitionDuration: '200ms',
+      transitionDuration: '0.2s',
       transitionTimingFunction: 'ease-out'
     },
     main: {
@@ -110,7 +110,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
       borderBottom: line2,
       backgroundColor: bg2,
       transitionProperty: 'background-color',
-      transitionDuration: '200ms',
+      transitionDuration: '0.2s',
       transitionTimingFunction: 'ease-out',
 
       [breakpoints.medium.up]: {
@@ -129,7 +129,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
       minWidth: 0, // Width overflow issue.
       backgroundColor: bg3,
       transitionProperty: 'width, background-color',
-      transitionDuration: '200ms',
+      transitionDuration: '0.2s',
       transitionTimingFunction: 'ease-out'
     },
     panelEditor: {
@@ -146,7 +146,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
       borderTop: line1,
       backgroundColor: bg1,
       transitionProperty: 'background-color',
-      transitionDuration: '200ms',
+      transitionDuration: '0.2s',
       transitionTimingFunction: 'ease-out'
     }
   };

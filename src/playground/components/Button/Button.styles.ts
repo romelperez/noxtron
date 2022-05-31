@@ -16,7 +16,9 @@ const createStyles = (theme: NTTheme, props: StyleProps): NTStyles => {
     root: {
       display: 'inline-block',
       outline: 'none',
-      border: `1px solid ${palette.levelHigh(3)}`,
+      borderWidth: 1,
+      borderStyle: 'solid',
+      borderColor: palette.levelHigh(3),
       padding: `${theme.space(isSmall ? 1 : 2)}px ${theme.space(
         isSmall ? 3 : 4
       )}px`,
@@ -37,7 +39,7 @@ const createStyles = (theme: NTTheme, props: StyleProps): NTStyles => {
       },
       '&:hover, &:focus': !disabled && {
         color: palette.textHigh(18),
-        backgroundColor: palette.levelHigh(2)
+        backgroundColor: palette.levelHigh(3)
       }
     }
   };

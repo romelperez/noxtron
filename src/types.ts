@@ -164,7 +164,7 @@ export interface NTPlaygroundSettings {
   codeLanguage?: 'javascript' | 'typescript';
   editorCustomSandboxMsg?: string;
   theme?: NTPlaygroundSettingsTheme;
-  title?: {
+  header?: {
     mobile?: ReactNode;
     desktop?: ReactNode;
   };

@@ -21,7 +21,7 @@ const Header = (props: HeaderProps): ReactElement => {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const { title, playgroundPath } = usePlaygroundSettings();
+  const { header, playgroundPath } = usePlaygroundSettings();
   const { optionsBooleans, setOptions } = useRouterState();
   const isLoading = useStore((state) => state.isLoading);
   const error = useStore((state) => state.error);
@@ -78,8 +78,8 @@ const Header = (props: HeaderProps): ReactElement => {
       </nav>
       <h1 css={styles.logo}>
         <a href={playgroundPath}>
-          <span css={styles.logoMobile}>{title?.mobile || 'Noxtron'}</span>
-          <span css={styles.logoDesktop}>{title?.desktop || 'Noxtron'}</span>
+          <span css={styles.logoMobile}>{header?.mobile || 'Noxtron'}</span>
+          <span css={styles.logoDesktop}>{header?.desktop || 'Noxtron'}</span>
         </a>
       </h1>
     </header>

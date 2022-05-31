@@ -9,7 +9,7 @@ const settings: NTPlaygroundSettings = {
   playgroundPath: '/noxtron',
   sandboxPath: '/noxtron/sandbox.html',
   codeLanguage: 'typescript',
-  title: {
+  header: {
     mobile: 'Noxtron',
     desktop: 'Noxtron'
   },

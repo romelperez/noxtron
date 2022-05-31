@@ -16,7 +16,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
       justifyContent: 'center',
       alignItems: 'center',
       marginRight: theme.space(2),
-      padding: theme.space(2),
+      padding: `${theme.space(2)}px ${theme.space(3)}px`,
       ...theme.typography.cta(2),
 
       [breakpoints.large.up]: {

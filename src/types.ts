@@ -152,6 +152,7 @@ export type NTPlaygroundSettingsTheme = Partial<{
     primary: number;
     secondary: number;
   }>;
+  colorSchemeDefault: NTThemeColorScheme;
 }>;
 
 export interface NTPlaygroundSettingsTypeDefinition {

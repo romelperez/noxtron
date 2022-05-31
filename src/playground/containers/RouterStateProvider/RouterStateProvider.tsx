@@ -80,7 +80,8 @@ const RouterStateProvider = (props: RouterStateProviderProps): ReactElement => {
     }
 
     if (options.dark === undefined) {
-      optionsBooleans.dark = true;
+      optionsBooleans.dark =
+        (settings.theme?.colorSchemeDefault ?? 'dark') === 'dark';
     }
 
     if (

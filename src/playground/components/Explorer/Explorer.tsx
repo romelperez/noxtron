@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
-import { ReactElement, useMemo } from 'react';
+import { ReactElement, useEffect, useMemo, useRef } from 'react';
 
 import type { NTStyles, NTSandbox } from '../../../types';
 import { cx } from '../../utils/cx';
@@ -19,7 +19,21 @@ const ExplorerNavList = (props: ExplorerNavListProps): ReactElement => {
   const { styles, items, currentSandboxPath } = props;
 
   const { optionsControls, setOptions } = useRouterState();
+  const buttonActiveElementRef = useRef<HTMLButtonElement | null>(null);
+
   const routerSandbox = optionsControls.sandbox;
+
+  useEffect(() => {
+    // Wait until all elements are rendered.
+    setTimeout(() => {
+      if (buttonActiveElementRef.current) {
+        buttonActiveElementRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+      }
+    }, 0);
+  }, []);
 
   return (
     <ul>
@@ -38,8 +52,9 @@ const ExplorerNavList = (props: ExplorerNavListProps): ReactElement => {
                 {name}
               </div>
             )}
-            {!!isLink && (
+            {isLink && (
               <button
+                ref={isActive ? buttonActiveElementRef : null}
                 css={[styles.item, styles.link, isActive && styles.linkActive]}
                 onClick={(event) => {
                   event.preventDefault();

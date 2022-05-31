@@ -4,7 +4,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import type {
   NTRouterURLOption,
   NTRouterState,
-  NTRouterStateOptions
+  NTRouterStateOptions,
+  NTRouterStateSetOptionsUpdate
 } from '../../../types';
 import {
   NT_BREAKPOINTS,
@@ -175,7 +176,7 @@ const RouterStateProvider = (props: RouterStateProviderProps): ReactElement => {
       options,
       optionsControls,
       optionsBooleans,
-      setOptions: (optionsToUpdate) => {
+      setOptions: (optionsToUpdate: NTRouterStateSetOptionsUpdate): void => {
         // If simultaneous calls are made, wait until "window.location" is updated.
         setTimeout(() => setOptions(optionsToUpdate), 0);
       }

@@ -1,6 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 const { NODE_ENV } = process.env;
 
@@ -18,6 +17,8 @@ module.exports = {
   mode: NODE_ENV || 'development',
   devtool: NODE_ENV === 'production' ? false : 'eval-source-map',
   entry: {
+    'editor.worker': 'monaco-editor/esm/vs/editor/editor.worker.js',
+    'ts.worker': 'monaco-editor/esm/vs/language/typescript/ts.worker',
     playground: path.join(SRC_PATH, 'playground/playground.tsx'),
     sandbox: path.join(SRC_PATH, 'sandbox/sandbox.tsx')
   },
@@ -56,10 +57,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new MonacoWebpackPlugin({
-      publicPath: BASE_PATH,
-      languages: ['javascript', 'typescript']
-    }),
     new HtmlWebpackPlugin({
       publicPath: BASE_PATH,
       template: path.join(SRC_PATH, 'playground/playground.html'),

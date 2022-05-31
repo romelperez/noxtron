@@ -19,9 +19,12 @@ export type NTMonacoCompilerOptions =
 
 export type NTThemeSettingsMultiplier = number;
 export type NTThemeSettingsStyle = CSSProperties[];
+export type NTThemeSettingsColorValue = [number, number, number, number?];
+export type NTThemeSettingsColorPatch = Array<number | undefined | null>;
 export type NTThemeSettingsColor = (
-  index: number
-) => [number, number, number, number?];
+  index: number,
+  patch?: NTThemeSettingsColorPatch
+) => NTThemeSettingsColorValue;
 
 export type NTThemeMultiplier = (index: number) => number;
 export type NTThemeStyleValue = CSSProperties;
@@ -37,7 +40,6 @@ export interface NTThemePalette {
   level: NTThemeColor;
   levelHigh: NTThemeColor;
   bg: NTThemeColor;
-  overlay: NTThemeColor;
 }
 
 export interface NTTheme {

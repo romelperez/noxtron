@@ -10,23 +10,20 @@ const createStyles = (theme: NTTheme, props: StyleProps): NTStyles => {
   const { color, disabled, size = 'default' } = props;
 
   const palette = theme.colors[color || 'primary'];
-  const isDark = theme.colorScheme === 'dark';
   const isSmall = size === 'small';
 
   return {
     root: {
       display: 'inline-block',
       outline: 'none',
-      border: isDark
-        ? `1px solid ${palette.levelHigh(3)}`
-        : `1px solid ${palette.decoHigh(12)}`,
+      border: `1px solid ${palette.levelHigh(3)}`,
       padding: `${theme.space(isSmall ? 1 : 2)}px ${theme.space(
         isSmall ? 3 : 4
       )}px`,
       verticalAlign: 'middle',
       ...theme.typography.cta(isSmall ? 1 : 0),
       lineHeight: 1,
-      color: isDark ? palette.textHigh(14) : palette.textHigh(18),
+      color: palette.textHigh(14),
       backgroundColor: palette.levelHigh(1),
       cursor: disabled ? 'not-allowed' : 'pointer',
       userSelect: 'none',

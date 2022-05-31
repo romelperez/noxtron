@@ -2,7 +2,6 @@ import type { NTTheme, NTStyles } from '../../../types';
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 
 const createStyles = (theme: NTTheme): NTStyles => {
-  const isDark = theme.colorScheme === 'dark';
   const { primary, secondary } = theme.colors;
 
   return {
@@ -35,7 +34,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
       ...theme.typography.cta(3),
       textTransform: 'none',
       wordBreak: 'break-all',
-      color: isDark ? primary.text(12) : primary.text(18),
+      color: primary.text(12),
       transitionProperty: 'color, background-color',
       transitionTimingFunction: 'ease-out',
       transitionDuration: '0.2s',
@@ -46,8 +45,8 @@ const createStyles = (theme: NTTheme): NTStyles => {
       }
     },
     itemActive: {
-      color: isDark ? secondary.text(12) : secondary.text(18),
-      backgroundColor: isDark ? secondary.level(1) : secondary.level(5)
+      color: secondary.text(12),
+      backgroundColor: secondary.level(1)
     },
     link: {
       display: 'block',
@@ -56,20 +55,20 @@ const createStyles = (theme: NTTheme): NTStyles => {
       border: 'none',
       width: '100%',
       textAlign: 'left',
-      color: isDark ? primary.textHigh(12) : primary.textHigh(18),
+      color: primary.textHigh(12),
       background: 'transparent',
       cursor: 'pointer',
 
       '&:hover, &:focus': {
-        color: isDark ? primary.textHigh(14) : primary.textHigh(20)
+        color: primary.textHigh(14)
       }
     },
     linkActive: {
-      color: isDark ? secondary.textHigh(12) : secondary.textHigh(18),
-      backgroundColor: isDark ? secondary.levelHigh(1) : secondary.levelHigh(5),
+      color: secondary.textHigh(12),
+      backgroundColor: secondary.levelHigh(1),
 
       '&:hover, &:focus': {
-        color: isDark ? secondary.textHigh(14) : secondary.textHigh(20)
+        color: secondary.textHigh(14)
       }
     }
   };

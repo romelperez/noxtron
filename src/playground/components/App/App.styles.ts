@@ -5,15 +5,11 @@ const createStyles = (theme: NTTheme): NTStyles => {
   const { primary } = theme.colors;
   const isDark = theme.colorScheme === 'dark';
 
-  const bg1 = isDark ? primary.bg(2) : primary.bg(2);
-  const bg2 = isDark ? primary.bg(3) : primary.bg(1);
-  const bg3 = isDark ? primary.bg(4) : primary.bg(0);
-  const line1 = isDark
-    ? `1px solid ${primary.deco(8)}`
-    : `1px solid ${primary.deco(12)}`;
-  const line2 = isDark
-    ? `1px solid ${primary.deco(4)}`
-    : `1px solid ${primary.deco(8)}`;
+  const bg1 = isDark ? primary.bg(2) : primary.bg(5);
+  const bg2 = isDark ? primary.bg(3) : primary.bg(6);
+  const bg3 = isDark ? primary.bg(4) : '#fff';
+  const line1 = `1px solid ${primary.deco(8)}`;
+  const line2 = `1px solid ${primary.deco(4)}`;
   const scrollbarBg = primary.bg(8);
   const scrollbarThumb = primary.bg(12);
 
@@ -57,12 +53,12 @@ const createStyles = (theme: NTTheme): NTStyles => {
       h5: { ...theme.typography.heading(4) },
       h6: { ...theme.typography.heading(5) },
       a: {
-        color: isDark ? primary.textHigh(14) : primary.textHigh(18),
+        color: primary.textHigh(14),
         textDecoration: 'none',
         transition: 'color 200ms ease-out',
 
         '&:hover': {
-          color: isDark ? primary.textHigh(12) : primary.textHigh(20)
+          color: primary.textHigh(12)
         }
       },
       'code, pre': {
@@ -80,7 +76,10 @@ const createStyles = (theme: NTTheme): NTStyles => {
     },
     header: {
       borderBottom: line1,
-      backgroundColor: bg1
+      backgroundColor: bg1,
+      transitionProperty: 'background-color',
+      transitionDuration: '200ms',
+      transitionTimingFunction: 'ease-out'
     },
     main: {
       flex: 1,
@@ -110,6 +109,9 @@ const createStyles = (theme: NTTheme): NTStyles => {
       display: 'none', // Hidden on mobile.
       borderBottom: line2,
       backgroundColor: bg2,
+      transitionProperty: 'background-color',
+      transitionDuration: '200ms',
+      transitionTimingFunction: 'ease-out',
 
       [breakpoints.medium.up]: {
         display: 'flex'
@@ -126,7 +128,9 @@ const createStyles = (theme: NTTheme): NTStyles => {
       flex: '1 1 50%',
       minWidth: 0, // Width overflow issue.
       backgroundColor: bg3,
-      transition: 'width 200ms ease-out'
+      transitionProperty: 'width, background-color',
+      transitionDuration: '200ms',
+      transitionTimingFunction: 'ease-out'
     },
     panelEditor: {
       //
@@ -140,7 +144,10 @@ const createStyles = (theme: NTTheme): NTStyles => {
     },
     footer: {
       borderTop: line1,
-      backgroundColor: bg1
+      backgroundColor: bg1,
+      transitionProperty: 'background-color',
+      transitionDuration: '200ms',
+      transitionTimingFunction: 'ease-out'
     }
   };
 };

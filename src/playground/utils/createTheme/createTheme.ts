@@ -51,8 +51,8 @@ const createTheme = (
 
   const colorHues = { ...userSettings.colorHues };
   const colors = {
-    primary: createThemeColorPalette(colorHues.primary ?? 180, colorScheme),
-    secondary: createThemeColorPalette(colorHues.secondary ?? 60, colorScheme)
+    primary: createThemeColorPalette(colorHues.primary ?? 180),
+    secondary: createThemeColorPalette(colorHues.secondary ?? 60)
   };
 
   return {

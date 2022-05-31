@@ -1,11 +1,13 @@
 import type { NTStyles } from '../../../types';
+import { animationAppear } from '../../utils/animations';
 
 const createStyles = (): NTStyles => {
   return {
     root: {
       position: 'relative',
       display: 'flex',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      animation: `${animationAppear} 0.2s ease-out`
     },
     sandbox: {
       flex: 1,

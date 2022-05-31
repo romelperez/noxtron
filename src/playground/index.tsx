@@ -5,7 +5,6 @@
 // TODO: Allow user to configure if sematic/type errors prevent from executing code.
 // TODO: Sandbox should process asterisk import.
 // Example: const tslib = require('tslib'); const react = (0, tslib.__importStar)(require('react'));
-// TODO: Add panel transition animations.
 // TODO: Add component BEM classes.
 
 export * from './containers/Playground';

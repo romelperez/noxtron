@@ -1,5 +1,6 @@
 import type { NTTheme, NTStyles } from '../../../types';
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
+import { animationAppear } from '../../utils/animations';
 
 const createStyles = (theme: NTTheme, hasLinks: boolean): NTStyles => {
   return {
@@ -9,6 +10,7 @@ const createStyles = (theme: NTTheme, hasLinks: boolean): NTStyles => {
       justifyContent: 'center',
       alignItems: 'center',
       padding: theme.space(2),
+      animation: `${animationAppear} 0.2s ease-out`,
       ...theme.typography.body(3),
 
       [breakpoints.medium.up]: {

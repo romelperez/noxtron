@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
-import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactElement, useEffect, useMemo, useRef } from 'react';
 
 import type { NTStyles, NTSandbox } from '../../../types';
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
@@ -28,7 +28,7 @@ const ExplorerNavList = (props: ExplorerNavListProps): ReactElement => {
 
   useEffect(() => {
     // Wait until all elements are rendered.
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       if (buttonActiveElementRef.current) {
         buttonActiveElementRef.current.scrollIntoView({
           behavior: 'smooth',
@@ -36,6 +36,9 @@ const ExplorerNavList = (props: ExplorerNavListProps): ReactElement => {
         });
       }
     }, 0);
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   return (

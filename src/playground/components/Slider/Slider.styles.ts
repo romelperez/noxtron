@@ -1,6 +1,6 @@
-import type { NTTheme, NTStyles } from '../../../types';
+import type { NTStyles } from '../../../types';
 
-const createStyles = (theme: NTTheme): NTStyles => {
+const createStyles = (): NTStyles => {
   return {
     root: {
       position: 'absolute',
@@ -8,11 +8,8 @@ const createStyles = (theme: NTTheme): NTStyles => {
       top: 0,
       bottom: 0,
       width: 3,
-      backgroundColor: 'hsla(0, 50%, 50%, 0.4)',
+      backgroundColor: 'transparent',
       cursor: 'ew-resize'
-    },
-    isHold: {
-      backgroundColor: 'hsla(120, 50%, 50%, 0.4)'
     }
   };
 };

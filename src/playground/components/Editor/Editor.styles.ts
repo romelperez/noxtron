@@ -1,10 +1,12 @@
-import type { NTTheme, NTStyles } from '../../../types';
+import type { NTStyles } from '../../../types';
+import { animationAppear } from '../../utils/animations';
 
-const createStyles = (theme: NTTheme): NTStyles => {
+const createStyles = (): NTStyles => {
   return {
     root: {
       display: 'flex',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      animation: `${animationAppear} 0.2s ease-out`
     },
     editor: {
       flex: 1,

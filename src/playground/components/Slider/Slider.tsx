@@ -1,6 +1,6 @@
 /** @jsx jsx */
-import { jsx, useTheme } from '@emotion/react';
-import { ReactElement, useEffect, useMemo, useRef, useState } from 'react';
+import { jsx } from '@emotion/react';
+import { ReactElement, useEffect, useMemo, useRef } from 'react';
 
 import { createStyles } from './Slider.styles';
 
@@ -12,8 +12,7 @@ interface SliderProps {
 const Slider = (props: SliderProps): ReactElement => {
   const { className, onChange } = props;
 
-  const theme = useTheme();
-  const styles = useMemo(() => createStyles(theme), [theme]);
+  const styles = useMemo(() => createStyles(), []);
   const elementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

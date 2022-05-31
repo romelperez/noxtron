@@ -20,7 +20,7 @@ const Editor = (props: EditorProps): ReactElement => {
 
   const routerState = useRouterState();
   const theme = useTheme();
-  const styles = useMemo(() => createStyles(theme), [theme]);
+  const styles = useMemo(() => createStyles(), []);
 
   const monaco = useStore((state) => state.monaco);
   const model = useStore((state) => state.model);

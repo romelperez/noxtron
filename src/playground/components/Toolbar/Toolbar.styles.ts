@@ -35,19 +35,6 @@ const createStyles = (theme: NTTheme): NTStyles => {
     optionLabel: {
       display: 'inline-block',
       marginLeft: theme.space(1)
-    },
-    location: {
-      flex: 1,
-      ...theme.typography.code(2),
-      overflow: 'hidden',
-      marginLeft: theme.space(3),
-      whiteSpace: 'nowrap',
-      textOverflow: 'ellipsis',
-      letterSpacing: '-1px',
-
-      [breakpoints.large.up]: {
-        ...theme.typography.code(2)
-      }
     }
   };
 };

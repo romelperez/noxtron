@@ -107,8 +107,6 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           <span css={styles.optionLabel}>URL</span>
         </Button>
       </div>
-
-      {!!location && <code css={styles.location}>{location}</code>}
     </nav>
   );
 };

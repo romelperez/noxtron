@@ -16,6 +16,7 @@ const PlaygroundSetup = (): ReactElement => {
   const setStatus = useStore((state) => state.setStatus);
   const setDependencies = useStore((state) => state.setDependencies);
   const isLoading = useStore((state) => state.isLoading);
+  const error = useStore((state) => state.error);
 
   useEffect(() => {
     setStatus({ isLoading: true });
@@ -57,7 +58,7 @@ const PlaygroundSetup = (): ReactElement => {
       .finally(() => setStatus({ isLoading: false }));
   }, []);
 
-  if (isLoading) {
+  if (isLoading || !!error) {
     return <></>;
   }
 

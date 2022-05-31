@@ -14,6 +14,7 @@ import { Editor } from '../Editor';
 import { Preview } from '../Preview';
 import { Footer } from '../Footer';
 import { Loading } from '../Loading';
+import { StatusMessage } from '../StatusMessage';
 import { createStyles } from './App.styles';
 
 const App = (): ReactElement => {
@@ -32,7 +33,10 @@ const App = (): ReactElement => {
       <div className="app" css={styles.root}>
         <Header css={styles.header} />
         <main className="app__main" css={styles.main}>
-          {!isReady && <Loading />}
+          {isLoading && <Loading />}
+
+          {!!error && <StatusMessage>{error}</StatusMessage>}
+
           {isReady && (
             <Fragment>
               {optionsBooleans.explorer && <Explorer css={styles.explorer} />}

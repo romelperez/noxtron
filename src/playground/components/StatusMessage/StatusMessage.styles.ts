@@ -10,6 +10,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
       paddingRight: theme.space(2),
       paddingTop: theme.space(4),
       paddingBottom: theme.space(4),
+      width: '100%',
       ...theme.typography.body(2),
       textAlign: 'center'
     },

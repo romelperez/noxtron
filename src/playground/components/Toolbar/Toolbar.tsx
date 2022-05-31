@@ -14,14 +14,8 @@ interface ToolbarProps {
   className?: string;
 }
 
-const {
-  mdiReload,
-  mdiBackupRestore,
-  mdiPencil,
-  mdiTestTube,
-  mdiContentCopy,
-  mdiShareVariant
-} = NT_ICONS;
+const { mdiReload, mdiBackupRestore, mdiPencil, mdiTestTube, mdiContentCopy } =
+  NT_ICONS;
 
 const Toolbar = (props: ToolbarProps): ReactElement => {
   const { className } = props;
@@ -32,10 +26,6 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
   const transpilation = useStore((state) => state.transpilation);
   const trigger = useStore((state) => state.trigger);
 
-  const location =
-    optionsControls.type === 'predefined'
-      ? optionsControls.sandbox.join(' / ')
-      : '';
   const hasEditorError = !!transpilation.error;
 
   return (
@@ -71,7 +61,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           onClick={() => trigger('customSandbox')}
         >
           <Icon css={styles.optionIcon} path={mdiPencil} />
-          <span css={styles.optionLabel}>Custom</span>
+          <span css={styles.optionLabel}>Customize</span>
         </Button>
 
         <Button
@@ -82,7 +72,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           onClick={() => trigger('openIsolated')}
         >
           <Icon css={styles.optionIcon} path={mdiTestTube} />
-          <span css={styles.optionLabel}>Isolated</span>
+          <span css={styles.optionLabel}>Isolate</span>
         </Button>
 
         <Button
@@ -92,19 +82,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           onClick={() => trigger('copyCode')}
         >
           <Icon css={styles.optionIcon} path={mdiContentCopy} />
-          <span css={styles.optionLabel}>Code</span>
-        </Button>
-
-        <Button
-          css={styles.option}
-          size="small"
-          title="Copy playground URL"
-          onClick={() => {
-            window.navigator.clipboard.writeText(window.location.href);
-          }}
-        >
-          <Icon css={styles.optionIcon} path={mdiShareVariant} />
-          <span css={styles.optionLabel}>URL</span>
+          <span css={styles.optionLabel}>Copy</span>
         </Button>
       </div>
     </nav>

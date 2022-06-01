@@ -6,6 +6,8 @@ import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 import { useRouterState } from '../../utils/useRouterState';
 import { useMediaQuery } from '../../utils/useMediaQuery';
 import { useStore } from '../../utils/useStore';
+import { StatusMessage } from '../../ui/StatusMessage';
+import { Loading } from '../../ui/Loading';
 
 import { Header } from '../Header';
 import { Explorer } from '../Explorer';
@@ -13,8 +15,6 @@ import { Toolbar } from '../Toolbar';
 import { Editor } from '../Editor';
 import { Preview } from '../Preview';
 import { Footer } from '../Footer';
-import { Loading } from '../Loading';
-import { StatusMessage } from '../StatusMessage';
 import { createStyles } from './App.styles';
 
 const App = (): ReactElement => {

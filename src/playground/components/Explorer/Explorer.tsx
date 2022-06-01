@@ -8,8 +8,8 @@ import { cx } from '../../utils/cx';
 import { useMediaQuery } from '../../utils/useMediaQuery';
 import { useRouterState } from '../../utils/useRouterState';
 import { useStore } from '../../utils/useStore';
-import { StatusMessage } from '../StatusMessage';
-import { Slider } from '../Slider';
+import { StatusMessage } from '../../ui/StatusMessage';
+import { Slider } from '../../ui/Slider';
 import { createStyles } from './Explorer.styles';
 
 interface ExplorerNavListProps {

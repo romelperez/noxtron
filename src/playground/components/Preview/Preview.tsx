@@ -4,6 +4,9 @@ import { ReactElement, useEffect, useMemo, useRef } from 'react';
 
 import { convertLocationSearchToString } from '../../../utils/convertLocationSearchToString';
 import { encodeURLParameter } from '../../../utils/encodeURLParameter';
+import { StatusMessage } from '../../ui/StatusMessage';
+import { Loading } from '../../ui/Loading';
+import { Slider } from '../../ui/Slider';
 
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 import { cx } from '../../utils/cx';
@@ -12,9 +15,6 @@ import { useStore } from '../../utils/useStore';
 import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 import { useRouterState } from '../../utils/useRouterState';
 import { createStyles } from './Preview.styles';
-import { Loading } from '../Loading';
-import { StatusMessage } from '../StatusMessage';
-import { Slider } from '../Slider';
 
 interface PreviewProps {
   className?: string;

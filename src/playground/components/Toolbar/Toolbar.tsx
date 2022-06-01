@@ -9,7 +9,7 @@ import { useMediaQuery } from '../../utils/useMediaQuery';
 import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 import { useRouterState } from '../../utils/useRouterState';
 import { useStore } from '../../utils/useStore';
-import { Button } from '../Button';
+import { Button } from '../../ui/Button';
 import { createStyles } from './Toolbar.styles';
 
 interface ToolbarProps {

@@ -10,7 +10,7 @@ import { useMediaQuery } from '../../utils/useMediaQuery';
 import { useRouterState } from '../../utils/useRouterState';
 import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 import { useStore } from '../../utils/useStore';
-import { Button } from '../Button';
+import { Button } from '../../ui/Button';
 import { createStyles } from './Header.styles';
 
 interface HeaderProps {

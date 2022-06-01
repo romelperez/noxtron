@@ -8,10 +8,11 @@ interface SliderProps {
   className?: string;
   position?: 'left' | 'right';
   onChange: (value: number) => void;
+  onReset?: () => void;
 }
 
 const Slider = (props: SliderProps): ReactElement => {
-  const { className, position = 'left', onChange } = props;
+  const { className, position = 'left', onChange, onReset } = props;
 
   const theme = useTheme();
   const styles = useMemo(
@@ -80,6 +81,7 @@ const Slider = (props: SliderProps): ReactElement => {
       ref={containerElementRef}
       className={className}
       css={[styles.root, styles.rootIsInactive]}
+      onDoubleClick={() => onReset?.()}
     >
       <div ref={barElementRef} css={styles.bar} />
     </div>

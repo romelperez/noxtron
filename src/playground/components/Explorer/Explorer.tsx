@@ -98,19 +98,21 @@ const sliderWidths = {
   max: 500
 };
 
-const formatSliderWidth = (width: number): number => {
-  const { min, max } = sliderWidths;
-  return Math.max(min, Math.min(max, width));
-};
-
 const getSliderWidthCache = (): number | null => {
   const initialCache = window.localStorage.getItem(sliderWidths.cacheKey);
+  if (!initialCache) {
+    return null;
+  }
   return Number.isFinite(Number(initialCache)) ? Number(initialCache) : null;
 };
 
-const setSliderWidthCache = (width: number): void => {
+const setSliderWidthCache = (width: number | null): void => {
   const { cacheKey } = sliderWidths;
-  window.localStorage.setItem(cacheKey, String(width));
+  if (width === null) {
+    window.localStorage.removeItem(cacheKey);
+  } else {
+    window.localStorage.setItem(cacheKey, String(width));
+  }
 };
 
 const Explorer = (props: ExplorerProps): ReactElement => {
@@ -122,17 +124,26 @@ const Explorer = (props: ExplorerProps): ReactElement => {
   const isMDMediumUp = useMediaQuery(breakpoints.medium.up);
   const elementRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  const setSliderWidth = (value: number | null): void => {
     const element = elementRef.current as HTMLDivElement;
 
+    if (value === null) {
+      element.style.width = '';
+    } else {
+      const { min, max } = sliderWidths;
+      const width = Math.max(min, Math.min(max, value));
+      element.style.width = `${width}px`;
+    }
+  };
+
+  useEffect(() => {
     if (isMDMediumUp) {
       const widthInitial = getSliderWidthCache() ?? sliderWidths.initial;
-      const width = formatSliderWidth(widthInitial);
-      element.style.width = `${width}px`;
+      setSliderWidth(widthInitial);
     }
 
     return () => {
-      element.style.width = '';
+      setSliderWidth(null);
     };
   }, [isMDMediumUp]);
 
@@ -163,9 +174,13 @@ const Explorer = (props: ExplorerProps): ReactElement => {
           position="right"
           onChange={(offset) => {
             const element = elementRef.current as HTMLDivElement;
-            const width = formatSliderWidth(element.offsetWidth + offset);
-            element.style.width = `${width}px`;
+            const width = element.offsetWidth + offset;
+            setSliderWidth(width);
             setSliderWidthCache(width);
+          }}
+          onReset={() => {
+            setSliderWidth(sliderWidths.initial);
+            setSliderWidthCache(null);
           }}
         />
       )}

@@ -1,3 +1,4 @@
+// TODO: Show slider icons.
 // TODO: Show in preview a message when there is no code changed.
 // TODO: Remove react/react-dom peer dependencies and provide a pre-built app.
 // TODO: Refactor setup components functionalities.

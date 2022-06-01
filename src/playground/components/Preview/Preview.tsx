@@ -33,12 +33,19 @@ const formatSliderWidth = (widthPerc: number): number => {
 
 const getSliderWidthCache = (): number | null => {
   const initialCache = window.localStorage.getItem(sliderWidths.cacheKey);
+  if (!initialCache) {
+    return null;
+  }
   return Number.isFinite(Number(initialCache)) ? Number(initialCache) : null;
 };
 
-const setSliderWidthCache = (widthPerc: number): void => {
+const setSliderWidthCache = (widthPerc: number | null): void => {
   const { cacheKey } = sliderWidths;
-  window.localStorage.setItem(cacheKey, String(widthPerc));
+  if (widthPerc === null) {
+    window.localStorage.removeItem(cacheKey);
+  } else {
+    window.localStorage.setItem(cacheKey, String(widthPerc));
+  }
 };
 
 const Preview = (props: PreviewProps): ReactElement => {
@@ -144,6 +151,12 @@ const Preview = (props: PreviewProps): ReactElement => {
             element.style.flex = `0 1 ${widthPerc * 100}%`;
             element.dataset.widthPerc = String(widthPerc);
             setSliderWidthCache(widthPerc);
+          }}
+          onReset={() => {
+            const element = elementRef.current as HTMLDivElement;
+            element.style.flex = '0 1 50%';
+            element.dataset.widthPerc = String(sliderWidths.initial);
+            setSliderWidthCache(null);
           }}
         />
       )}

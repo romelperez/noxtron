@@ -32,24 +32,25 @@ const Editor = (props: EditorProps): ReactElement => {
   const isBreakpointXLargeUp = useMediaQuery(breakpoints.xlarge.up);
   const isBreakpointXXLargeUp = useMediaQuery(breakpoints.xxlarge.up);
 
-  const editorContainerElementRef = useRef<HTMLDivElement>(null);
+  const containerElementRef = useRef<HTMLDivElement>(null);
   const editorElementRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<NTMonacoEditor | null>(null);
 
   const onResize = useCallback(
     throttle((): void => {
-      if (!editorRef.current || !editorContainerElementRef.current) {
+      if (!editorRef.current || !containerElementRef.current) {
         return;
       }
       editorRef.current.layout({
-        width: editorContainerElementRef.current.offsetWidth,
-        height: editorContainerElementRef.current.offsetHeight
+        width: containerElementRef.current.offsetWidth,
+        height: containerElementRef.current.offsetHeight
       });
     }, 50),
     []
   );
 
   useEffect(() => {
+    const containerElement = containerElementRef.current as HTMLDivElement;
     const editorElement = editorElementRef.current as HTMLDivElement;
     const { fontFamily, fontSize, fontWeight } = theme.typography.code(
       isBreakpointLargeUp ? 2 : 3
@@ -83,9 +84,13 @@ const Editor = (props: EditorProps): ReactElement => {
 
     window.addEventListener('resize', onResize);
 
+    const containerResizeObserver = new ResizeObserver(onResize);
+    containerResizeObserver.observe(containerElement);
+
     return () => {
       editorRef.current?.dispose();
       window.removeEventListener('resize', onResize);
+      containerResizeObserver.disconnect();
     };
   }, []);
 
@@ -129,7 +134,7 @@ const Editor = (props: EditorProps): ReactElement => {
 
   return (
     <div
-      ref={editorContainerElementRef}
+      ref={containerElementRef}
       className={cx('editor', className)}
       css={styles.root}
     >

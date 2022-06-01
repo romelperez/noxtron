@@ -1,22 +1,29 @@
 import type { NTTheme, NTStyles } from '../../../types';
 
-const createStyles = (theme: NTTheme): NTStyles => {
+const createStyles = (theme: NTTheme, position: 'left' | 'right'): NTStyles => {
+  const isLeft = position === 'left';
+
   return {
     root: {
       position: 'absolute',
-      left: -3,
-      right: 'auto',
       top: 0,
       bottom: 0,
-      width: 6,
+      left: isLeft ? 0 : 'auto',
+      right: isLeft ? 'auto' : 0,
       cursor: 'ew-resize'
     },
-    toRight: {
-      left: 'auto',
-      right: -3
+    rootIsInactive: {
+      transform: isLeft ? 'translateX(-3px)' : 'translateX(3px)',
+      width: '6px'
+    },
+    // Make the slider container wide enough so the mouse wouldn't get out to places
+    // where the mouse events break. For example, when the mouse goes to an iframe
+    // (the preview iframe), the mouse events are lost.
+    rootIsActive: {
+      transform: isLeft ? 'translateX(-30vw)' : 'translateX(30vw)',
+      width: '60vw'
     },
     bar: {
-      zIndex: 2,
       position: 'absolute',
       left: '50%',
       top: 0,

@@ -14,7 +14,10 @@ const Slider = (props: SliderProps): ReactElement => {
   const { className, position = 'left', onChange } = props;
 
   const theme = useTheme();
-  const styles = useMemo(() => createStyles(theme), [theme]);
+  const styles = useMemo(
+    () => createStyles(theme, position),
+    [theme, position]
+  );
   const containerElementRef = useRef<HTMLDivElement>(null);
   const barElementRef = useRef<HTMLDivElement>(null);
 
@@ -27,6 +30,7 @@ const Slider = (props: SliderProps): ReactElement => {
 
     const onMove = (event: MouseEvent) => {
       if (isActive) {
+        // Send how many pixels the mouse moved in the X axis since the last movement.
         const xOffset = event.pageX - xInitial;
         xInitial = event.pageX;
         onChange(xOffset);
@@ -48,26 +52,15 @@ const Slider = (props: SliderProps): ReactElement => {
 
       enableSlider();
 
-      Object.assign(containerElement.style, {
-        width: '60vw',
-        transform:
-          position === 'right' ? 'translateX(30vw)' : 'translateX(-30vw)'
-      });
-      Object.assign(barElement.style, {
-        opacity: 1
-      });
+      Object.assign(containerElement.style, styles.rootIsActive);
+      Object.assign(barElement.style, { opacity: 1 });
     };
 
     const onStop = () => {
       disableSlider();
 
-      Object.assign(containerElement.style, {
-        width: '6px',
-        transform: 'none'
-      });
-      Object.assign(barElement.style, {
-        opacity: 0
-      });
+      Object.assign(containerElement.style, styles.rootIsInactive);
+      Object.assign(barElement.style, { opacity: 0 });
     };
 
     containerElement.addEventListener('mousedown', onStart);
@@ -86,7 +79,7 @@ const Slider = (props: SliderProps): ReactElement => {
     <div
       ref={containerElementRef}
       className={className}
-      css={[styles.root, position === 'right' && styles.toRight]}
+      css={[styles.root, styles.rootIsInactive]}
     >
       <div ref={barElementRef} css={styles.bar} />
     </div>

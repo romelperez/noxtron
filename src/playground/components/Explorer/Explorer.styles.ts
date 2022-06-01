@@ -41,7 +41,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
       textTransform: 'none',
       wordBreak: 'break-all',
       color: primary.text(12),
-      transitionProperty: 'color, background-color',
+      transitionProperty: 'border-color, color, background-color',
       transitionTimingFunction: 'ease-out',
       transitionDuration: '0.2s',
 
@@ -72,11 +72,12 @@ const createStyles = (theme: NTTheme): NTStyles => {
     linkActive: {
       borderRightWidth: 2,
       borderRightStyle: 'solid',
-      borderRightColor: secondary.levelHigh(14),
+      borderRightColor: secondary.textHigh(14),
       color: secondary.textHigh(14),
       backgroundColor: secondary.levelHigh(1),
 
       '&:hover, &:focus': {
+        borderRightColor: secondary.textHigh(18),
         color: secondary.textHigh(18)
       }
     }

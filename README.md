@@ -188,7 +188,7 @@ Only an HTML element with id "root" is required.
 
 import React from 'react';
 import { render } from 'react-dom';
-import { Playground } from 'noxtron/build/playground';
+import { Playground } from 'noxtron/build/cjs/playground';
 
 const settings = {
   // Where the Noxtron apps will be served.
@@ -270,7 +270,7 @@ source code.
 ```js
 // src/sandbox.js
 
-import { setupSandbox } from 'noxtron/build/sandbox';
+import { setupSandbox } from 'noxtron/build/cjs/sandbox';
 import React from 'react';
 import ReactDOM from 'react-dom';
 

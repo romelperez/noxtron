@@ -5,7 +5,7 @@ import random from 'lodash/random';
 import * as emotionReact from '@emotion/react';
 import * as motion from 'motion';
 
-import { setupSandbox } from '../../../../build/sandbox';
+import { setupSandbox } from '../../../../build/cjs/sandbox';
 
 setupSandbox({
   dependencies: [

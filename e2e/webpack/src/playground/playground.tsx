@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 
 import type { NTPlaygroundSettings } from '../../../../';
-import { Playground } from '../../../../build/playground';
+import { Playground } from '../../../../build/cjs/playground';
 
 const settings: NTPlaygroundSettings = {
   basePath: '/noxtron/',

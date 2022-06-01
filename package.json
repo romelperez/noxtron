@@ -32,7 +32,7 @@
   "files": [
     "build"
   ],
-  "types": "./build/index.d.ts",
+  "types": "./build/cjs/index.d.ts",
   "peerDependencies": {
     "monaco-editor": "0.33",
     "prop-types": "15",

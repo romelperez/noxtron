@@ -24,7 +24,7 @@ const Header = (props: HeaderProps): ReactElement => {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const { header, title, playgroundPath } = usePlaygroundSettings();
+  const { header, title } = usePlaygroundSettings();
   const { optionsBooleans, setOptions } = useRouterState();
   const isMDMediumUp = useMediaQuery(breakpoints.medium.up);
   const isLoading = useStore((state) => state.isLoading);
@@ -84,9 +84,7 @@ const Header = (props: HeaderProps): ReactElement => {
           {(isMDMediumUp && header?.medium) || header?.small}
         </div>
         <h1 className="header__logo" css={styles.logo}>
-          <Link to={playgroundPath}>
-            {(isMDMediumUp && title?.medium) || title?.small}
-          </Link>
+          <Link to="/">{(isMDMediumUp && title?.medium) || title?.small}</Link>
         </h1>
       </div>
     </header>

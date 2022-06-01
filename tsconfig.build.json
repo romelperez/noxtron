@@ -6,7 +6,7 @@
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo",
     "rootDir": "src",
-    "outDir": "build"
+    "outDir": "build/cjs"
   },
   "exclude": [
     "node_modules",

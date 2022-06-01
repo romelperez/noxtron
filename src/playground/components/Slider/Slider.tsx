@@ -1,22 +1,26 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/react';
+import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useEffect, useMemo, useRef } from 'react';
 
 import { createStyles } from './Slider.styles';
 
 interface SliderProps {
   className?: string;
+  position?: 'left' | 'right';
   onChange: (value: number) => void;
 }
 
 const Slider = (props: SliderProps): ReactElement => {
-  const { className, onChange } = props;
+  const { className, position = 'left', onChange } = props;
 
-  const styles = useMemo(() => createStyles(), []);
-  const elementRef = useRef<HTMLDivElement>(null);
+  const theme = useTheme();
+  const styles = useMemo(() => createStyles(theme), [theme]);
+  const containerElementRef = useRef<HTMLDivElement>(null);
+  const barElementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const element = elementRef.current as HTMLDivElement;
+    const containerElement = containerElementRef.current as HTMLDivElement;
+    const barElement = barElementRef.current as HTMLDivElement;
 
     let isActive = false;
     let xInitial = 0;
@@ -29,11 +33,6 @@ const Slider = (props: SliderProps): ReactElement => {
       }
     };
 
-    const onMouseEvent = (event: MouseEvent) => {
-      event.preventDefault();
-      event.stopPropagation();
-    };
-
     const enableSlider = () => {
       isActive = true;
       document.addEventListener('mousemove', onMove);
@@ -44,35 +43,54 @@ const Slider = (props: SliderProps): ReactElement => {
       document.removeEventListener('mousemove', onMove);
     };
 
-    const onMouseDown = (event: MouseEvent) => {
+    const onStart = (event: MouseEvent) => {
       xInitial = event.pageX;
-      onMouseEvent(event);
+
       enableSlider();
+
+      Object.assign(containerElement.style, {
+        width: '60vw',
+        transform:
+          position === 'right' ? 'translateX(30vw)' : 'translateX(-30vw)'
+      });
+      Object.assign(barElement.style, {
+        opacity: 1
+      });
     };
 
-    const onMouseUp = (event: MouseEvent) => {
-      onMouseEvent(event);
+    const onStop = () => {
       disableSlider();
+
+      Object.assign(containerElement.style, {
+        width: '6px',
+        transform: 'none'
+      });
+      Object.assign(barElement.style, {
+        opacity: 0
+      });
     };
 
-    const onDocumentMouseUp = (event: MouseEvent) => {
-      onMouseEvent(event);
-      disableSlider();
-    };
-
-    element.addEventListener('mousedown', onMouseDown);
-    element.addEventListener('mouseup', onMouseUp);
-    document.addEventListener('mouseup', onDocumentMouseUp);
+    containerElement.addEventListener('mousedown', onStart);
+    containerElement.addEventListener('mouseup', onStop);
+    document.addEventListener('mouseup', onStop);
 
     return () => {
       disableSlider();
-      element.addEventListener('mousedown', onMouseDown);
-      element.addEventListener('mouseup', onMouseUp);
-      document.addEventListener('mouseup', onDocumentMouseUp);
+      containerElement.removeEventListener('mousedown', onStart);
+      containerElement.removeEventListener('mouseup', onStop);
+      document.removeEventListener('mouseup', onStop);
     };
   }, []);
 
-  return <div ref={elementRef} className={className} css={styles.root} />;
+  return (
+    <div
+      ref={containerElementRef}
+      className={className}
+      css={[styles.root, position === 'right' && styles.toRight]}
+    >
+      <div ref={barElementRef} css={styles.bar} />
+    </div>
+  );
 };
 
 export { Slider };

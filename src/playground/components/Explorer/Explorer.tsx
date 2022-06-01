@@ -95,7 +95,7 @@ const sliderWidths = {
   cacheKey: 'noxtron-explorer-width',
   initial: 300,
   min: 250,
-  max: 400
+  max: 500
 };
 
 const formatSliderWidth = (width: number): number => {
@@ -129,9 +129,11 @@ const Explorer = (props: ExplorerProps): ReactElement => {
       const widthInitial = getSliderWidthCache() ?? sliderWidths.initial;
       const width = formatSliderWidth(widthInitial);
       element.style.width = `${width}px`;
-    } else {
-      element.style.width = '';
     }
+
+    return () => {
+      element.style.width = '';
+    };
   }, [isMDMediumUp]);
 
   return (
@@ -158,6 +160,7 @@ const Explorer = (props: ExplorerProps): ReactElement => {
 
       {isMDMediumUp && (
         <Slider
+          position="right"
           onChange={(offset) => {
             const element = elementRef.current as HTMLDivElement;
             const width = formatSliderWidth(element.offsetWidth + offset);

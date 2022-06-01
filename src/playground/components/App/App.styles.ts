@@ -125,10 +125,10 @@ const createStyles = (theme: NTTheme): NTStyles => {
       minHeight: 0 // Height overflow issue.
     },
     panel: {
-      flex: '1 1 50%',
+      flex: 1,
       minWidth: 0, // Width overflow issue.
       backgroundColor: bg3,
-      transitionProperty: 'width, background-color',
+      transitionProperty: 'background-color',
       transitionDuration: '0.2s',
       transitionTimingFunction: 'ease-out'
     },

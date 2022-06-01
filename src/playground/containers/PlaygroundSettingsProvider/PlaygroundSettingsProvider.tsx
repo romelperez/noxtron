@@ -12,8 +12,11 @@ const settingsDefault: Partial<NTPlaygroundSettings> = {
   playgroundPath: '/',
   sandboxPath: '/sandbox/',
   codeLanguage: 'javascript',
-  editorCustomSandboxMsg:
-    '// Select a sandbox in the explorer...\n// Or continue editing this custom sandbox...\n'
+  newCustomSandboxCode: [
+    '// Select a sandbox in the explorer...\n',
+    '// Or continue editing this custom sandbox...\n'
+  ].join(''),
+  newCustomSandboxMessage: 'Select a sandbox in the explorer or edit the code.'
 };
 
 const PlaygroundSettingsProvider = (

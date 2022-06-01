@@ -18,7 +18,7 @@ const ExplorationSetup = (): ReactElement => {
 
   // Setup predefined sandbox.
   useEffect(() => {
-    const { editorCustomSandboxMsg } = settings;
+    const { newCustomSandboxCode } = settings;
     const { type, sandbox: sandboxPath } = routerState.optionsControls;
 
     if (type === 'predefined') {
@@ -32,7 +32,7 @@ const ExplorationSetup = (): ReactElement => {
         setSandboxSelected(null);
         routerState.setOptions({
           type: 'custom',
-          code: editorCustomSandboxMsg
+          code: newCustomSandboxCode
         });
       }
     }

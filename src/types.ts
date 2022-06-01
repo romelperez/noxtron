@@ -165,7 +165,8 @@ export interface NTPlaygroundSettings {
   playgroundPath: string;
   sandboxPath: string;
   codeLanguage?: 'javascript' | 'typescript';
-  editorCustomSandboxMsg?: string;
+  newCustomSandboxCode?: string;
+  newCustomSandboxMessage?: string;
   theme?: NTPlaygroundSettingsTheme;
   header?: {
     mobile?: ReactNode;

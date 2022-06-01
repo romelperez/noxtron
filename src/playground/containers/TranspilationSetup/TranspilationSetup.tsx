@@ -17,11 +17,11 @@ const TranspilationSetup = (): ReactElement => {
   routerStateRef.current = routerState;
 
   useEffect(() => {
-    const { editorCustomSandboxMsg } = settings;
+    const { newCustomSandboxCode } = settings;
     const { type } = routerState.optionsControls;
 
     const setTranspilationProcessingState = (): void => {
-      const isEditorUnchanged = model.getValue() !== editorCustomSandboxMsg;
+      const isEditorUnchanged = model.getValue() !== newCustomSandboxCode;
       updateTranspilation({
         isLoading: isEditorUnchanged,
         importsLines: [],

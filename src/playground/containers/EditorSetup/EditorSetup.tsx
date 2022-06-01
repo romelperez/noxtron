@@ -71,11 +71,11 @@ const EditorSetup = (): ReactElement => {
   }, [sandboxSelected]);
 
   useEffect(() => {
-    const { editorCustomSandboxMsg } = settings;
+    const { newCustomSandboxCode } = settings;
     const { type, code } = routerState.optionsControls;
 
     if (type === 'custom') {
-      model.setValue(code || (editorCustomSandboxMsg as string));
+      model.setValue(code || (newCustomSandboxCode as string));
     }
   }, [routerState.optionsControls.type, routerState.optionsControls.code]);
 

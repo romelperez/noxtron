@@ -13,6 +13,7 @@ import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 import { useRouterState } from '../../utils/useRouterState';
 import { createStyles } from './Preview.styles';
 import { Loading } from '../Loading';
+import { StatusMessage } from '../StatusMessage';
 import { Slider } from '../Slider';
 
 interface PreviewProps {
@@ -52,7 +53,11 @@ const Preview = (props: PreviewProps): ReactElement => {
   const { className } = props;
 
   const styles = useMemo(() => createStyles(), []);
-  const { sandboxPath } = usePlaygroundSettings();
+  const {
+    sandboxPath,
+    newCustomSandboxCode = '',
+    newCustomSandboxMessage
+  } = usePlaygroundSettings();
   const transpilation = useStore((state) => state.transpilation);
   const { optionsBooleans } = useRouterState();
   const subscribe = useStore((state) => state.subscribe);
@@ -61,6 +66,8 @@ const Preview = (props: PreviewProps): ReactElement => {
   const isMDMediumUp = useMediaQuery(breakpoints.medium.up);
   const elementRef = useRef<HTMLDivElement>(null);
 
+  const isCodeUnchanged =
+    transpilation.code.trim() === newCustomSandboxCode.trim();
   const hasSlider = optionsBooleans.editor && isMDMediumUp;
 
   const sandboxURLSearch: string = useMemo(() => {
@@ -123,7 +130,11 @@ const Preview = (props: PreviewProps): ReactElement => {
     >
       {transpilation.isLoading && <Loading full />}
 
-      {!transpilation.isLoading && (
+      {!transpilation.isLoading && isCodeUnchanged && (
+        <StatusMessage>{newCustomSandboxMessage}</StatusMessage>
+      )}
+
+      {!transpilation.isLoading && !isCodeUnchanged && (
         <iframe
           className="preview__iframe"
           ref={iframeRef}

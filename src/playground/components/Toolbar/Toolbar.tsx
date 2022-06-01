@@ -3,8 +3,10 @@ import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 import Icon from '@mdi/react';
 
-import { NT_ICONS } from '../../../constants';
+import { NT_ICONS, NT_BREAKPOINTS as breakpoints } from '../../../constants';
 import { cx } from '../../utils/cx';
+import { useMediaQuery } from '../../utils/useMediaQuery';
+import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 import { useRouterState } from '../../utils/useRouterState';
 import { useStore } from '../../utils/useStore';
 import { Button } from '../Button';
@@ -23,14 +25,16 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
   const { optionsControls, optionsBooleans } = useRouterState();
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const { toolbar } = usePlaygroundSettings();
   const transpilation = useStore((state) => state.transpilation);
   const trigger = useStore((state) => state.trigger);
+  const isMDMediumUp = useMediaQuery(breakpoints.medium.up);
 
   const hasEditorError = !!transpilation.error;
 
   return (
     <nav className={cx('toolbar', className)} css={styles.root}>
-      <div css={styles.options}>
+      <div className="toolbar__options" css={styles.options}>
         <Button
           css={styles.option}
           size="small"
@@ -84,6 +88,9 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           <Icon css={styles.optionIcon} path={mdiContentCopy} />
           <span css={styles.optionLabel}>Copy</span>
         </Button>
+      </div>
+      <div className="toolbar__custom" css={styles.custom}>
+        {isMDMediumUp ? toolbar?.medium : toolbar?.small}
       </div>
     </nav>
   );

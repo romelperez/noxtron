@@ -168,13 +168,21 @@ export interface NTPlaygroundSettings {
   newCustomSandboxCode?: string;
   newCustomSandboxMessage?: string;
   theme?: NTPlaygroundSettingsTheme;
+  title?: {
+    small?: ReactNode;
+    medium?: ReactNode;
+  };
   header?: {
-    mobile?: ReactNode;
-    desktop?: ReactNode;
+    small?: ReactNode;
+    medium?: ReactNode;
+  };
+  toolbar?: {
+    small?: ReactNode;
+    medium?: ReactNode;
   };
   links?: {
-    mobile?: ReactNode[][];
-    desktop?: ReactNode[][];
+    small?: ReactNode[][];
+    medium?: ReactNode[][];
   };
   getMonaco: () => Promise<NTMonaco>;
   getSandboxes: () => Promise<NTSandbox[]>;

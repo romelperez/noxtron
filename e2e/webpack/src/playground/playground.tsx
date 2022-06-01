@@ -9,12 +9,12 @@ const settings: NTPlaygroundSettings = {
   playgroundPath: '/noxtron',
   sandboxPath: '/noxtron/sandbox.html',
   codeLanguage: 'typescript',
-  header: {
-    mobile: 'Noxtron',
-    desktop: 'Noxtron'
+  title: {
+    small: 'NT',
+    medium: 'Noxtron'
   },
   links: {
-    mobile: [
+    small: [
       [
         <span>v1.2.3 00-12-31</span>,
         <a href="https://github.com/romelperez/noxtron" target="Website">
@@ -22,7 +22,7 @@ const settings: NTPlaygroundSettings = {
         </a>
       ]
     ],
-    desktop: [
+    medium: [
       [
         <span>v1.2.3 00-12-31</span>,
         <a href="https://github.com/romelperez/noxtron" target="Website">

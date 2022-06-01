@@ -2,6 +2,7 @@
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useEffect, useMemo, useRef } from 'react';
 
+import { cx } from '../../utils/cx';
 import { createStyles } from './Slider.styles';
 
 interface SliderProps {
@@ -79,11 +80,11 @@ const Slider = (props: SliderProps): ReactElement => {
   return (
     <div
       ref={containerElementRef}
-      className={className}
+      className={cx('slider', className)}
       css={[styles.root, styles.rootIsInactive]}
       onDoubleClick={() => onReset?.()}
     >
-      <div ref={barElementRef} css={styles.bar} />
+      <div className="slider__bar" ref={barElementRef} css={styles.bar} />
     </div>
   );
 };

@@ -4,7 +4,8 @@ import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 const createStyles = (theme: NTTheme): NTStyles => {
   return {
     root: {
-      display: 'block',
+      display: 'flex',
+      flexDirection: 'row',
       padding: theme.space(2),
 
       [breakpoints.medium.up]: {
@@ -35,6 +36,9 @@ const createStyles = (theme: NTTheme): NTStyles => {
     optionLabel: {
       display: 'inline-block',
       marginLeft: theme.space(1)
+    },
+    custom: {
+      flex: 1
     }
   };
 };

@@ -2,6 +2,7 @@
 import { jsx, Theme, useTheme } from '@emotion/react';
 import { ReactNode, ReactElement, useMemo } from 'react';
 
+import { cx } from '../../utils/cx';
 import { createStyles } from './Button.styles';
 
 interface ButtonProps {
@@ -25,7 +26,7 @@ const Button = (props: ButtonProps): ReactElement => {
 
   return (
     <button
-      className={className}
+      className={cx('button', className)}
       css={styles.root}
       title={title}
       disabled={disabled}

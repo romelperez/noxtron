@@ -42,7 +42,7 @@ const ExplorerNavList = (props: ExplorerNavListProps): ReactElement => {
   }, []);
 
   return (
-    <ul>
+    <ul className="explorer__nav-list">
       {items.map(({ name, code, children }, index) => {
         const isLink = !!code;
         const itemSandboxPath = [...currentSandboxPath, name];
@@ -52,15 +52,19 @@ const ExplorerNavList = (props: ExplorerNavListProps): ReactElement => {
         );
 
         return (
-          <li key={index}>
+          <li key={index} className="explorer__nav-item">
             {!isLink && (
-              <div css={[styles.item, isActive && styles.itemActive]}>
+              <div
+                className="explorer__nav-text"
+                css={[styles.item, isActive && styles.itemActive]}
+              >
                 {name}
               </div>
             )}
             {isLink && (
               <button
                 ref={isActive ? buttonActiveElementRef : null}
+                className="explorer__nav-link"
                 css={[styles.item, styles.link, isActive && styles.linkActive]}
                 onClick={(event) => {
                   event.preventDefault();
@@ -153,8 +157,8 @@ const Explorer = (props: ExplorerProps): ReactElement => {
       className={cx('explorer', className)}
       css={styles.root}
     >
-      <div css={styles.container}>
-        <nav css={styles.nav}>
+      <div className="explorer__container" css={styles.container}>
+        <nav className="explorer__nav" css={styles.nav}>
           {!sandboxes.length && (
             <StatusMessage>No sandboxes available.</StatusMessage>
           )}

@@ -2,6 +2,7 @@
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 
+import { cx } from '../../utils/cx';
 import { createStyles } from './Loading.styles';
 
 interface LoadingProps {
@@ -15,7 +16,12 @@ const Loading = (props: LoadingProps): ReactElement => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
 
-  return <div className={className} css={[styles.root, full && styles.full]} />;
+  return (
+    <div
+      className={cx('loading', className)}
+      css={[styles.root, full && styles.full]}
+    />
+  );
 };
 
 export { Loading };

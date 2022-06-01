@@ -16,7 +16,7 @@ const settingsDefault: Partial<NTPlaygroundSettings> = {
     '// Select a sandbox in the explorer...\n',
     '// Or continue editing this custom sandbox...\n'
   ].join(''),
-  newCustomSandboxMessage: 'Select a sandbox in the explorer or edit the code.'
+  newCustomSandboxMessage: 'Select a sandbox or edit the code.'
 };
 
 const PlaygroundSettingsProvider = (

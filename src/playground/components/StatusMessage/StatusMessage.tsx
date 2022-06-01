@@ -2,6 +2,7 @@
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, ReactNode, useMemo } from 'react';
 
+import { cx } from '../../utils/cx';
 import { createStyles } from './StatusMessage.styles';
 
 interface LoadingProps {
@@ -16,8 +17,10 @@ const StatusMessage = (props: LoadingProps): ReactElement => {
   const styles = useMemo(() => createStyles(theme), [theme]);
 
   return (
-    <div className={className} css={styles.root}>
-      <div css={styles.content}>{children}</div>
+    <div className={cx('status-message', className)} css={styles.root}>
+      <div className="status-message__content" css={styles.content}>
+        {children}
+      </div>
     </div>
   );
 };

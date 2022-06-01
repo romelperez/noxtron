@@ -1,9 +1,12 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import Icon from '@mdi/react';
 
-import { NT_ICONS } from '../../../constants';
+import { NT_ICONS, NT_BREAKPOINTS as breakpoints } from '../../../constants';
+import { cx } from '../../utils/cx';
+import { useMediaQuery } from '../../utils/useMediaQuery';
 import { useRouterState } from '../../utils/useRouterState';
 import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 import { useStore } from '../../utils/useStore';
@@ -21,16 +24,17 @@ const Header = (props: HeaderProps): ReactElement => {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const { header, playgroundPath } = usePlaygroundSettings();
+  const { header, title, playgroundPath } = usePlaygroundSettings();
   const { optionsBooleans, setOptions } = useRouterState();
+  const isMDMediumUp = useMediaQuery(breakpoints.medium.up);
   const isLoading = useStore((state) => state.isLoading);
   const error = useStore((state) => state.error);
 
   const isControlsDisabled = isLoading || !!error;
 
   return (
-    <header className={className} css={styles.root}>
-      <nav css={styles.options}>
+    <header className={cx('header', className)} css={styles.root}>
+      <nav className="header__options" css={styles.options}>
         <Button
           css={styles.option}
           title="Toggle explorer panel"
@@ -75,12 +79,16 @@ const Header = (props: HeaderProps): ReactElement => {
           </span>
         </Button>
       </nav>
-      <h1 css={styles.logo}>
-        <a href={playgroundPath}>
-          <span css={styles.logoMobile}>{header?.mobile || 'Noxtron'}</span>
-          <span css={styles.logoDesktop}>{header?.desktop || 'Noxtron'}</span>
-        </a>
-      </h1>
+      <div className="header__content" css={styles.content}>
+        <div className="header__custom" css={styles.custom}>
+          {(isMDMediumUp && header?.medium) || header?.small}
+        </div>
+        <h1 className="header__logo" css={styles.logo}>
+          <Link to={playgroundPath}>
+            {(isMDMediumUp && title?.medium) || title?.small}
+          </Link>
+        </h1>
+      </div>
     </header>
   );
 };

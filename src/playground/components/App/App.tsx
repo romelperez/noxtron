@@ -46,10 +46,16 @@ const App = (): ReactElement => {
                     <Toolbar css={styles.toolbar} />
                     <div className="app__panels" css={styles.panels}>
                       {optionsBooleans.editor && (
-                        <Editor css={[styles.panel, styles.panelEditor]} />
+                        <Editor
+                          className="app__panel"
+                          css={[styles.panel, styles.panelEditor]}
+                        />
                       )}
                       {optionsBooleans.preview && (
-                        <Preview css={[styles.panel, styles.panelPreview]} />
+                        <Preview
+                          className="app__panel"
+                          css={[styles.panel, styles.panelPreview]}
+                        />
                       )}
                     </div>
                   </Fragment>

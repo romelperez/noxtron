@@ -38,23 +38,20 @@ const createStyles = (theme: NTTheme): NTStyles => {
         marginLeft: theme.space(2)
       }
     },
+    content: {
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'row'
+    },
+    custom: {
+      flex: 1
+    },
     logo: {
-      display: 'block',
+      marginLeft: theme.space(2),
       ...theme.typography.heading(2),
 
       [breakpoints.medium.up]: {
         ...theme.typography.heading(0)
-      }
-    },
-    logoMobile: {
-      [breakpoints.medium.up]: {
-        display: 'none'
-      }
-    },
-    logoDesktop: {
-      display: 'none',
-      [breakpoints.medium.up]: {
-        display: 'inline'
       }
     }
   };

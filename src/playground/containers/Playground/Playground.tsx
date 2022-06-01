@@ -6,7 +6,7 @@ import { RouterProvider } from '../RouterProvider';
 import { RouterStateProvider } from '../RouterStateProvider';
 import { ThemeProvider } from '../ThemeProvider';
 import { PlaygroundSetup } from '../PlaygroundSetup';
-import { App } from '../../components/App';
+import { App } from '../App';
 
 interface PlaygroundProps {
   settings: NTPlaygroundSettings;

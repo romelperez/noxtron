@@ -15,13 +15,15 @@ components as isolated sandboxes in realtime in browser. It is composed by two
 applications, a playground app with the interface to explore and control the
 configured sandboxes, and a sandbox app to execute the sandboxes source code.
 
-![Noxtron Preview](https://raw.githubusercontent.com/romelperez/noxtron/main/preview.jpg)
-
 ## Demos
 
-- [e2e/webpack](https://github.com/romelperez/noxtron/tree/main/e2e/webpack) -
-  Webpack, TypeScript, React.
-- [Arwes Playground](https://next.arwes.dev/play) - Webpack, TypeScript, React.
+- **e2e/webpack**
+  - Technologies: Webpack, TypeScript, React.
+  - [Soure code](https://github.com/romelperez/noxtron/tree/main/e2e/webpack).
+- **Arwes Playground**
+  - Technologies: Webpack, TypeScript, React.
+  - [Preview](https://next.arwes.dev/play).
+  - [Source Code](https://github.com/arwes/arwes).
 
 ## Features
 

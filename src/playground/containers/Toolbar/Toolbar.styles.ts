@@ -19,23 +19,12 @@ const createStyles = (theme: NTTheme): NTStyles => {
       flexDirection: 'row'
     },
     option: {
-      display: 'inline-flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginRight: theme.space(2),
-      ...theme.typography.cta(3),
-
-      [breakpoints.large.up]: {
-        ...theme.typography.cta(2)
-      }
-    },
-    optionIcon: {
-      width: '1em',
-      height: '1em'
+      marginRight: theme.space(2)
     },
     optionLabel: {
-      display: 'inline-block',
-      marginLeft: theme.space(1)
+      [breakpoints.large.down]: {
+        display: 'none'
+      }
     },
     custom: {
       flex: 1

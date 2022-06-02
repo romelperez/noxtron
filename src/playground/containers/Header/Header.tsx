@@ -42,7 +42,7 @@ const Header = (props: HeaderProps): ReactElement => {
           disabled={isControlsDisabled}
           onClick={() => setOptions({ explorer: !optionsBooleans.explorer })}
         >
-          <Icon css={styles.optionIcon} path={mdiMenu} />
+          <Icon path={mdiMenu} />
           <span css={styles.optionLabel}>Explorer</span>
         </Button>
 
@@ -53,7 +53,7 @@ const Header = (props: HeaderProps): ReactElement => {
           disabled={isControlsDisabled}
           onClick={() => setOptions({ editor: !optionsBooleans.editor })}
         >
-          <Icon css={styles.optionIcon} path={mdiXml} />
+          <Icon path={mdiXml} />
           <span css={styles.optionLabel}>Editor</span>
         </Button>
 
@@ -64,7 +64,7 @@ const Header = (props: HeaderProps): ReactElement => {
           disabled={isControlsDisabled}
           onClick={() => setOptions({ preview: !optionsBooleans.preview })}
         >
-          <Icon css={styles.optionIcon} path={mdiChartBubble} />
+          <Icon path={mdiChartBubble} />
           <span css={styles.optionLabel}>Preview</span>
         </Button>
 
@@ -73,7 +73,7 @@ const Header = (props: HeaderProps): ReactElement => {
           title="Toggle theme color scheme"
           onClick={() => setOptions({ dark: !optionsBooleans.dark })}
         >
-          <Icon css={styles.optionIcon} path={mdiInvertColors} />
+          <Icon path={mdiInvertColors} />
           <span css={styles.optionLabel}>
             {optionsBooleans.dark ? 'Dark' : 'Light'}
           </span>

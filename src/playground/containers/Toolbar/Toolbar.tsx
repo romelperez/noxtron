@@ -42,7 +42,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           disabled={!optionsBooleans.preview || hasEditorError}
           onClick={() => trigger('reload')}
         >
-          <Icon css={styles.optionIcon} path={mdiReload} />
+          <Icon path={mdiReload} />
           <span css={styles.optionLabel}>Reload</span>
         </Button>
 
@@ -53,7 +53,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           disabled={optionsControls.type === 'custom'}
           onClick={() => trigger('resetPredefinedSandboxCode')}
         >
-          <Icon css={styles.optionIcon} path={mdiBackupRestore} />
+          <Icon path={mdiBackupRestore} />
           <span css={styles.optionLabel}>Reset</span>
         </Button>
 
@@ -64,7 +64,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           title="Make custom sandbox from current source code"
           onClick={() => trigger('customSandbox')}
         >
-          <Icon css={styles.optionIcon} path={mdiPencil} />
+          <Icon path={mdiPencil} />
           <span css={styles.optionLabel}>Customize</span>
         </Button>
 
@@ -75,7 +75,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           disabled={!optionsBooleans.preview || hasEditorError}
           onClick={() => trigger('openIsolated')}
         >
-          <Icon css={styles.optionIcon} path={mdiTestTube} />
+          <Icon path={mdiTestTube} />
           <span css={styles.optionLabel}>Isolate</span>
         </Button>
 
@@ -85,7 +85,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           title="Copy source code"
           onClick={() => trigger('copyCode')}
         >
-          <Icon css={styles.optionIcon} path={mdiContentCopy} />
+          <Icon path={mdiContentCopy} />
           <span css={styles.optionLabel}>Copy</span>
         </Button>
       </div>

@@ -5,6 +5,7 @@ const createStyles = (theme: NTTheme, position: 'left' | 'right'): NTStyles => {
 
   return {
     root: {
+      zIndex: 100,
       position: 'absolute',
       top: 0,
       bottom: 0,
@@ -13,8 +14,8 @@ const createStyles = (theme: NTTheme, position: 'left' | 'right'): NTStyles => {
       cursor: 'ew-resize'
     },
     rootIsInactive: {
-      transform: isLeft ? 'translateX(-3px)' : 'translateX(3px)',
-      width: '6px'
+      transform: isLeft ? 'translateX(-4px)' : 'translateX(4px)',
+      width: '7px'
     },
     // Make the slider container wide enough so the mouse wouldn't get out to places
     // where the mouse events break. For example, when the mouse goes to an iframe
@@ -35,6 +36,15 @@ const createStyles = (theme: NTTheme, position: 'left' | 'right'): NTStyles => {
       transitionDuration: '0.1s',
       transitionTimingFunction: 'ease-out',
       opacity: 0 // Animated.
+    },
+    icon: {
+      position: 'absolute',
+      left: '50%',
+      top: '50%',
+      transform: 'translate(-50%, -50%)',
+      color: theme.colors.primary.decoHigh(5),
+      width: theme.space(5),
+      height: theme.space(5)
     }
   };
 };

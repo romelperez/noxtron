@@ -1,4 +1,3 @@
-// TODO: Show slider icons.
 // TODO: Provide a pre-built app.
 // TODO: Refactor setup components functionalities.
 // TODO: Fix editor empty resetup.

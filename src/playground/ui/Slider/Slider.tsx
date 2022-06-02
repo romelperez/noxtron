@@ -1,7 +1,9 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useEffect, useMemo, useRef } from 'react';
+import Icon from '@mdi/react';
 
+import { NT_ICONS } from '../../../constants';
 import { cx } from '../../utils/cx';
 import { createStyles } from './Slider.styles';
 
@@ -11,6 +13,8 @@ interface SliderProps {
   onChange: (value: number) => void;
   onReset?: () => void;
 }
+
+const { mdiDragVertical } = NT_ICONS;
 
 const Slider = (props: SliderProps): ReactElement => {
   const { className, position = 'left', onChange, onReset } = props;
@@ -85,6 +89,7 @@ const Slider = (props: SliderProps): ReactElement => {
       onDoubleClick={() => onReset?.()}
     >
       <div className="slider__bar" ref={barElementRef} css={styles.bar} />
+      <Icon className="slider__icon" css={styles.icon} path={mdiDragVertical} />
     </div>
   );
 };

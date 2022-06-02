@@ -51,7 +51,11 @@ const Explorer = (props: ExplorerProps): ReactElement => {
   const elementRef = useRef<HTMLDivElement>(null);
 
   const setSliderWidth = (value: number | null): void => {
-    const element = elementRef.current as HTMLDivElement;
+    const element = elementRef.current;
+
+    if (!element) {
+      return;
+    }
 
     if (value === null) {
       element.style.width = '';

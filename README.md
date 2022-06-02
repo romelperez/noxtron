@@ -28,8 +28,8 @@ configured sandboxes, and a sandbox app to execute the sandboxes source code.
 - It uses the [monaco-editor](https://microsoft.github.io/monaco-editor), and it
   requires different HTML and JavaScript files, so it needs to be configured with
   a module bundler like [webpack](https://webpack.js.org) or [esbuild](https://esbuild.github.io).
-- Only the playground app requires [React](https://reactjs.org). The sandbox app
-  does not require any library or framework.
+- Only the playground app requires external libraries. The sandbox app
+  does not require any library or framework so it is very small.
 - The sandboxes source code should be written in ES modules. The sandbox app can
   be setup to allow packages to be imported via `import` in the sandboxes source code.
 - For TypeScript sandboxes, the packages type definitions need to be provided as
@@ -44,7 +44,7 @@ configured sandboxes, and a sandbox app to execute the sandboxes source code.
 - The editor transpiler will only throw for syntax errors. Type errors will
   only be shown in the interface.
 - The JavaScript and TypeScript transpilers are configured to use JSX or TSX
-  with React by default. The directive `/** @jsx XXX */` can be used inline.
+  with React by default if needed. The directive `/** @jsx XXX */` can be used inline.
 - The playground app can be used in two modes.
   - In "predefined" mode, it will show an specific sandbox configured in build time.
     The sandbox source code can be edited but it will not be persisted in the
@@ -53,10 +53,13 @@ configured sandboxes, and a sandbox app to execute the sandboxes source code.
     Since it is persisted in the browser URL, it could generate a long one.
 - The playground app will persist in the browser URL the state of the controls
   and the source code of the sandbox so it can be easily shared with more people.
-- The editor is not available in mobile browsers.
+- The editor is not editable in mobile browsers. But the app can be used in mobile.
+- The toolbar options are not available in mobile browsers.
 - The playground app final bundles can have 5MB or more due to the JavaScript
   and TypeScript transpilers, the type definitions, and provided sandboxes source code.
   The sandbox app will depend only on user setup.
+- There are no provided tools to format, lint, and test sandboxes source code in
+  CI environments.
 
 ## Example Use Case
 
@@ -79,7 +82,7 @@ touch webpack.config.js
 npm init -y
 
 # install peer dependencies
-npm i react@^17 react-dom@^17 prop-types@^15 monaco-editor@^0.33
+npm i monaco-editor@^0.33
 
 # install noxtron
 npm i noxtron

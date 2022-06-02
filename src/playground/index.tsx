@@ -1,8 +1,8 @@
+// TODO: Show slider icons.
+// TODO: Provide a pre-built app.
+// TODO: Refactor setup components functionalities.
 // TODO: Fix editor empty resetup.
 // TODO: On title redirect, the explorer sandbox selection gets stuck once.
-// TODO: Show slider icons.
-// TODO: Refactor setup components functionalities.
-// TODO: Remove react/react-dom peer dependencies and provide a pre-built app.
 
 // TODO: Allow user to configure TypeScript compiler.
 // TODO: Allow user to configure if sematic/type errors prevent from executing code.

@@ -2,7 +2,6 @@
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useEffect, useMemo, useRef } from 'react';
 
-import type { NTStyles, NTSandbox } from '../../../types';
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 import { cx } from '../../utils/cx';
 import { useMediaQuery } from '../../utils/useMediaQuery';
@@ -10,86 +9,8 @@ import { useRouterState } from '../../utils/useRouterState';
 import { useStore } from '../../utils/useStore';
 import { StatusMessage } from '../../ui/StatusMessage';
 import { Slider } from '../../ui/Slider';
+import { SandboxList } from '../../ui/SandboxList';
 import { createStyles } from './Explorer.styles';
-
-interface ExplorerNavListProps {
-  styles: NTStyles;
-  items: NTSandbox[];
-  currentSandboxPath: string[];
-}
-
-const ExplorerNavList = (props: ExplorerNavListProps): ReactElement => {
-  const { styles, items, currentSandboxPath } = props;
-
-  const { optionsControls, setOptions } = useRouterState();
-  const buttonActiveElementRef = useRef<HTMLButtonElement | null>(null);
-
-  const routerSandbox = optionsControls.sandbox;
-
-  useEffect(() => {
-    // Wait until all elements are rendered.
-    const timeoutId = setTimeout(() => {
-      if (buttonActiveElementRef.current) {
-        buttonActiveElementRef.current.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center'
-        });
-      }
-    }, 0);
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, []);
-
-  return (
-    <ul className="explorer__nav-list">
-      {items.map(({ name, code, children }, index) => {
-        const isLink = !!code;
-        const itemSandboxPath = [...currentSandboxPath, name];
-        const isActive = itemSandboxPath.every(
-          (itemSandboxPathFragment, i) =>
-            routerSandbox[i] === itemSandboxPathFragment
-        );
-
-        return (
-          <li key={index} className="explorer__nav-item">
-            {!isLink && (
-              <div
-                className="explorer__nav-text"
-                css={[styles.item, isActive && styles.itemActive]}
-              >
-                {name}
-              </div>
-            )}
-            {isLink && (
-              <button
-                ref={isActive ? buttonActiveElementRef : null}
-                className="explorer__nav-link"
-                css={[styles.item, styles.link, isActive && styles.linkActive]}
-                onClick={(event) => {
-                  event.preventDefault();
-                  setOptions({
-                    type: 'predefined',
-                    sandbox: itemSandboxPath
-                  });
-                }}
-              >
-                {name}
-              </button>
-            )}
-            {!!children && !!children.length && (
-              <ExplorerNavList
-                styles={styles}
-                items={children}
-                currentSandboxPath={itemSandboxPath}
-              />
-            )}
-          </li>
-        );
-      })}
-    </ul>
-  );
-};
 
 interface ExplorerProps {
   className?: string;
@@ -124,6 +45,7 @@ const Explorer = (props: ExplorerProps): ReactElement => {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const { optionsControls, setOptions } = useRouterState();
   const sandboxes = useStore((state) => state.sandboxes);
   const isMDMediumUp = useMediaQuery(breakpoints.medium.up);
   const elementRef = useRef<HTMLDivElement>(null);
@@ -164,10 +86,16 @@ const Explorer = (props: ExplorerProps): ReactElement => {
           )}
 
           {!!sandboxes.length && (
-            <ExplorerNavList
-              styles={styles}
+            <SandboxList
               items={sandboxes}
+              routerSandbox={optionsControls.sandbox}
               currentSandboxPath={[]}
+              onSelect={(newSandboxPath) => {
+                setOptions({
+                  type: 'predefined',
+                  sandbox: newSandboxPath
+                });
+              }}
             />
           )}
         </nav>

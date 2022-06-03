@@ -1,8 +1,9 @@
-// TODO: Provide a pre-built app.
+// TODO: Provide a pre-built app!
 // TODO: Refactor setup components functionalities.
 // TODO: Fix editor empty resetup.
 // TODO: On title redirect, the explorer sandbox selection gets stuck once.
 
+// TODO: Refactor UI components from containers components to ui components.
 // TODO: Allow user to configure TypeScript compiler.
 // TODO: Allow user to configure if sematic/type errors prevent from executing code.
 // TODO: Sandbox should process asterisk import.

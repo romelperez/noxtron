@@ -161,8 +161,21 @@ export interface NTPlaygroundSettingsTypeDefinition {
 }
 
 export interface NTPlaygroundSettings {
+  /**
+   * The URL path to the Noxtron app and all the asset files.
+   * @default '/''
+   * @example '/docs/' to serve Noxtron at "website.com/docs/".
+   */
   basePath: string;
+  /**
+   * The playground app HTML URL.
+   * @example '/playground.html'
+   */
   playgroundPath: string;
+  /**
+   * The sandbox app HTML URL.
+   * * @example '/sandbox.html'
+   */
   sandboxPath: string;
   codeLanguage?: 'javascript' | 'typescript';
   newCustomSandboxCode?: string;

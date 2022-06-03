@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useMemo } from 'react';
 
 import { NTMonacoCompilerOptions } from '../../../types';
 import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
@@ -13,7 +13,7 @@ const EditorSetup = (): ReactElement => {
   const typeDefinitions = useStore((state) => state.typeDefinitions);
   const sandboxSelected = useStore((state) => state.sandboxSelected);
 
-  useEffect(() => {
+  useMemo(() => {
     const { basePath } = settings;
     const basePathPrefix = basePath.endsWith('/') ? basePath : `${basePath}/`;
     const { typescript } = monaco.languages;

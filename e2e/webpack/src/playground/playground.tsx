@@ -6,8 +6,8 @@ import { Playground } from '../../../../build/cjs/playground';
 
 const settings: NTPlaygroundSettings = {
   basePath: '/noxtron/',
-  playgroundPath: '/noxtron',
-  sandboxPath: '/noxtron/sandbox.html',
+  playgroundPath: '/noxtron/',
+  sandboxPath: '/noxtron/sandbox/',
   codeLanguage: 'typescript',
   title: {
     small: 'NT',
@@ -66,7 +66,7 @@ const settings: NTPlaygroundSettings = {
       secondary: 70 // Yellow
     }
   },
-  getMonaco: () => import('monaco-editor'),
+  getMonaco: () => import('../../../../build/cjs/monaco'),
   getSandboxes: () => import('./sandboxes/sandboxes').then((m) => m.sandboxes),
   getTypeDefinitions: () =>
     import('./typeDefinitions/typeDefinitions').then((m) => m.typeDefinitions)

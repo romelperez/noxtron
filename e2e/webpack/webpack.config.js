@@ -66,7 +66,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       publicPath: BASE_PATH,
       template: path.join(SRC_PATH, 'sandbox/sandbox.html'),
-      filename: path.join(BUILD_PATH, BASE_PATH, 'sandbox.html'),
+      filename: path.join(BUILD_PATH, BASE_PATH, 'sandbox/index.html'),
       chunks: ['sandbox']
     })
   ],

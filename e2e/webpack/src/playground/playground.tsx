@@ -1,11 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import type { NTPlaygroundSettings } from '../../../../';
+import type { NTPlaygroundSettings } from '../../../../build/cjs';
 import { Playground } from '../../../../build/cjs/playground';
 
 const settings: NTPlaygroundSettings = {
   basePath: '/noxtron/',
+  assetsPath: '/noxtron/',
   playgroundPath: '/noxtron/',
   sandboxPath: '/noxtron/sandbox/',
   codeLanguage: 'typescript',

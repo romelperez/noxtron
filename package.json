@@ -37,29 +37,34 @@
     "monaco-editor": "0.33"
   },
   "dependencies": {
-    "@emotion/react": "^11.8.2",
-    "@mdi/react": "^1.5.0",
+    "@emotion/react": "^11.9.0",
+    "@mdi/react": "^1.6.0",
+    "@types/react": "^17.0.45",
     "lodash": "^4.17.21",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-router-dom": "^6.2.2",
-    "tslib": "^2.3.1",
+    "react-router-dom": "^6.3.0",
+    "tslib": "^2.4.0",
     "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
-    "@types/jest": "^27.4.1",
+    "@types/jest": "^28.1.0",
     "@types/lodash": "^4.14.182",
-    "@types/react": "^17.0.40",
     "@types/react-dom": "^17.0.13",
     "@types/react-router-dom": "^5.3.3",
     "cross-env": "^7.0.3",
-    "jest": "^27.5.1",
+    "css-loader": "^6.7.1",
+    "jest": "^28.1.0",
     "monaco-editor": "^0.33.0",
-    "prettier": "^2.6.0",
+    "prettier": "^2.6.2",
     "serve": "^13.0.2",
-    "ts-jest": "^27.1.3",
-    "typescript": "^4.7.2"
+    "style-loader": "^3.3.1",
+    "ts-jest": "^28.0.4",
+    "ts-loader": "^9.3.0",
+    "typescript": "^4.7.3",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.9.2"
   },
   "scripts": {
     "lint": "prettier --check .",
@@ -67,8 +72,10 @@
     "test": "jest",
     "test-watch": "jest --watch",
     "clean": "rm -rf ./build && rm -f .tsbuildinfo",
-    "build": "tsc -p ./tsconfig.build.json",
-    "dev": "tsc -p ./tsconfig.build.json --watch",
+    "build-cjs": "tsc -p ./tsconfig.build.cjs.json",
+    "build-umd": "cross-env NODE_ENV=production webpack --config ./webpack.build.umd.js --progress",
+    "build": "npm run build-cjs && npm run build-umd",
+    "dev": "tsc -p ./tsconfig.build.cjs.json --watch",
     "integration": "npm run clean && npm run build && npm run lint && npm run test",
     "prepublishOnly": "npm run integration"
   }

@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useMemo } from 'react';
 
 import {
   NTMonaco,
@@ -17,6 +17,23 @@ const PlaygroundSetup = (): ReactElement => {
   const setDependencies = useStore((state) => state.setDependencies);
   const isLoading = useStore((state) => state.isLoading);
   const error = useStore((state) => state.error);
+
+  useMemo(() => {
+    const { assetsPath } = settings;
+    const assetsPathPrefix = assetsPath.endsWith('/')
+      ? assetsPath
+      : `${assetsPath}/`;
+
+    // @ts-ignore
+    window.MonacoEnvironment = {
+      getWorkerUrl: (moduleId: string, label: string): string => {
+        if (label === 'typescript' || label === 'javascript') {
+          return `${assetsPathPrefix}ts.worker.js`;
+        }
+        return `${assetsPathPrefix}editor.worker.js`;
+      }
+    };
+  }, []);
 
   useEffect(() => {
     setStatus({ isLoading: true });

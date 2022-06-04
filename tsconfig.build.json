@@ -1,13 +1,5 @@
 {
   "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "module": "CommonJS",
-    "declaration": true,
-    "incremental": true,
-    "tsBuildInfoFile": ".tsbuildinfo",
-    "rootDir": "src",
-    "outDir": "build/cjs"
-  },
   "exclude": [
     "node_modules",
     "build",

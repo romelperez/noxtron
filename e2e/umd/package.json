@@ -1,15 +1,12 @@
 {
-  "name": "e2e-webpack",
+  "name": "e2e-umd",
   "private": true,
   "engines": {
     "node": "^16.14",
     "npm": "^8.3"
   },
   "dependencies": {
-    "empanada": "^0.2.2",
     "html-webpack-plugin": "^5.5.0",
-    "motion": "^10.7.0",
-    "raw-loader": "^4.0.2",
     "webpack-dev-server": "^4.9.1"
   },
   "scripts": {

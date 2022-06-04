@@ -14,19 +14,7 @@ const EditorSetup = (): ReactElement => {
   const sandboxSelected = useStore((state) => state.sandboxSelected);
 
   useMemo(() => {
-    const { basePath } = settings;
-    const basePathPrefix = basePath.endsWith('/') ? basePath : `${basePath}/`;
     const { typescript } = monaco.languages;
-
-    // @ts-ignore
-    window.MonacoEnvironment = {
-      getWorkerUrl: (moduleId: string, label: string): string => {
-        if (label === 'typescript' || label === 'javascript') {
-          return `${basePathPrefix}ts.worker.js`;
-        }
-        return `${basePathPrefix}editor.worker.js`;
-      }
-    };
 
     // Disable type checking and syntax validation before adding type definitions.
     typescript.typescriptDefaults.setDiagnosticsOptions({

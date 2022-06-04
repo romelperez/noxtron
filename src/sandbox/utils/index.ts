@@ -1,3 +1,3 @@
-export * from './getCodeImportsRefsCode';
-export * from './getCodeImportsRefsFragments';
-export * from './setupSandbox';
+export * from './getCodeImportsRefsCode/index';
+export * from './getCodeImportsRefsFragments/index';
+export * from './setupSandbox/index';

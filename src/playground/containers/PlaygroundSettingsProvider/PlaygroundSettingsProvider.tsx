@@ -9,6 +9,7 @@ interface PlaygroundSettingsProviderProps {
 }
 
 const settingsDefault: Partial<NTPlaygroundSettings> = {
+  assetsPath: '/',
   playgroundPath: '/',
   sandboxPath: '/sandbox/',
   codeLanguage: 'javascript',

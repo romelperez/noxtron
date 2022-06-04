@@ -162,11 +162,16 @@ export interface NTPlaygroundSettingsTypeDefinition {
 
 export interface NTPlaygroundSettings {
   /**
-   * The URL path to the Noxtron app and all the asset files.
+   * The URL path to the Noxtron app.
    * @default '/''
    * @example '/docs/' to serve Noxtron at "website.com/docs/".
    */
   basePath: string;
+  /**
+   * The URL path to the Noxtron asset files.
+   * @default '/'
+   */
+  assetsPath: string;
   /**
    * The playground app HTML URL.
    * @example '/playground.html'

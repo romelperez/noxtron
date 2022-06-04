@@ -1,4 +1,4 @@
-// TODO: Provide a pre-built app!
+// TODO: Export Icon UI component.
 // TODO: Refactor setup components functionalities.
 // TODO: Fix editor empty resetup.
 // TODO: On title redirect, the explorer sandbox selection gets stuck once.

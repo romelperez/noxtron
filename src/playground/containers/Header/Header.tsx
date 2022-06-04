@@ -2,7 +2,6 @@
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import Icon from '@mdi/react';
 
 import { NT_ICONS, NT_BREAKPOINTS as breakpoints } from '../../../constants';
 import { cx } from '../../utils/cx';
@@ -11,6 +10,7 @@ import { useRouterState } from '../../utils/useRouterState';
 import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
 import { useStore } from '../../utils/useStore';
 import { Button } from '../../ui/Button';
+import { Icon } from '../../ui/Icon';
 import { createStyles } from './Header.styles';
 
 interface HeaderProps {

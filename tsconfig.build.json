@@ -4,9 +4,11 @@
     "node_modules",
     "build",
     "e2e",
+    "examples",
     "**/node_modules",
     "**/build",
     "**/e2e",
+    "**/examples",
     "**/*.test.ts"
   ]
 }

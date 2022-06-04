@@ -1,4 +1,4 @@
-import type { NTSandbox } from '../../../../../';
+import type { NTSandbox } from '../../../../../build/cjs';
 
 export const sandboxes: NTSandbox[] = [
   {

@@ -1,4 +1,4 @@
-import type { NTPlaygroundSettingsTypeDefinition } from '../../../../../build';
+import type { NTPlaygroundSettingsTypeDefinition } from '../../../../../build/cjs';
 
 export const typeDefinitions: NTPlaygroundSettingsTypeDefinition[] = [
   // react and react-dom

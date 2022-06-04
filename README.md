@@ -17,13 +17,19 @@ configured sandboxes, and a sandbox app to execute the sandboxes source code.
 
 ## Demos
 
-- **e2e/webpack**
-  - Technologies: Webpack, TypeScript, React.
-  - [Soure code](https://github.com/romelperez/noxtron/tree/main/e2e/webpack).
 - **Arwes Playground**
   - Technologies: Webpack, TypeScript, React.
   - [Preview](https://next.arwes.dev/play).
   - [Source Code](https://github.com/arwes/arwes).
+
+## Examples
+
+- **examples/webpack**
+  - Technologies: Webpack, TypeScript, React.
+  - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/webpack).
+- **examples/umd**
+  - Technologies: Webpack, JavaScript.
+  - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/umd).
 
 ## Features
 
@@ -323,7 +329,7 @@ npm run start
 ```
 
 There is a complete end-to-end example use case using TypeScript, React, and
-Webpack in [e2e/webpack](https://github.com/romelperez/noxtron/tree/main/e2e/webpack).
+Webpack in [examples/webpack](https://github.com/romelperez/noxtron/tree/main/examples/webpack).
 
 ## About
 

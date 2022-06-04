@@ -1,4 +1,3 @@
-// TODO: Rename e2e to examples.
 // TODO: Inject application dependencies into settings setup.
 // TODO: Refactor setup components functionalities.
 // TODO: Fix editor empty resetup.

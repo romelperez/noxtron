@@ -1,10 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import type { NTPlaygroundSettings } from '../../../../build/cjs';
-import { Playground } from '../../../../build/cjs/playground';
+import { Playground, PlaygroundProps } from '../../../../build/cjs/playground';
 
-const settings: NTPlaygroundSettings = {
+const getSettings: PlaygroundProps['getSettings'] = () => ({
   basePath: '/noxtron/',
   assetsPath: '/noxtron/',
   playgroundPath: '/noxtron/',
@@ -71,6 +70,9 @@ const settings: NTPlaygroundSettings = {
   getSandboxes: () => import('./sandboxes/sandboxes').then((m) => m.sandboxes),
   getTypeDefinitions: () =>
     import('./typeDefinitions/typeDefinitions').then((m) => m.typeDefinitions)
-};
+});
 
-render(<Playground settings={settings} />, document.querySelector('#root'));
+render(
+  <Playground getSettings={getSettings} />,
+  document.querySelector('#root')
+);

@@ -23,7 +23,7 @@
   "funding": "https://github.com/sponsors/romelperez",
   "license": "MIT",
   "workspaces": [
-    "e2e/*"
+    "examples/*"
   ],
   "engines": {
     "node": "^16.14",

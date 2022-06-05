@@ -1,10 +1,8 @@
-# e2e/webpack
-
-Complete end-to-end example use case using TypeScript, React, and Webpack.
+# examples/webpack
 
 ```bash
 # at repository root path
 npm install
 npm run dev # in one terminal
-npm run dev -w e2e/webpack # in one terminal
+npm run dev -w examples/webpack # in one terminal
 ```

@@ -1,23 +1,18 @@
 import React from 'react';
 import { render } from 'react-dom';
-import * as emotionReact from '@emotion/react';
+import emotion from '@emotion/react';
 
 import type { NTPlaygroundSettings } from '../types';
 import { Playground } from '../playground/containers/Playground';
 import * as monaco from '../monaco';
 
-const defaultSettings: Partial<NTPlaygroundSettings> = {
-  getMonaco: () => monaco as any
-};
-
-interface PlaygroundDependencies {
+interface PlaygroundPropsGetSettingsDependencies {
   React: typeof React;
-  '@emotion/react': typeof emotionReact;
+  emotion: typeof emotion;
 }
 
-type PlaygroundInjectDependencies = (dependencies: PlaygroundDependencies) => {
-  settings: NTPlaygroundSettings;
-  element: HTMLElement;
+const defaultSettings: Partial<NTPlaygroundSettings> = {
+  getMonaco: () => monaco as any
 };
 
 const win = window as any;
@@ -25,16 +20,17 @@ const win = window as any;
 win.noxtronPlayground = win.noxtronPlayground || {};
 
 win.noxtronPlayground.renderPlayground = (
-  injectDependencies: PlaygroundInjectDependencies
+  getSettingsProvided: (
+    dependencies: PlaygroundPropsGetSettingsDependencies
+  ) => NTPlaygroundSettings,
+  element: HTMLElement
 ): void => {
-  const setup = injectDependencies({
-    React,
-    '@emotion/react': emotionReact
-  });
-  const settings: NTPlaygroundSettings = {
+  const getSettings = (
+    dependencies: PlaygroundPropsGetSettingsDependencies
+  ) => ({
     ...defaultSettings,
-    ...setup.settings
-  };
+    ...getSettingsProvided(dependencies)
+  });
 
-  render(<Playground settings={settings} />, setup.element);
+  render(<Playground getSettings={getSettings} />, element);
 };

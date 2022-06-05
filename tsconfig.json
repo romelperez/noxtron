@@ -1,4 +1,11 @@
 {
   "extends": "./tsconfig.base.json",
-  "exclude": ["node_modules", "build", "**/node_modules", "**/build", "**/e2e"]
+  "exclude": [
+    "node_modules",
+    "build",
+    "**/node_modules",
+    "**/build",
+    "**/e2e",
+    "**/examples"
+  ]
 }

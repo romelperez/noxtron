@@ -1,5 +1,5 @@
 {
-  "name": "e2e-umd",
+  "name": "examples-umd",
   "private": true,
   "engines": {
     "node": "^16.14",

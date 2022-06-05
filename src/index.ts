@@ -1,4 +1,3 @@
-// TODO: Export renderPlayground utility function.
 // TODO: Refactor setup components functionalities.
 // TODO: Fix editor empty resetup.
 // TODO: On title redirect, the explorer sandbox selection gets stuck once.

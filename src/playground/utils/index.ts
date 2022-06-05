@@ -10,3 +10,4 @@ export * from './useMediaQuery';
 export * from './usePlaygroundSettings';
 export * from './useRouterState';
 export * from './useStore';
+export * from './renderPlayground';

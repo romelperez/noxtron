@@ -25,10 +25,13 @@ configured sandboxes, and a sandbox app to execute the sandboxes source code.
 ## Examples
 
 - **examples/webpack**
-  - Technologies: Webpack, TypeScript, React.
+  - Technologies: ESM, Webpack, TypeScript, React.
   - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/webpack).
+- **examples/esbuild**
+  - Technologies: ESM, ESBuild, JavaScript.
+  - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/esbuild).
 - **examples/umd**
-  - Technologies: Webpack, JavaScript.
+  - Technologies: UMD, Webpack, JavaScript.
   - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/umd).
 
 ## Features

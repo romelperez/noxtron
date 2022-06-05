@@ -48,16 +48,42 @@ const getSettings = () => ({
         children: [
           {
             name: 'basic',
-            code: `const root = document.querySelector('#root');
-root.style.color = '#777';
-root.innerHTML = '<h1>MyComponent basic sandbox!</h1>';
+            code: `/** @jsx h */
+import h from 'solid-js/h';
+import { render } from 'solid-js/web';
+
+const Sandbox = () => {
+  return (
+    <h2 style={{ padding: '20px', background: 'black', color: 'yellow' }}>
+      MyComponent basic
+    </h2>
+  );
+};
+
+render(() => <Sandbox />, document.querySelector('#root'));
 `
           },
           {
             name: 'advanced',
-            code: `const root = document.querySelector('#root');
-root.style.color = '#777';
-root.innerHTML = '<h1>MyComponent advanced sandbox!</h1>';
+            code: `/** @jsx h */
+import h from 'solid-js/h';
+import { render } from 'solid-js/web';
+import { createSignal } from 'solid-js';
+
+const Sandbox = () => {
+  const [count, setCount] = createSignal(0);
+  const onIncrement = () => setCount(count() + 1);
+
+  return (
+    <div style={{ padding: '20px', background: 'black', color: 'yellow' }}>
+      <h2>MyComponent advanced</h2>
+      <p>Counter: {count}</p>
+      <button onClick={onIncrement}>Add</button>
+    </div>
+  );
+};
+
+render(() => <Sandbox />, document.querySelector('#root'));
 `
           }
         ]

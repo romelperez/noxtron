@@ -18,27 +18,27 @@ configured sandboxes, and a sandbox app to execute the sandboxes source code.
 ## Demos
 
 - **Arwes Playground**
-  - Technologies: Webpack, TypeScript, React.
+  - Technologies: [Webpack](https://webpack.js.org), TypeScript, [React](https://reactjs.org).
   - [Preview](https://next.arwes.dev/play).
   - [Source Code](https://github.com/arwes/arwes).
 
 ## Examples
 
 - **examples/webpack**
-  - Technologies: ESM, Webpack, TypeScript, React.
+  - Technologies: ESM, [Webpack](https://webpack.js.org), TypeScript, [React](https://reactjs.org).
   - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/webpack).
 - **examples/esbuild**
-  - Technologies: ESM, ESBuild, JavaScript.
+  - Technologies: ESM, [ESBuild](https://esbuild.github.io), JavaScript, [SolidJS](https://www.solidjs.com).
   - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/esbuild).
 - **examples/umd**
-  - Technologies: UMD, Webpack, JavaScript.
+  - Technologies: UMD, [Webpack](https://webpack.js.org), JavaScript.
   - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/umd).
 
 ## Features
 
 - It uses the [monaco-editor](https://microsoft.github.io/monaco-editor), and it
   requires different HTML and JavaScript files, so it needs to be configured with
-  a module bundler like [webpack](https://webpack.js.org) or [esbuild](https://esbuild.github.io).
+  a module bundler like [Webpack](https://webpack.js.org) or [ESBuild](https://esbuild.github.io).
 - Only the playground app requires external libraries. The sandbox app
   does not require any library or framework so it is very small.
 - The sandboxes source code should be written in ES modules. The sandbox app can

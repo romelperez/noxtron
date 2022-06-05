@@ -20,7 +20,7 @@ const setupSandbox = (settings: NTSandboxSettings = {}): void => {
     const codeRaw = decodeURLParameter(parameters.code);
 
     if (!codeRaw) {
-      throw new Error('No valid source code provided.');
+      throw new Error('[Noxtron] No valid source code provided.');
     }
 
     // Dependencies available for the sandbox to use but not injected until
@@ -81,7 +81,7 @@ const setupSandbox = (settings: NTSandboxSettings = {}): void => {
     const errorMessage =
       error instanceof Error
         ? escape(String(error))
-        : 'ERROR: Source code processing error.';
+        : 'ERROR: [Noxtron] Source code processing error.';
 
     document.body.innerHTML = `
       <pre style="

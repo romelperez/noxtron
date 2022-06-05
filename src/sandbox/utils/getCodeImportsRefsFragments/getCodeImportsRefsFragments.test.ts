@@ -11,8 +11,7 @@ test('Should throw if import references a non existent dependency', () => {
   const importsLines = [`import b from 'b';`, `import x from 'x';`];
   expect(() => {
     getCodeImportsRefsFragments(dependencies, importsLines);
-  }).toThrow(`[Noxtron] Sandbox dependency "x" is not available.
-It needs to be setup in the sandbox application.`);
+  }).toThrow(`[Noxtron] Sandbox dependency "x" is not available.`);
 });
 
 test('Should filter import type', () => {

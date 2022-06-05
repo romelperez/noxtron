@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import emotion from '@emotion/react';
+import * as emotion from '@emotion/react';
 
 import type { NTPlaygroundSettings } from '../../../types';
 import { PlaygroundSettingsProvider } from '../PlaygroundSettingsProvider';
@@ -9,6 +9,8 @@ import { ThemeProvider } from '../ThemeProvider';
 import { PlaygroundSetup } from '../PlaygroundSetup';
 import { App } from '../App';
 import * as UI from '../../ui';
+import * as playgroundUtils from '../../utils';
+import * as globalUtils from '../../../utils';
 
 interface PlaygroundPropsGetSettingsDependencies {
   React: typeof React;
@@ -27,6 +29,8 @@ const Playground = (props: PlaygroundProps): ReactElement => {
   const [settings] = useState<NTPlaygroundSettings>(() =>
     getSettings({
       ...UI,
+      ...playgroundUtils,
+      ...globalUtils,
       React,
       emotion
     })

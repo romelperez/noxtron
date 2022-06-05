@@ -24,7 +24,7 @@ function getTranspileLineStarts(text: string): number[] {
   return lineStarts;
 }
 
-export function getTranspileErrorLineInfo(
+function getTranspileErrorLineInfo(
   error: TranspileDiagnostic,
   lineStarts: number[]
 ): { line: number; col: number } {

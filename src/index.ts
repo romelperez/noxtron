@@ -1,6 +1,7 @@
 // TODO: Refactor setup components functionalities.
 // TODO: Fix editor empty resetup.
 // TODO: On title redirect, the explorer sandbox selection gets stuck once.
+// TODO: Document API updates.
 
 // TODO: Refactor UI components from containers components to ui components.
 // TODO: Allow user to configure TypeScript compiler.

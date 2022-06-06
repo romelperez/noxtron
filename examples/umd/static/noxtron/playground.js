@@ -1,6 +1,6 @@
 const getSettings = () => ({
   basePath: '/noxtron/',
-  assetsPath: '/build/umd/',
+  assetsPath: '/umd/',
   playgroundPath: '/noxtron/',
   sandboxPath: '/noxtron/sandbox/',
   codeLanguage: 'javascript',

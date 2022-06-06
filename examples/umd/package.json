@@ -5,16 +5,8 @@
     "node": "^16.14",
     "npm": "^8.3"
   },
-  "dependencies": {
-    "html-webpack-plugin": "^5.5.0",
-    "webpack": "^5.73.0",
-    "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.9.1"
-  },
   "scripts": {
-    "clean": "rm -rf ./build",
-    "build": "cross-env NODE_ENV=production webpack --progress",
-    "dev": "webpack serve",
+    "build": "sh ./build.sh",
     "start": "serve ./build -p 4000"
   }
 }

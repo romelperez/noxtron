@@ -31,7 +31,7 @@ configured sandboxes, and a sandbox app to execute the sandboxes source code.
   - Technologies: ESM, [ESBuild](https://esbuild.github.io), JavaScript, [SolidJS](https://www.solidjs.com).
   - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/esbuild).
 - **examples/umd**
-  - Technologies: UMD, [Webpack](https://webpack.js.org), JavaScript.
+  - Technologies: UMD, JavaScript.
   - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/umd).
 
 ## Features

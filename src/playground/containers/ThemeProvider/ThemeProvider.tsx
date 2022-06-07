@@ -1,9 +1,11 @@
 import React, { ReactNode, ReactElement, useMemo } from 'react';
 import { ThemeProvider as EmotionThemeProvider, Theme } from '@emotion/react';
 
-import { createTheme } from '../../utils/createTheme';
-import { useRouterState } from '../../utils/useRouterState';
-import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
+import {
+  createTheme,
+  useRouterState,
+  usePlaygroundSettings
+} from '../../utils';
 
 interface ThemeProviderProps {
   children: ReactNode;

@@ -1,10 +1,11 @@
 import React, { ReactElement, useEffect } from 'react';
 
-import { NTMonacoModel } from '../../../types';
-import { useRouterState } from '../../utils/useRouterState';
-import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
-import { useStore } from '../../utils/useStore';
-import { findSandboxByPath } from '../../utils/findSandboxByPath';
+import {
+  useRouterState,
+  usePlaygroundSettings,
+  findSandboxByPath
+} from '../../utils';
+import { useStore } from '../../services';
 
 const ExplorationSetup = (): ReactElement => {
   const settings = usePlaygroundSettings();

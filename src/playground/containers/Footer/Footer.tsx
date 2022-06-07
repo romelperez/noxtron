@@ -3,9 +3,7 @@ import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
-import { cx } from '../../utils/cx';
-import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
-import { useMediaQuery } from '../../utils/useMediaQuery';
+import { cx, usePlaygroundSettings, useMediaQuery } from '../../utils';
 import { createStyles } from './Footer.styles';
 
 interface FooterProps {

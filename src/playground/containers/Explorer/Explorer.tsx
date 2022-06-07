@@ -3,13 +3,9 @@ import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useEffect, useMemo, useRef } from 'react';
 
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
-import { cx } from '../../utils/cx';
-import { useMediaQuery } from '../../utils/useMediaQuery';
-import { useRouterState } from '../../utils/useRouterState';
-import { useStore } from '../../utils/useStore';
-import { StatusMessage } from '../../ui/StatusMessage';
-import { Slider } from '../../ui/Slider';
-import { SandboxList } from '../../ui/SandboxList';
+import { cx, useMediaQuery, useRouterState } from '../../utils';
+import { useStore } from '../../services/useStore';
+import { StatusMessage, Slider, SandboxList } from '../../ui';
 import { createStyles } from './Explorer.styles';
 
 interface ExplorerProps {

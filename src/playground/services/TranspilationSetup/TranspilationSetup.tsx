@@ -1,10 +1,8 @@
 import React, { ReactElement, useEffect, useRef } from 'react';
 import debounce from 'lodash/debounce';
 
-import { useRouterState } from '../../utils/useRouterState';
-import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
-import { useStore } from '../../utils/useStore';
-import { transpile } from '../../utils/transpile';
+import { useRouterState, usePlaygroundSettings, transpile } from '../../utils';
+import { useStore } from '../../services/useStore';
 
 const TranspilationSetup = (): ReactElement => {
   const settings = usePlaygroundSettings();

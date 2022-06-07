@@ -5,8 +5,8 @@ import {
   NTSandbox,
   NTPlaygroundSettingsTypeDefinition
 } from '../../../types';
-import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
-import { useStore } from '../../utils/useStore';
+import { usePlaygroundSettings } from '../../utils';
+import { useStore } from '../useStore';
 import { ExplorationSetup } from '../ExplorationSetup';
 import { EditorSetup } from '../EditorSetup';
 import { TranspilationSetup } from '../TranspilationSetup';

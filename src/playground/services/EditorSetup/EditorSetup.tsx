@@ -1,9 +1,8 @@
 import React, { ReactElement, useEffect, useMemo } from 'react';
 
 import { NTMonacoCompilerOptions } from '../../../types';
-import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
-import { useRouterState } from '../../utils/useRouterState';
-import { useStore } from '../../utils/useStore';
+import { usePlaygroundSettings, useRouterState } from '../../utils';
+import { useStore } from '../useStore';
 
 const EditorSetup = (): ReactElement => {
   const settings = usePlaygroundSettings();

@@ -12,14 +12,17 @@ import {
   NT_ROUTER_URL_OPTIONS_BOOLEANS,
   NT_ROUTER_URL_OPTIONS
 } from '../../../constants';
-import { convertLocationSearchToString } from '../../../utils/convertLocationSearchToString';
-import { convertLocationSearchToObject } from '../../../utils/convertLocationSearchToObject';
-import { encodeURLParameter } from '../../../utils/encodeURLParameter';
-import { decodeURLParameter } from '../../../utils/decodeURLParameter';
-
-import { useMediaQuery } from '../../utils/useMediaQuery';
-import { RouterStateContext } from '../../utils/RouterStateContext';
-import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
+import {
+  convertLocationSearchToString,
+  convertLocationSearchToObject,
+  encodeURLParameter,
+  decodeURLParameter
+} from '../../../utils';
+import {
+  useMediaQuery,
+  RouterStateContext,
+  usePlaygroundSettings
+} from '../../utils';
 
 interface RouterStateProviderProps {
   children: ReactNode;

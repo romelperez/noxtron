@@ -3,13 +3,14 @@ import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 
 import { NT_ICONS, NT_BREAKPOINTS as breakpoints } from '../../../constants';
-import { cx } from '../../utils/cx';
-import { useMediaQuery } from '../../utils/useMediaQuery';
-import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
-import { useRouterState } from '../../utils/useRouterState';
-import { useStore } from '../../utils/useStore';
-import { Button } from '../../ui/Button';
-import { Icon } from '../../ui/Icon';
+import {
+  cx,
+  useMediaQuery,
+  usePlaygroundSettings,
+  useRouterState
+} from '../../utils';
+import { useStore } from '../../services/useStore';
+import { Button, Icon } from '../../ui';
 import { createStyles } from './Toolbar.styles';
 
 interface ToolbarProps {

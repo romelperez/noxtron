@@ -6,7 +6,7 @@ import { PlaygroundSettingsProvider } from '../PlaygroundSettingsProvider';
 import { RouterProvider } from '../RouterProvider';
 import { RouterStateProvider } from '../RouterStateProvider';
 import { ThemeProvider } from '../ThemeProvider';
-import { PlaygroundSetup } from '../PlaygroundSetup';
+import { PlaygroundSetup } from '../../services';
 import { App } from '../App';
 import * as UI from '../../ui';
 import * as playgroundUtils from '../../utils';

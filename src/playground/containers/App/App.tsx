@@ -3,11 +3,9 @@ import { jsx, useTheme, Global } from '@emotion/react';
 import { Fragment, ReactElement, useMemo } from 'react';
 
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
-import { useRouterState } from '../../utils/useRouterState';
-import { useMediaQuery } from '../../utils/useMediaQuery';
-import { useStore } from '../../utils/useStore';
-import { StatusMessage } from '../../ui/StatusMessage';
-import { Loading } from '../../ui/Loading';
+import { useStore } from '../../services';
+import { useRouterState, useMediaQuery } from '../../utils';
+import { Loading, StatusMessage } from '../../ui';
 
 import { Header } from '../Header';
 import { Explorer } from '../Explorer';

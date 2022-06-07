@@ -1,7 +1,7 @@
 import React, { ReactNode, ReactElement, useMemo } from 'react';
 
 import type { NTPlaygroundSettings } from '../../../types';
-import { PlaygroundSettingsContext } from '../../utils/PlaygroundSettingsContext';
+import { PlaygroundSettingsContext } from '../../utils';
 
 interface PlaygroundSettingsProviderProps {
   settings: NTPlaygroundSettings;

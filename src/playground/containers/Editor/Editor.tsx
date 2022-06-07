@@ -5,10 +5,8 @@ import throttle from 'lodash/throttle';
 
 import type { NTMonacoEditor } from '../../../types';
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
-import { cx } from '../../utils/cx';
-import { useMediaQuery } from '../../utils/useMediaQuery';
-import { useRouterState } from '../../utils/useRouterState';
-import { useStore } from '../../utils/useStore';
+import { cx, useMediaQuery, useRouterState } from '../../utils';
+import { useStore } from '../../services';
 import { createStyles } from './Editor.styles';
 
 interface EditorProps {

@@ -2,18 +2,19 @@
 import { jsx } from '@emotion/react';
 import { ReactElement, useEffect, useMemo, useRef } from 'react';
 
-import { convertLocationSearchToString } from '../../../utils/convertLocationSearchToString';
-import { encodeURLParameter } from '../../../utils/encodeURLParameter';
-import { StatusMessage } from '../../ui/StatusMessage';
-import { Loading } from '../../ui/Loading';
-import { Slider } from '../../ui/Slider';
-
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
-import { cx } from '../../utils/cx';
-import { useMediaQuery } from '../../utils/useMediaQuery';
-import { useStore } from '../../utils/useStore';
-import { usePlaygroundSettings } from '../../utils/usePlaygroundSettings';
-import { useRouterState } from '../../utils/useRouterState';
+import {
+  convertLocationSearchToString,
+  encodeURLParameter
+} from '../../../utils';
+import {
+  cx,
+  useMediaQuery,
+  usePlaygroundSettings,
+  useRouterState
+} from '../../utils';
+import { useStore } from '../../services';
+import { StatusMessage, Loading, Slider } from '../../ui';
 import { createStyles } from './Preview.styles';
 
 interface PreviewProps {

@@ -2,7 +2,7 @@ import type {
   NTMonacoModel,
   NTMonacoLanguage,
   NTMonacoUri,
-  NTStoreTranspilation
+  NTTranspilation
 } from '../../../types';
 import { convertCodeImportsToRefs } from '../../utils/convertCodeImportsToRefs';
 
@@ -64,9 +64,8 @@ function getTranspileFirstErrorMessage(
 function transpile(
   typescript: NTMonacoLanguage,
   model: NTMonacoModel
-): Promise<NTStoreTranspilation> {
-  const transpiledOutput: NTStoreTranspilation = {
-    isLoading: false,
+): Promise<NTTranspilation> {
+  const transpiledOutput: NTTranspilation = {
     importsLines: [],
     code: '',
     error: ''

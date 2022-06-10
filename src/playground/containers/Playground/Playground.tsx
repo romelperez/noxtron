@@ -1,54 +1,30 @@
-import React, { ReactElement, useState } from 'react';
-import * as emotion from '@emotion/react';
+import React, { ReactElement } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useStore } from 'effector-react';
 
-import type { NTPlaygroundSettings } from '../../../types';
-import { PlaygroundSettingsProvider } from '../PlaygroundSettingsProvider';
-import { RouterProvider } from '../RouterProvider';
-import { RouterStateProvider } from '../RouterStateProvider';
+import { RouterState } from '../RouterState';
 import { ThemeProvider } from '../ThemeProvider';
-import { PlaygroundSetup } from '../../services';
 import { App } from '../App';
-import * as UI from '../../ui';
-import * as playgroundUtils from '../../utils';
-import * as globalUtils from '../../../utils';
+import { $setup } from '../../services';
 
-interface PlaygroundPropsGetSettingsDependencies {
-  React: typeof React;
-  emotion: typeof emotion;
-}
-
-interface PlaygroundProps {
-  getSettings: (
-    dependencies: PlaygroundPropsGetSettingsDependencies
-  ) => NTPlaygroundSettings;
-}
-
-const Playground = (props: PlaygroundProps): ReactElement => {
-  const { getSettings } = props;
-
-  const [settings] = useState<NTPlaygroundSettings>(() =>
-    getSettings({
-      ...UI,
-      ...playgroundUtils,
-      ...globalUtils,
-      React,
-      emotion
-    })
-  );
+const Playground = (): ReactElement => {
+  const setup = useStore($setup);
 
   return (
-    <PlaygroundSettingsProvider settings={settings}>
-      <RouterProvider>
-        <RouterStateProvider>
-          <ThemeProvider>
-            <PlaygroundSetup />
-            <App />
-          </ThemeProvider>
-        </RouterStateProvider>
-      </RouterProvider>
-    </PlaygroundSettingsProvider>
+    <BrowserRouter basename={setup.basePath}>
+      <Routes>
+        <Route
+          path="*"
+          element={
+            <ThemeProvider>
+              <RouterState />
+              <App />
+            </ThemeProvider>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
-export type { PlaygroundProps };
 export { Playground };

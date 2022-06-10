@@ -2,11 +2,12 @@
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useCallback, useEffect, useMemo, useRef } from 'react';
 import throttle from 'lodash/throttle';
+import { useStore, useStoreMap } from 'effector-react';
 
 import type { NTMonacoEditor } from '../../../types';
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
-import { cx, useMediaQuery, useRouterState } from '../../utils';
-import { useStore } from '../../services';
+import { cx, useMediaQuery } from '../../utils';
+import { $router, $dependencies } from '../../services';
 import { createStyles } from './Editor.styles';
 
 interface EditorProps {
@@ -16,14 +17,12 @@ interface EditorProps {
 const Editor = (props: EditorProps): ReactElement => {
   const { className } = props;
 
-  const routerState = useRouterState();
   const theme = useTheme();
   const styles = useMemo(() => createStyles(), []);
 
-  const monaco = useStore((state) => state.monaco);
-  const model = useStore((state) => state.model);
-  const subscribe = useStore((state) => state.subscribe);
-  const unsubscribe = useStore((state) => state.unsubscribe);
+  const router = useStore($router);
+  const monaco = useStoreMap($dependencies, (state) => state.monaco);
+  const model = useStoreMap($dependencies, (state) => state.model);
 
   const isBreakpointMediumUp = useMediaQuery(breakpoints.medium.up);
   const isBreakpointLargeUp = useMediaQuery(breakpoints.large.up);
@@ -94,41 +93,20 @@ const Editor = (props: EditorProps): ReactElement => {
 
   useEffect(() => {
     onResize();
-  }, [routerState]);
+  }, [router]);
 
   useEffect(() => {
     editorRef.current?.setScrollPosition({
       scrollLeft: 0,
       scrollTop: 0
     });
-  }, [routerState.optionsControls.type, routerState.optionsControls.sandbox]);
+  }, [router.optionsControls.type, router.optionsControls.sandbox]);
 
   useEffect(() => {
     editorRef.current?.updateOptions({
       theme: theme.colorScheme === 'dark' ? 'vs-dark' : 'vs'
     });
   }, [theme]);
-
-  useEffect(() => {
-    const onCopy = (): void => {
-      window.navigator.clipboard.writeText(model.getValue());
-    };
-
-    const onCustomSandbox = (): void => {
-      routerState.setOptions({
-        type: 'custom',
-        code: model.getValue()
-      });
-    };
-
-    subscribe('copyCode', onCopy);
-    subscribe('customSandbox', onCustomSandbox);
-
-    return () => {
-      unsubscribe('copyCode', onCopy);
-      unsubscribe('customSandbox', onCustomSandbox);
-    };
-  }, []);
 
   return (
     <div

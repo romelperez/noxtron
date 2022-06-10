@@ -1,10 +1,11 @@
 /** @jsx jsx */
 import { jsx, useTheme, Global } from '@emotion/react';
 import { Fragment, ReactElement, useMemo } from 'react';
+import { useStore } from 'effector-react';
 
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
-import { useStore } from '../../services';
-import { useRouterState, useMediaQuery } from '../../utils';
+import { useMediaQuery } from '../../utils';
+import { $dependencies, $router } from '../../services';
 import { Loading, StatusMessage } from '../../ui';
 
 import { Header } from '../Header';
@@ -12,17 +13,19 @@ import { Explorer } from '../Explorer';
 import { Toolbar } from '../Toolbar';
 import { Editor } from '../Editor';
 import { Preview } from '../Preview';
-import { Footer } from '../Footer';
+import { Links } from '../Links';
 import { createStyles } from './App.styles';
 
 const App = (): ReactElement => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const { optionsBooleans } = useRouterState();
-  const isLoading = useStore((state) => state.isLoading);
-  const error = useStore((state) => state.error);
-  const isMDMediumUp = useMediaQuery(breakpoints.medium.up);
+  const isMQMediumUp = useMediaQuery(breakpoints.medium.up);
 
+  const router = useStore($router);
+  const dependencies = useStore($dependencies);
+
+  const { optionsBooleans } = router;
+  const { isLoading, error } = dependencies;
   const isReady = !isLoading && !error;
 
   return (
@@ -62,8 +65,9 @@ const App = (): ReactElement => {
             </Fragment>
           )}
         </main>
-        {(isMDMediumUp || optionsBooleans.explorer) && (
-          <Footer css={styles.footer} />
+
+        {(isMQMediumUp || optionsBooleans.explorer) && (
+          <Links css={styles.links} />
         )}
       </div>
     </Fragment>

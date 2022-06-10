@@ -1,17 +1,13 @@
 import mapValues from 'lodash/mapValues';
 
-import type {
-  NTThemeColorScheme,
-  NTTheme,
-  NTPlaygroundSettingsTheme
-} from '../../../types';
+import type { NTThemeColorScheme, NTTheme, NTSetupTheme } from '../../../types';
 import { createThemeMultiplier } from './createThemeMultiplier';
 import { createThemeStyle } from './createThemeStyle';
 import { createThemeColorPalette } from './createThemeColorPalette';
 
 const createTheme = (
   colorScheme: NTThemeColorScheme,
-  userSettings: NTPlaygroundSettingsTheme = {}
+  userSettings: NTSetupTheme = {}
 ): NTTheme => {
   const commonTypo = { fontFamily: 'Menlo, Monaco, "Courier New", monospace' };
   const userTypo = { ...userSettings.typographyCommons };

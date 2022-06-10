@@ -1,22 +1,25 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
+import { useStore } from 'effector-react';
 
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
-import { cx, usePlaygroundSettings, useMediaQuery } from '../../utils';
-import { createStyles } from './Footer.styles';
+import { cx, useMediaQuery } from '../../utils';
+import { $setup } from '../../services';
+import { createStyles } from './Links.styles';
 
-interface FooterProps {
+interface LinksProps {
   className?: string;
 }
 
-const Footer = (props: FooterProps): ReactElement => {
+const Links = (props: LinksProps): ReactElement => {
   const { className } = props;
 
   const theme = useTheme();
   const isMDMediumUp = useMediaQuery(breakpoints.medium.up);
-  const { links = {} } = usePlaygroundSettings();
+  const setup = useStore($setup);
 
+  const { links = {} } = setup;
   const { small = [], medium = [] } = links;
   const viewportLinks = isMDMediumUp ? medium : small;
   const hasLinks = !!viewportLinks.length;
@@ -27,18 +30,18 @@ const Footer = (props: FooterProps): ReactElement => {
   );
 
   return (
-    <footer className={cx('footer', className)} css={styles.root}>
+    <nav className={cx('links', className)} css={styles.root}>
       {viewportLinks.map((section = [], index) => (
-        <div key={index} className="footer__section" css={styles.section}>
+        <div key={index} className="links__section" css={styles.section}>
           {section.map((item, itemIndex) => (
-            <span className="footer__item" key={itemIndex} css={styles.item}>
+            <span className="links__item" key={itemIndex} css={styles.item}>
               {item}
             </span>
           ))}
         </div>
       ))}
-    </footer>
+    </nav>
   );
 };
 
-export { Footer };
+export { Links };

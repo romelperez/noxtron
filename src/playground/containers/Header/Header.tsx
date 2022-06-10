@@ -2,15 +2,11 @@
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { useStore, useStoreMap } from 'effector-react';
 
 import { NT_ICONS, NT_BREAKPOINTS as breakpoints } from '../../../constants';
-import {
-  cx,
-  useMediaQuery,
-  useRouterState,
-  usePlaygroundSettings
-} from '../../utils';
-import { useStore } from '../../services';
+import { cx, useMediaQuery } from '../../utils';
+import { $setup, $router, $dependencies, sendRoute } from '../../services';
 import { Button, Icon } from '../../ui';
 import { createStyles } from './Header.styles';
 
@@ -25,12 +21,14 @@ const Header = (props: HeaderProps): ReactElement => {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const { header, title } = usePlaygroundSettings();
-  const { optionsBooleans, setOptions } = useRouterState();
+  const setup = useStore($setup);
+  const router = useStore($router);
   const isMDMediumUp = useMediaQuery(breakpoints.medium.up);
-  const isLoading = useStore((state) => state.isLoading);
-  const error = useStore((state) => state.error);
+  const isLoading = useStoreMap($dependencies, (state) => state.isLoading);
+  const error = useStoreMap($dependencies, (state) => state.error);
 
+  const { header, title } = setup;
+  const { optionsBooleans } = router;
   const isControlsDisabled = isLoading || !!error;
 
   return (
@@ -41,7 +39,7 @@ const Header = (props: HeaderProps): ReactElement => {
           title="Toggle explorer panel"
           color={optionsBooleans.explorer ? 'secondary' : 'primary'}
           disabled={isControlsDisabled}
-          onClick={() => setOptions({ explorer: !optionsBooleans.explorer })}
+          onClick={() => sendRoute({ explorer: !optionsBooleans.explorer })}
         >
           <Icon path={mdiMenu} />
           <span css={styles.optionLabel}>Explorer</span>
@@ -52,7 +50,7 @@ const Header = (props: HeaderProps): ReactElement => {
           title="Toggle editor panel"
           color={optionsBooleans.editor ? 'secondary' : 'primary'}
           disabled={isControlsDisabled}
-          onClick={() => setOptions({ editor: !optionsBooleans.editor })}
+          onClick={() => sendRoute({ editor: !optionsBooleans.editor })}
         >
           <Icon path={mdiXml} />
           <span css={styles.optionLabel}>Editor</span>
@@ -63,7 +61,7 @@ const Header = (props: HeaderProps): ReactElement => {
           title="Toggle preview panel"
           color={optionsBooleans.preview ? 'secondary' : 'primary'}
           disabled={isControlsDisabled}
-          onClick={() => setOptions({ preview: !optionsBooleans.preview })}
+          onClick={() => sendRoute({ preview: !optionsBooleans.preview })}
         >
           <Icon path={mdiChartBubble} />
           <span css={styles.optionLabel}>Preview</span>
@@ -72,7 +70,7 @@ const Header = (props: HeaderProps): ReactElement => {
         <Button
           css={styles.option}
           title="Toggle theme color scheme"
-          onClick={() => setOptions({ dark: !optionsBooleans.dark })}
+          onClick={() => sendRoute({ dark: !optionsBooleans.dark })}
         >
           <Icon path={mdiInvertColors} />
           <span css={styles.optionLabel}>
@@ -80,6 +78,7 @@ const Header = (props: HeaderProps): ReactElement => {
           </span>
         </Button>
       </nav>
+
       <div className="header__content" css={styles.content}>
         <div className="header__custom" css={styles.custom}>
           {(isMDMediumUp && header?.medium) || header?.small}

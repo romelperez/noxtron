@@ -142,7 +142,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
         }
       }
     },
-    footer: {
+    links: {
       borderTop: line1,
       backgroundColor: bg1,
       transitionProperty: 'background-color',

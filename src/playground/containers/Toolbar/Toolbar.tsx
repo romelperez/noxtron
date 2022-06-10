@@ -1,15 +1,20 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useMemo } from 'react';
+import { useStore } from 'effector-react';
 
 import { NT_ICONS, NT_BREAKPOINTS as breakpoints } from '../../../constants';
+import { cx, useMediaQuery } from '../../utils';
 import {
-  cx,
-  useMediaQuery,
-  usePlaygroundSettings,
-  useRouterState
-} from '../../utils';
-import { useStore } from '../../services/useStore';
+  $setup,
+  $router,
+  $transpilation,
+  sendReload,
+  sendReset,
+  sendCustomize,
+  sendIsolate,
+  sendCopy
+} from '../../services';
 import { Button, Icon } from '../../ui';
 import { createStyles } from './Toolbar.styles';
 
@@ -23,14 +28,15 @@ const { mdiReload, mdiBackupRestore, mdiPencil, mdiTestTube, mdiContentCopy } =
 const Toolbar = (props: ToolbarProps): ReactElement => {
   const { className } = props;
 
-  const { optionsControls, optionsBooleans } = useRouterState();
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const { toolbar } = usePlaygroundSettings();
-  const transpilation = useStore((state) => state.transpilation);
-  const trigger = useStore((state) => state.trigger);
   const isMDMediumUp = useMediaQuery(breakpoints.medium.up);
 
+  const setup = useStore($setup);
+  const router = useStore($router);
+  const transpilation = useStore($transpilation);
+
+  const { optionsControls, optionsBooleans } = router;
   const hasEditorError = !!transpilation.error;
 
   return (
@@ -41,7 +47,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           size="small"
           title="Reload preview"
           disabled={!optionsBooleans.preview || hasEditorError}
-          onClick={() => trigger('reload')}
+          onClick={() => sendReload()}
         >
           <Icon path={mdiReload} />
           <span css={styles.optionLabel}>Reload</span>
@@ -52,7 +58,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           size="small"
           title="Reset predefined sandbox source code"
           disabled={optionsControls.type === 'custom'}
-          onClick={() => trigger('resetPredefinedSandboxCode')}
+          onClick={() => sendReset()}
         >
           <Icon path={mdiBackupRestore} />
           <span css={styles.optionLabel}>Reset</span>
@@ -63,7 +69,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           size="small"
           disabled={optionsControls.type === 'custom'}
           title="Make custom sandbox from current source code"
-          onClick={() => trigger('customSandbox')}
+          onClick={() => sendCustomize()}
         >
           <Icon path={mdiPencil} />
           <span css={styles.optionLabel}>Customize</span>
@@ -74,7 +80,7 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           size="small"
           title="Make a copy of the current sandbox and open preview in an independent isolated window"
           disabled={!optionsBooleans.preview || hasEditorError}
-          onClick={() => trigger('openIsolated')}
+          onClick={() => sendIsolate()}
         >
           <Icon path={mdiTestTube} />
           <span css={styles.optionLabel}>Isolate</span>
@@ -84,14 +90,14 @@ const Toolbar = (props: ToolbarProps): ReactElement => {
           css={styles.option}
           size="small"
           title="Copy source code"
-          onClick={() => trigger('copyCode')}
+          onClick={() => sendCopy()}
         >
           <Icon path={mdiContentCopy} />
           <span css={styles.optionLabel}>Copy</span>
         </Button>
       </div>
       <div className="toolbar__custom" css={styles.custom}>
-        {isMDMediumUp ? toolbar?.medium : toolbar?.small}
+        {isMDMediumUp ? setup.toolbar?.medium : setup.toolbar?.small}
       </div>
     </nav>
   );

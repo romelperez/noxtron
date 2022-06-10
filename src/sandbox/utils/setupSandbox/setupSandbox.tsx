@@ -1,13 +1,13 @@
 import escape from 'lodash/escape';
 import uniqBy from 'lodash/uniqBy';
 
-import type { NTSandboxDependency, NTSandboxSettings } from '../../../types';
+import type { NTSandboxDependency, NTAppSandboxSettings } from '../../../types';
 import { decodeURLParameter } from '../../../utils/decodeURLParameter';
 import { convertLocationSearchToObject } from '../../../utils/convertLocationSearchToObject';
 import { getCodeImportsRefsFragments } from '../getCodeImportsRefsFragments';
 import { getCodeImportsRefsCode } from '../getCodeImportsRefsCode';
 
-const setupSandbox = (settings: NTSandboxSettings = {}): void => {
+const setupSandbox = (settings: NTAppSandboxSettings = {}): void => {
   const { dependencies: userDependenciesAvailable = [] } = settings;
 
   try {

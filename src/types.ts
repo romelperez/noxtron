@@ -97,27 +97,18 @@ export type NTRouterURLOption =
   | NTRouterURLOptionControl
   | NTRouterURLOptionBoolean;
 
-export type NTRouterStateSetOptionsUpdate = {
-  type?: 'predefined' | 'custom';
-  sandbox?: string[];
-  code?: string;
-} & { [name in NTRouterURLOptionBoolean]?: boolean };
+export type NTRouterOptionsControls = {
+  type: 'predefined' | 'custom';
+  sandbox: string[];
+  code: string;
+};
 
-export type NTRouterStateOptions = Record<
-  NTRouterURLOption,
-  string | undefined
->;
+export type NTRouterOptionsBooleans = Record<NTRouterURLOptionBoolean, boolean>;
 
-export interface NTRouterState {
-  options: NTRouterStateOptions;
-  optionsControls: {
-    type: 'predefined' | 'custom';
-    sandbox: string[];
-    code: string;
-  };
-  optionsBooleans: Record<NTRouterURLOptionBoolean, boolean>;
-  setOptions: (newOptions: NTRouterStateSetOptionsUpdate) => void;
-}
+export type NTRouterOptions = Record<NTRouterURLOption, string | undefined>;
+
+export type NTRouterOptionsUpdate = Partial<NTRouterOptionsControls> &
+  Partial<NTRouterOptionsBooleans>;
 
 // SANDBOX
 
@@ -139,9 +130,24 @@ export interface NTSandboxImportRef {
   dependencySlug: string;
 }
 
-// PLAYGROUND SETTINGS
+// TYPE DEFINITION
 
-export type NTPlaygroundSettingsTheme = Partial<{
+export interface NTTypeDefinition {
+  filename: string;
+  code: string;
+}
+
+// TRANSPILATION
+
+export interface NTTranspilation {
+  importsLines: string[];
+  code: string;
+  error: string;
+}
+
+// SETUP
+
+export type NTSetupTheme = Partial<{
   typographyCommons: Partial<{
     heading: CSSProperties;
     body: CSSProperties;
@@ -155,12 +161,18 @@ export type NTPlaygroundSettingsTheme = Partial<{
   colorSchemeDefault: NTThemeColorScheme;
 }>;
 
-export interface NTPlaygroundSettingsTypeDefinition {
-  filename: string;
-  code: string;
+export interface NTSetupUI {
+  /**
+   * For small width viewport.
+   */
+  small?: ReactNode;
+  /**
+   * For medium width viewport.
+   */
+  medium?: ReactNode;
 }
 
-export interface NTPlaygroundSettings {
+export interface NTSetup {
   /**
    * The URL path to the Noxtron app.
    * @default '/''
@@ -182,83 +194,106 @@ export interface NTPlaygroundSettings {
    * * @example '/sandbox.html'
    */
   sandboxPath: string;
-  codeLanguage?: 'javascript' | 'typescript';
-  newCustomSandboxCode?: string;
-  newCustomSandboxMessage?: string;
-  theme?: NTPlaygroundSettingsTheme;
-  title?: {
-    small?: ReactNode;
-    medium?: ReactNode;
-  };
-  header?: {
-    small?: ReactNode;
-    medium?: ReactNode;
-  };
-  toolbar?: {
-    small?: ReactNode;
-    medium?: ReactNode;
-  };
-  links?: {
+  /**
+   * Sandboxes source code language.
+   */
+  codeLanguage: 'javascript' | 'typescript';
+  /**
+   * JavaScript/TypeScript source code to show when a new custom empty sandbox
+   * is created.
+   */
+  newCustomSandboxCode: string;
+  /**
+   * Text message to show when a new custom empty sandbox is created.
+   */
+  newCustomSandboxMessage: string;
+  /**
+   * Visual theme customization.
+   */
+  theme: NTSetupTheme;
+  /**
+   * Playground app title.
+   */
+  title: NTSetupUI;
+  /**
+   * Playground app header custom elements.
+   */
+  header: NTSetupUI;
+  /**
+   * Playground app toolbar custom elements.
+   */
+  toolbar: NTSetupUI;
+  /**
+   * Playground app links custom elements.
+   */
+  links: {
     small?: ReactNode[][];
     medium?: ReactNode[][];
   };
-  getMonaco: () => Promise<NTMonaco>;
-  getSandboxes: () => Promise<NTSandbox[]>;
-  getTypeDefinitions?: () => Promise<NTPlaygroundSettingsTypeDefinition[]>;
+  /**
+   * Get `monaco-editor` package dependency. Since this package has a big filesize,
+   * it can and should be lazy loaded to improve the user experience.
+   */
+  getMonaco: () => Promise<NTMonaco> | NTMonaco;
+  /**
+   * Get the sandboxes list. Since this list contains every sandbox source code,
+   * it may get big in filesize. It should be lazy loaded if possible.
+   */
+  getSandboxes: () => Promise<NTSandbox[]> | NTSandbox[];
+  /**
+   * Get the type definitions contents for both JavaScript and TypeScript sandboxes.
+   * TypeScript sandboxes will show errors in the editor. JavaScript sandboxes will not.
+   * Since these type definitions contents may take a big filesize, the list
+   * should be lazy loaded.
+   */
+  getTypeDefinitions?: () => Promise<NTTypeDefinition[]> | NTTypeDefinition[];
+  /**
+   * When the playground app URL changes.
+   */
   onRouteChange?: () => void;
+  /**
+   * When the current sandbox changes.
+   */
   onSandboxChange?: (sandbox: NTSandbox | null) => void;
 }
 
-// SANBOX SETTINGS
+// STORES
 
-export interface NTSandboxSettingsDependency {
-  name: string;
-  pkg: unknown;
+export type NTStoreSetup = NTSetup;
+
+export interface NTStoreRouter {
+  options: NTRouterOptions;
+  optionsControls: NTRouterOptionsControls;
+  optionsBooleans: NTRouterOptionsBooleans;
 }
 
-export interface NTSandboxSettings {
-  dependencies?: NTSandboxSettingsDependency[];
-}
-
-// STORE
-
-export interface NTStoreTranspilation {
-  isLoading: boolean;
-  importsLines: string[];
-  code: string;
-  error: string;
-}
-
-export type NTStoreEvent =
-  | 'reload'
-  | 'resetPredefinedSandboxCode'
-  | 'copyCode'
-  | 'customSandbox'
-  | 'openIsolated';
-
-export type NTStoreSubscriber = () => void;
-
-export interface NTStore {
+export interface NTStoreDependencies {
   isLoading: boolean;
   error: string;
   monaco: NTMonaco;
   model: NTMonacoModel;
-  typeDefinitions: NTPlaygroundSettingsTypeDefinition[];
   sandboxes: NTSandbox[];
-  sandboxSelected: NTSandbox | null;
-  transpilation: NTStoreTranspilation;
+  typeDefinitions: NTTypeDefinition[];
+}
 
-  setStatus: (status: Partial<{ isLoading: boolean; error: string }>) => void;
-  setDependencies: (dependencies: {
-    monaco: NTMonaco;
-    model: NTMonacoModel;
-    sandboxes: NTSandbox[];
-    typeDefinitions: NTPlaygroundSettingsTypeDefinition[];
-  }) => void;
-  setSandboxSelected: (sandbox: NTSandbox | null) => void;
-  updateTranspilation: (transpilation: Partial<NTStoreTranspilation>) => void;
+export type NTStoreSandboxSelected = NTSandbox | null;
 
-  subscribe: (event: NTStoreEvent, subscriber: NTStoreSubscriber) => void;
-  unsubscribe: (event: NTStoreEvent, subscriber: NTStoreSubscriber) => void;
-  trigger: (event: NTStoreEvent) => void;
+export interface NTStoreTranspilation extends NTTranspilation {
+  isLoading: boolean;
+  sandboxURLParams: string;
+}
+
+// APP PLAYGROUND SETTINGS
+
+export type NTAppPlaygroundSettings = Partial<NTSetup>;
+
+// APP SANBOX SETTINGS
+
+export interface NTAppSandboxSettingsDependency {
+  name: string;
+  pkg: unknown;
+}
+
+export interface NTAppSandboxSettings {
+  dependencies?: NTAppSandboxSettingsDependency[];
 }

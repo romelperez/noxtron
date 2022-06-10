@@ -1,19 +1,11 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 import { ReactElement, useEffect, useMemo, useRef } from 'react';
+import { useStore } from 'effector-react';
 
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
-import {
-  convertLocationSearchToString,
-  encodeURLParameter
-} from '../../../utils';
-import {
-  cx,
-  useMediaQuery,
-  usePlaygroundSettings,
-  useRouterState
-} from '../../utils';
-import { useStore } from '../../services';
+import { cx, useMediaQuery } from '../../utils';
+import { $setup, $router, $transpilation, sendReload } from '../../services';
 import { StatusMessage, Loading, Slider } from '../../ui';
 import { createStyles } from './Preview.styles';
 
@@ -54,58 +46,29 @@ const Preview = (props: PreviewProps): ReactElement => {
   const { className } = props;
 
   const styles = useMemo(() => createStyles(), []);
-  const {
-    sandboxPath,
-    newCustomSandboxCode = '',
-    newCustomSandboxMessage
-  } = usePlaygroundSettings();
-  const transpilation = useStore((state) => state.transpilation);
-  const { optionsBooleans } = useRouterState();
-  const subscribe = useStore((state) => state.subscribe);
-  const unsubscribe = useStore((state) => state.unsubscribe);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const isMDMediumUp = useMediaQuery(breakpoints.medium.up);
   const elementRef = useRef<HTMLDivElement>(null);
 
+  const setup = useStore($setup);
+  const transpilation = useStore($transpilation);
+  const router = useStore($router);
+
+  const {
+    sandboxPath,
+    newCustomSandboxCode = '',
+    newCustomSandboxMessage
+  } = setup;
+  const { optionsBooleans } = router;
   const isCodeUnchanged =
     transpilation.code.trim() === newCustomSandboxCode.trim();
   const hasSlider = optionsBooleans.editor && isMDMediumUp;
 
-  const sandboxURLSearch: string = useMemo(() => {
-    const { importsLines, code, error } = transpilation;
-    return convertLocationSearchToString({
-      importsLines: encodeURLParameter(JSON.stringify(importsLines)),
-      code: encodeURLParameter(code),
-      error: encodeURLParameter(error)
-    });
-  }, [transpilation]);
-
   useEffect(() => {
-    const onReload = (): void => {
+    return sendReload.watch(() => {
       iframeRef.current?.contentWindow?.location.reload();
-    };
-
-    subscribe('reload', onReload);
-
-    return () => {
-      unsubscribe('reload', onReload);
-    };
+    });
   }, []);
-
-  useEffect(() => {
-    const onOpenIsolated = (): void => {
-      window.open(
-        `${window.location.origin}${sandboxPath}?${sandboxURLSearch}`,
-        'sandbox'
-      );
-    };
-
-    subscribe('openIsolated', onOpenIsolated);
-
-    return () => {
-      unsubscribe('openIsolated', onOpenIsolated);
-    };
-  }, [sandboxURLSearch]);
 
   useEffect(() => {
     const element = elementRef.current as HTMLDivElement;
@@ -140,7 +103,7 @@ const Preview = (props: PreviewProps): ReactElement => {
           className="preview__iframe"
           ref={iframeRef}
           css={styles.sandbox}
-          src={`${sandboxPath}?${sandboxURLSearch}`}
+          src={`${sandboxPath}?${transpilation.sandboxURLParams}`}
         />
       )}
 

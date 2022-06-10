@@ -1,9 +1,9 @@
-import React from 'react';
-import { render } from 'react-dom';
+import {
+  renderPlayground,
+  RenderPlaygroundGetSettings
+} from '../../../../build/cjs/playground';
 
-import { Playground, PlaygroundProps } from '../../../../build/cjs/playground';
-
-const getSettings: PlaygroundProps['getSettings'] = () => ({
+const getSettings: RenderPlaygroundGetSettings = ({ React }) => ({
   basePath: '/noxtron/',
   assetsPath: '/noxtron/',
   playgroundPath: '/noxtron/',
@@ -72,7 +72,6 @@ const getSettings: PlaygroundProps['getSettings'] = () => ({
     import('./typeDefinitions/typeDefinitions').then((m) => m.typeDefinitions)
 });
 
-render(
-  <Playground getSettings={getSettings} />,
-  document.querySelector('#root')
-);
+const rootElement = document.querySelector('#root') as HTMLDivElement;
+
+renderPlayground(getSettings, rootElement);

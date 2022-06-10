@@ -1,10 +1,11 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
 import { ReactElement, useEffect, useMemo, useRef } from 'react';
+import { useStore, useStoreMap } from 'effector-react';
 
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
-import { cx, useMediaQuery, useRouterState } from '../../utils';
-import { useStore } from '../../services/useStore';
+import { cx, useMediaQuery } from '../../utils';
+import { $router, $dependencies, sendRoute } from '../../services';
 import { StatusMessage, Slider, SandboxList } from '../../ui';
 import { createStyles } from './Explorer.styles';
 
@@ -41,9 +42,9 @@ const Explorer = (props: ExplorerProps): ReactElement => {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const { optionsControls, setOptions } = useRouterState();
-  const sandboxes = useStore((state) => state.sandboxes);
-  const isMDMediumUp = useMediaQuery(breakpoints.medium.up);
+  const router = useStore($router);
+  const sandboxes = useStoreMap($dependencies, (state) => state.sandboxes);
+  const isMQMediumUp = useMediaQuery(breakpoints.medium.up);
   const elementRef = useRef<HTMLDivElement>(null);
 
   const setSliderWidth = (value: number | null): void => {
@@ -63,7 +64,7 @@ const Explorer = (props: ExplorerProps): ReactElement => {
   };
 
   useEffect(() => {
-    if (isMDMediumUp) {
+    if (isMQMediumUp) {
       const widthInitial = getSliderWidthCache() ?? sliderWidths.initial;
       setSliderWidth(widthInitial);
     }
@@ -71,7 +72,7 @@ const Explorer = (props: ExplorerProps): ReactElement => {
     return () => {
       setSliderWidth(null);
     };
-  }, [isMDMediumUp]);
+  }, [isMQMediumUp]);
 
   return (
     <aside
@@ -88,10 +89,10 @@ const Explorer = (props: ExplorerProps): ReactElement => {
           {!!sandboxes.length && (
             <SandboxList
               items={sandboxes}
-              routerSandbox={optionsControls.sandbox}
+              routerSandbox={router.optionsControls.sandbox}
               currentSandboxPath={[]}
               onSelect={(newSandboxPath) => {
-                setOptions({
+                sendRoute({
                   type: 'predefined',
                   sandbox: newSandboxPath
                 });
@@ -101,7 +102,7 @@ const Explorer = (props: ExplorerProps): ReactElement => {
         </nav>
       </div>
 
-      {isMDMediumUp && (
+      {isMQMediumUp && (
         <Slider
           position="right"
           onChange={(offset) => {

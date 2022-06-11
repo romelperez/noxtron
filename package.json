@@ -33,36 +33,31 @@
     "build"
   ],
   "types": "./build/cjs/index.d.ts",
-  "peerDependencies": {
-    "monaco-editor": "0.33"
-  },
-  "dependencies": {
+  "devDependencies": {
     "@emotion/react": "^11.9.0",
     "@mdi/react": "^1.6.0",
+    "@types/jest": "^28.1.1",
+    "@types/lodash": "^4.14.182",
     "@types/react": "^17.0.45",
+    "@types/react-dom": "^17.0.13",
+    "@types/react-router-dom": "^5.3.3",
+    "cross-env": "^7.0.3",
     "effector": "^22.3.0",
     "effector-react": "^22.0.6",
+    "esbuild": "^0.14.43",
+    "husky": "^8.0.1",
+    "jest": "^28.1.1",
+    "jest-environment-jsdom": "^28.1.1",
     "lodash": "^4.17.21",
+    "monaco-editor": "^0.33.0",
+    "prettier": "^2.6.2",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.3.0",
-    "tslib": "^2.4.0"
-  },
-  "devDependencies": {
-    "@types/jest": "^28.1.0",
-    "@types/lodash": "^4.14.182",
-    "@types/react-dom": "^17.0.13",
-    "@types/react-router-dom": "^5.3.3",
-    "cross-env": "^7.0.3",
-    "esbuild": "^0.14.42",
-    "husky": "^8.0.1",
-    "jest": "^28.1.0",
-    "jest-environment-jsdom": "^28.1.0",
-    "monaco-editor": "^0.33.0",
-    "prettier": "^2.6.2",
     "serve": "^13.0.2",
     "ts-jest": "^28.0.4",
+    "tslib": "^2.4.0",
     "typescript": "^4.7.3"
   },
   "scripts": {

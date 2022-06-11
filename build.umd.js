@@ -9,8 +9,9 @@ esbuild
     entryPoints: [
       './node_modules/monaco-editor/esm/vs/editor/editor.worker.js',
       './node_modules/monaco-editor/esm/vs/language/typescript/ts.worker.js',
-      path.join(SRC_PATH, 'umd/playground.tsx'),
-      path.join(SRC_PATH, 'umd/sandbox.tsx')
+      path.join(SRC_PATH, 'umd/monaco.ts'),
+      path.join(SRC_PATH, 'umd/playground.ts'),
+      path.join(SRC_PATH, 'umd/sandbox.ts')
     ],
     entryNames: '[name]',
     outdir: BUILD_PATH,

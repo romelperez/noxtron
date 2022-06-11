@@ -1,11 +1,7 @@
-import React from 'react';
-import { render } from 'react-dom';
-
-import { Playground } from '../../../../build/cjs/playground';
-
-const getSettings = () => ({
+window.noxtron.setupPlayground(() => ({
+  element: document.querySelector('#root'),
   basePath: '/noxtron/',
-  assetsPath: '/noxtron/',
+  assetsPath: '/noxtron/umd/',
   playgroundPath: '/noxtron/',
   sandboxPath: '/noxtron/sandbox/',
   codeLanguage: 'javascript',
@@ -16,16 +12,16 @@ const getSettings = () => ({
   theme: {
     typographyCommons: {
       heading: {
-        fontFamily: 'Jura, sans-serif',
+        fontFamily: 'Roboto, sans-serif',
         fontWeight: '700',
         textTransform: 'uppercase'
       },
       body: {
-        fontFamily: 'Jura, sans-serif',
+        fontFamily: 'Roboto, sans-serif',
         fontWeight: '400'
       },
       cta: {
-        fontFamily: 'Jura, sans-serif',
+        fontFamily: 'Roboto, sans-serif',
         fontWeight: '400',
         textTransform: 'uppercase'
       },
@@ -36,11 +32,10 @@ const getSettings = () => ({
       }
     },
     colorHues: {
-      primary: 190, // Cyan
-      secondary: 70 // Yellow
+      primary: 200,
+      secondary: 30
     }
   },
-  getMonaco: () => import('../../../../build/cjs/monaco'),
   getSandboxes: () =>
     Promise.resolve([
       {
@@ -75,7 +70,7 @@ const Sandbox = () => {
   const onIncrement = () => setCount(count() + 1);
 
   return (
-    <div style={{ padding: '20px', background: 'black', color: 'yellow' }}>
+    <div style={{ padding: '20px', background: 'black', color: 'magenta' }}>
       <h2>MyComponent advanced</h2>
       <p>Counter: {count}</p>
       <button onClick={onIncrement}>Add</button>
@@ -89,9 +84,4 @@ render(() => <Sandbox />, document.querySelector('#root'));
         ]
       }
     ])
-});
-
-render(
-  React.createElement(Playground, { getSettings }),
-  document.querySelector('#root')
-);
+}));

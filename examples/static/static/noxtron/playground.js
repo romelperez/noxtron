@@ -1,6 +1,7 @@
-const getSettings = () => ({
+window.noxtron.setupPlayground(() => ({
+  element: document.querySelector('#root'),
   basePath: '/noxtron/',
-  assetsPath: '/umd/',
+  assetsPath: '/noxtron/umd/',
   playgroundPath: '/noxtron/',
   sandboxPath: '/noxtron/sandbox/',
   codeLanguage: 'javascript',
@@ -11,16 +12,16 @@ const getSettings = () => ({
   theme: {
     typographyCommons: {
       heading: {
-        fontFamily: 'Jura, sans-serif',
-        fontWeight: '700',
+        fontFamily: '"Chakra Petch", sans-serif',
+        fontWeight: '600',
         textTransform: 'uppercase'
       },
       body: {
-        fontFamily: 'Jura, sans-serif',
+        fontFamily: '"Chakra Petch", sans-serif',
         fontWeight: '400'
       },
       cta: {
-        fontFamily: 'Jura, sans-serif',
+        fontFamily: '"Chakra Petch", sans-serif',
         fontWeight: '400',
         textTransform: 'uppercase'
       },
@@ -31,8 +32,8 @@ const getSettings = () => ({
       }
     },
     colorHues: {
-      primary: 190, // Cyan
-      secondary: 70 // Yellow
+      primary: 120,
+      secondary: 60
     }
   },
   getSandboxes: () =>
@@ -43,22 +44,18 @@ const getSettings = () => ({
           {
             name: 'basic',
             code: `const root = document.querySelector('#root');
-root.style.color = '#777';
+root.style.color = '#77f';
 root.innerHTML = '<h1>MyComponent basic sandbox!</h1>';
 `
           },
           {
             name: 'advanced',
             code: `const root = document.querySelector('#root');
-root.style.color = '#777';
+root.style.color = '#f77';
 root.innerHTML = '<h1>MyComponent advanced sandbox!</h1>';
 `
           }
         ]
       }
     ])
-});
-
-const element = document.querySelector('#root');
-
-window.noxtronPlayground.renderPlayground(getSettings, element);
+}));

@@ -1,9 +1,7 @@
-import { setupPlayground } from '../../../../build/cjs/playground';
-
-setupPlayground(({ React }) => ({
-  element: document.querySelector('#root') as HTMLDivElement,
+window.noxtron.setupPlayground(({ React }) => ({
+  element: document.querySelector('#root'),
   basePath: '/noxtron/',
-  assetsPath: '/noxtron/',
+  assetsPath: '/noxtron/umd/',
   playgroundPath: '/noxtron/',
   sandboxPath: '/noxtron/sandbox/',
   codeLanguage: 'typescript',
@@ -14,26 +12,42 @@ setupPlayground(({ React }) => ({
   links: {
     small: [
       [
-        <span>v1.2.3 00-12-31</span>,
-        <a href="https://github.com/romelperez/noxtron" target="Website">
-          Website
-        </a>
+        React.createElement('span', null, 'v1.2.3 00-12-31'),
+        React.createElement('a', {
+          href: 'https://github.com/romelperez/noxtron',
+          target: 'Website'
+        })
       ]
     ],
     medium: [
       [
-        <span>v1.2.3 00-12-31</span>,
-        <a href="https://github.com/romelperez/noxtron" target="Website">
-          Website
-        </a>
+        React.createElement('span', null, 'v1.2.3 00-12-31'),
+        React.createElement(
+          'a',
+          {
+            href: 'https://github.com/romelperez/noxtron',
+            target: 'Website'
+          },
+          'Website'
+        )
       ],
       [
-        <a href="https://twitter.com/romelperez07" target="Twitter">
-          Twitter
-        </a>,
-        <a href="https://github.com/romelperez/noxtron" target="GitHub">
-          GitHub
-        </a>
+        React.createElement(
+          'a',
+          {
+            href: 'https://twitter.com/romelperez07',
+            target: 'Twitter'
+          },
+          'Twitter'
+        ),
+        React.createElement(
+          'a',
+          {
+            href: 'https://github.com/romelperez/noxtron',
+            target: 'GitHub'
+          },
+          'GitHub'
+        )
       ]
     ]
   },
@@ -64,7 +78,6 @@ setupPlayground(({ React }) => ({
       secondary: 70 // Yellow
     }
   },
-  getMonaco: () => import('../../../../build/cjs/monaco'),
   getSandboxes: () => import('./sandboxes/sandboxes').then((m) => m.sandboxes),
   getTypeDefinitions: () =>
     import('./typeDefinitions/typeDefinitions').then((m) => m.typeDefinitions)

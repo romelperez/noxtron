@@ -1,19 +1,15 @@
 const path = require('path');
 const esbuild = require('esbuild');
 
-const { NODE_ENV } = process.env;
 const SRC_PATH = path.join(__dirname, 'src');
 const BUILD_PATH = path.join(__dirname, 'build');
-
-const isProduction = NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production';
 
 /**
  * @type {import ('esbuild').BuildOptions} opts
  */
 const buildOptions = {
   entryPoints: [
-    '../../node_modules/monaco-editor/esm/vs/language/typescript/ts.worker.js',
-    '../../node_modules/monaco-editor/esm/vs/editor/editor.worker.js',
     path.join(SRC_PATH, 'playground/playground.js'),
     path.join(SRC_PATH, 'sandbox/sandbox.js')
   ],

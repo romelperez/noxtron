@@ -1,6 +1,4 @@
-import type { NTSandbox } from '../../../../../build/cjs';
-
-export const sandboxes: NTSandbox[] = [
+export const sandboxes = [
   {
     name: 'MyComponent',
     children: [

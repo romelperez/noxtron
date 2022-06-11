@@ -236,11 +236,6 @@ export interface NTSetup {
     medium?: ReactNode[][];
   };
   /**
-   * Get `monaco-editor` package dependency. Since this package has a big filesize,
-   * it can and should be lazy loaded to improve the user experience.
-   */
-  getMonaco: () => Promise<NTMonaco> | NTMonaco;
-  /**
    * Get the sandboxes list. Since this list contains every sandbox source code,
    * it may get big in filesize. It should be lazy loaded if possible.
    */

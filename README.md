@@ -24,15 +24,15 @@ configured sandboxes, and a sandbox app to execute the sandboxes source code.
 
 ## Examples
 
+- **examples/static**
+  - Technologies: JavaScript.
+  - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/static).
 - **examples/webpack**
-  - Technologies: ESM, [Webpack](https://webpack.js.org), TypeScript, [React](https://reactjs.org).
+  - Technologies: [Webpack](https://webpack.js.org), TypeScript, [React](https://reactjs.org).
   - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/webpack).
 - **examples/esbuild**
-  - Technologies: ESM, [ESBuild](https://esbuild.github.io), JavaScript, [SolidJS](https://www.solidjs.com).
+  - Technologies: [ESBuild](https://esbuild.github.io), JavaScript, [SolidJS](https://www.solidjs.com).
   - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/esbuild).
-- **examples/umd**
-  - Technologies: UMD, JavaScript.
-  - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/umd).
 
 ## Features
 

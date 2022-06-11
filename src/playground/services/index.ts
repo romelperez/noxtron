@@ -40,7 +40,6 @@ export const $setup = createStore<NTStoreSetup>({
   header: {},
   toolbar: {},
   links: {},
-  getMonaco: () => null as any,
   getSandboxes: () => []
 });
 
@@ -121,19 +120,45 @@ export const sendCopy = createEvent('sendCopy');
 
 const setupMonacoEnvironment = (setup: NTSetup) => {
   const { assetsPath } = setup;
-  const assetsPathPrefix = assetsPath.endsWith('/')
-    ? assetsPath
-    : `${assetsPath}/`;
 
   // @ts-ignore
   window.MonacoEnvironment = {
     getWorkerUrl: (moduleId: string, label: string): string => {
       if (label === 'typescript' || label === 'javascript') {
-        return `${assetsPathPrefix}ts.worker.js`;
+        return `${assetsPath}ts.worker.js`;
       }
-      return `${assetsPathPrefix}editor.worker.js`;
+      return `${assetsPath}editor.worker.js`;
     }
   };
+};
+
+const getMonaco = (setup: NTSetup): Promise<NTMonaco> => {
+  const { assetsPath } = setup;
+
+  const getMonacoJS = () => {
+    return new Promise((resolve, reject) => {
+      const element = document.createElement('script');
+      element.onload = resolve;
+      element.onerror = element.onabort = reject;
+      element.src = assetsPath + 'monaco.js';
+      document.body.appendChild(element);
+    });
+  };
+
+  const getMonacoCSS = () => {
+    return new Promise((resolve, reject) => {
+      const element = document.createElement('link');
+      element.onload = resolve;
+      element.onerror = element.onabort = reject;
+      element.rel = 'stylesheet';
+      element.href = assetsPath + 'monaco.css';
+      document.body.appendChild(element);
+    });
+  };
+
+  return Promise.all([getMonacoJS(), getMonacoCSS()]).then(() => {
+    return (window as any).noxtron.monaco as NTMonaco;
+  });
 };
 
 const setupMonacoCompilers = (
@@ -200,12 +225,12 @@ const isolate = (url: string) => {
 
 export const loadDependencies = createEffect(() => {
   const setup = $setup.getState();
-  const { getMonaco, getSandboxes, getTypeDefinitions, codeLanguage } = setup;
+  const { getSandboxes, getTypeDefinitions, codeLanguage } = setup;
 
   setupMonacoEnvironment(setup);
 
   return Promise.all(
-    [getMonaco(), getSandboxes(), getTypeDefinitions?.()].filter(Boolean)
+    [getMonaco(setup), getSandboxes(), getTypeDefinitions?.()].filter(Boolean)
   ).then((dependencies) => {
     const monaco = dependencies[0] as NTMonaco;
     const sandboxes = dependencies[1] as NTSandbox[];
@@ -238,8 +263,16 @@ export const loadDependencies = createEffect(() => {
 
 $setup.on(sendSetupState, (state, newState) => {
   const newSetup = { ...state, ...newState };
-  const basePath = (newSetup.basePath || '').replace(/\/$/, '') || '/';
-  return { ...newSetup, basePath };
+
+  const basePath = newSetup.basePath.endsWith('/')
+    ? newSetup.basePath
+    : `${newSetup.basePath}/`;
+
+  const assetsPath = newSetup.assetsPath.endsWith('/')
+    ? newSetup.assetsPath
+    : `${newSetup.assetsPath}/`;
+
+  return { ...newSetup, basePath, assetsPath };
 });
 
 $router.on(sendRouterState, (state, newState) => ({ ...state, ...newState }));

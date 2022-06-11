@@ -1,6 +1,4 @@
-import type { NTPlaygroundSettingsTypeDefinition } from '../../../../../build/cjs';
-
-export const typeDefinitions: NTPlaygroundSettingsTypeDefinition[] = [
+export const typeDefinitions = [
   // react and react-dom
   {
     filename: 'file:///node_modules/csstype/index.d.ts',

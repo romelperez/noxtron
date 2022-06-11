@@ -8,7 +8,8 @@ import { getCodeImportsRefsFragments } from '../getCodeImportsRefsFragments';
 import { getCodeImportsRefsCode } from '../getCodeImportsRefsCode';
 
 const setupSandbox = (getSettings: () => NTAppSandboxSettings): void => {
-  const { dependencies: userDependenciesAvailable = [] } = getSettings();
+  const settings = getSettings?.() || {};
+  const { dependencies: userDependenciesAvailable = [] } = settings;
 
   try {
     const parameters = convertLocationSearchToObject(window.location.search);

@@ -5,9 +5,7 @@ import random from 'lodash/random';
 import * as emotionReact from '@emotion/react';
 import * as motion from 'motion';
 
-import { setupSandbox } from '../../../../build/cjs/sandbox';
-
-setupSandbox(() => ({
+window.noxtron.setupSandbox(() => ({
   dependencies: [
     { name: 'react', pkg: React },
     { name: 'react-dom', pkg: ReactDOM },

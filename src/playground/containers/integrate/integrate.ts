@@ -164,6 +164,8 @@ const integrate = (): void => {
       if (model.getValue() !== currentCode) {
         model.setValue(currentCode);
       }
+
+      sendSandbox(null);
     }
   });
 

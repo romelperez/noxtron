@@ -6,12 +6,11 @@ const createStyles = (theme: NTTheme): NTStyles => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      paddingLeft: theme.space(2),
-      paddingRight: theme.space(2),
-      paddingTop: theme.space(4),
-      paddingBottom: theme.space(4),
+      padding: theme.space(4),
       width: '100%',
       ...theme.typography.body(2),
+      color:
+        theme.colorScheme === 'dark' ? undefined : theme.colors.primary.text(4),
       textAlign: 'center'
     },
     content: {

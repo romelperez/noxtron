@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, useTheme } from '@emotion/react';
-import { ReactElement, useMemo } from 'react';
+import { ReactElement, Fragment, useMemo } from 'react';
 import { useStore } from 'effector-react';
 
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
@@ -28,6 +28,10 @@ const Links = (props: LinksProps): ReactElement => {
     () => createStyles(theme, hasLinks),
     [theme, hasLinks]
   );
+
+  if (!hasLinks) {
+    return <Fragment></Fragment>;
+  }
 
   return (
     <nav className={cx('links', className)} css={styles.root}>

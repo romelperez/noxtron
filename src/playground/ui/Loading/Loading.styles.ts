@@ -17,24 +17,25 @@ const lineMovementKeyframe = keyframes`
 `;
 
 const createStyles = (theme: NTTheme): NTStyles => {
+  const lineWidth = 2;
+
   return {
     root: {
       position: 'relative',
-      alignSelf: 'flex-start',
       width: '100%',
-      borderBottomWidth: 2,
-      borderBottomStyle: 'solid',
-      borderBottomColor: theme.colors.secondary.decoHigh(4),
+      borderTopWidth: lineWidth,
+      borderTopStyle: 'solid',
+      borderTopColor: theme.colors.secondary.decoHigh(4),
 
       '&::before': {
         content: '""',
         position: 'absolute',
         left: 0,
-        top: 0,
+        top: -lineWidth,
         width: '20%',
-        borderBottomWidth: 2,
-        borderBottomStyle: 'solid',
-        borderBottomColor: theme.colors.secondary.decoHigh(12),
+        borderTopWidth: lineWidth,
+        borderTopStyle: 'solid',
+        borderTopColor: theme.colors.secondary.decoHigh(12),
         animation: `${lineMovementKeyframe} 0.5s ease-in-out infinite alternate`
       }
     },

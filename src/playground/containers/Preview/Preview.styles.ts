@@ -18,6 +18,8 @@ const createStyles = (): NTStyles => {
       outline: 'none',
       border: 'none',
       padding: 0,
+      width: '100%',
+      height: '100%',
       background: 'transparent'
     }
   };

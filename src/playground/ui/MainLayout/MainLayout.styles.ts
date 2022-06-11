@@ -79,12 +79,17 @@ const createStyles = (theme: NTTheme): NTStyles => {
       backgroundColor: bg1,
       transitionProperty: 'background-color',
       transitionDuration: '0.2s',
-      transitionTimingFunction: 'ease-out'
+      transitionTimingFunction: 'ease-out',
+
+      '&:empty': {
+        display: 'none'
+      }
     },
     main: {
       flex: 1,
       display: 'flex',
       flexDirection: 'row',
+      justifyContent: 'center',
       minHeight: 0 // Height overflow issue.
     },
     leftView: {
@@ -92,6 +97,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
       justifyContent: 'center',
       alignItems: 'center',
       display: 'flex',
+      height: '100%',
       minHeight: 0, // Height overflow issue.
       backgroundColor: bg2,
 
@@ -104,6 +110,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
       flex: 1,
       display: 'flex',
       flexDirection: 'column',
+      height: '100%',
       minWidth: 0, // Width overflow issue.
       minHeight: 0 // Height overflow issue.
     },
@@ -115,6 +122,9 @@ const createStyles = (theme: NTTheme): NTStyles => {
       transitionDuration: '0.2s',
       transitionTimingFunction: 'ease-out',
 
+      '&:empty': {
+        display: 'none'
+      },
       [breakpoints.medium.up]: {
         display: 'flex'
       }
@@ -145,7 +155,11 @@ const createStyles = (theme: NTTheme): NTStyles => {
       backgroundColor: bg1,
       transitionProperty: 'background-color',
       transitionDuration: '0.2s',
-      transitionTimingFunction: 'ease-out'
+      transitionTimingFunction: 'ease-out',
+
+      '&:empty': {
+        display: 'none'
+      }
     }
   };
 };

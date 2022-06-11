@@ -24,4 +24,5 @@ const Loading = (props: LoadingProps): ReactElement => {
   );
 };
 
+export type { LoadingProps };
 export { Loading };

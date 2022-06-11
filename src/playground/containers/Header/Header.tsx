@@ -73,6 +73,7 @@ const Header = (props: HeaderProps): ReactElement => {
           <Button
             css={styles.option}
             title="Toggle theme color scheme"
+            disabled={isControlsDisabled}
             onClick={() => sendRoute({ dark: !optionsBooleans.dark })}
           >
             <Icon path={mdiInvertColors} />

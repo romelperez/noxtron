@@ -1,5 +1,5 @@
 {
-  "name": "examples-esbuild",
+  "name": "examples-solid",
   "private": true,
   "engines": {
     "node": "^16.14",

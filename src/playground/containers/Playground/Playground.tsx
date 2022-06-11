@@ -5,7 +5,7 @@ import { useStore } from 'effector-react';
 import { RouterState } from '../RouterState';
 import { ThemeProvider } from '../ThemeProvider';
 import { App } from '../App';
-import { $setup } from '../../services';
+import { $setup } from '../../stores';
 
 const Playground = (): ReactElement => {
   const setup = useStore($setup);

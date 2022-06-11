@@ -6,7 +6,8 @@ import { useStore, useStoreMap } from 'effector-react';
 
 import { NT_ICONS, NT_BREAKPOINTS as breakpoints } from '../../../constants';
 import { cx, useMediaQuery } from '../../utils';
-import { $setup, $router, $dependencies, sendRoute } from '../../services';
+import { $setup, $router, $dependencies } from '../../stores';
+import { sendRoute } from '../../events';
 import { Button, Icon } from '../../ui';
 import { createStyles } from './Header.styles';
 

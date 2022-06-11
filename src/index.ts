@@ -1,11 +1,8 @@
-// TODO: Playground settings theme palette.
-// TODO: Refactor RouterState functionalities.
-// TODO: On title redirect, the explorer sandbox selection gets stuck once.
-// TODO: Organize playground services.
 // TODO: Refactor UI components from containers components to ui components.
 // TODO: Document API updates.
-// TODO: Update loading component.
 
+// TODO: Fix playground settings theme palette customization.
+// TODO: Update loading component.
 // TODO: Allow user to configure JavaScript/TypeScript compiler.
 // TODO: Allow user to configure if sematic/type errors prevent from executing code.
 // TODO: Sandbox should process asterisk import.

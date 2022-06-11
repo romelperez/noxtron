@@ -5,7 +5,8 @@ import { useStore, useStoreMap } from 'effector-react';
 
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 import { cx, useMediaQuery } from '../../utils';
-import { $router, $dependencies, sendRoute } from '../../services';
+import { $router, $dependencies } from '../../stores';
+import { sendRoute } from '../../events';
 import { StatusMessage, Slider, SandboxList } from '../../ui';
 import { createStyles } from './Explorer.styles';
 

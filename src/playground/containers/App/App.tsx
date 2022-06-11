@@ -5,7 +5,7 @@ import { useStore } from 'effector-react';
 
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 import { useMediaQuery } from '../../utils';
-import { $dependencies, $router } from '../../services';
+import { $dependencies, $router } from '../../stores';
 import { Loading, StatusMessage } from '../../ui';
 
 import { Header } from '../Header';

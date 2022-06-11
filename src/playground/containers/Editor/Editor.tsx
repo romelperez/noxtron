@@ -7,7 +7,7 @@ import { useStore, useStoreMap } from 'effector-react';
 import type { NTMonacoEditor } from '../../../types';
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 import { cx, useMediaQuery } from '../../utils';
-import { $router, $dependencies } from '../../services';
+import { $router, $dependencies } from '../../stores';
 import { createStyles } from './Editor.styles';
 
 interface EditorProps {

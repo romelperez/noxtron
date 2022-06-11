@@ -5,16 +5,14 @@ import { useStore } from 'effector-react';
 
 import { NT_ICONS, NT_BREAKPOINTS as breakpoints } from '../../../constants';
 import { cx, useMediaQuery } from '../../utils';
+import { $setup, $router, $transpilation } from '../../stores';
 import {
-  $setup,
-  $router,
-  $transpilation,
   sendReload,
   sendReset,
   sendCustomize,
   sendIsolate,
   sendCopy
-} from '../../services';
+} from '../../events';
 import { Button, Icon } from '../../ui';
 import { createStyles } from './Toolbar.styles';
 

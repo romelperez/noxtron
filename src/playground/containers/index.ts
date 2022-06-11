@@ -8,4 +8,5 @@ export * from './Links';
 export * from './Header';
 export * from './Preview';
 export * from './Toolbar';
+export * from './integrate';
 export * from './setupPlayground';

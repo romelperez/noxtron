@@ -19,7 +19,8 @@ import {
   decodeURLParameter
 } from '../../../utils';
 import { useMediaQuery } from '../../utils';
-import { $setup, $router, sendRouterState, sendRoute } from '../../services';
+import { $setup, $router } from '../../stores';
+import { sendRouterState, sendRoute } from '../../events';
 
 const getLocationOptions = (): NTRouterOptions => {
   const optionsRaw: Record<string, string | undefined> =
@@ -173,7 +174,7 @@ const RouterState = (): ReactElement => {
 
   useEffect(() => {
     setup.onRouteChange?.();
-  }, [setup.onRouteChange, location]);
+  }, [location]);
 
   return <></>;
 };

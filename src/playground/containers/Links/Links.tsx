@@ -5,7 +5,7 @@ import { useStore } from 'effector-react';
 
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 import { cx, useMediaQuery } from '../../utils';
-import { $setup } from '../../services';
+import { $setup } from '../../stores';
 import { createStyles } from './Links.styles';
 
 interface LinksProps {

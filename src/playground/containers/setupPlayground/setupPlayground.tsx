@@ -4,7 +4,9 @@ import * as emotion from '@emotion/react';
 
 import { NTAppPlaygroundSettings } from '../../../types';
 import { Playground } from '../Playground';
-import { loadDependencies, sendSetupState } from '../../services';
+import { sendSetupState } from '../../events';
+import { loadDependencies } from '../../effects';
+import { integrate } from '../integrate';
 import * as UI from '../../ui';
 import * as playgroundUtils from '../../utils';
 import * as globalUtils from '../../../utils';
@@ -26,6 +28,8 @@ const setupPlayground = (getSettings: SetupPlaygroundGetSettings): void => {
     React,
     emotion
   });
+
+  integrate();
 
   sendSetupState(settings);
 

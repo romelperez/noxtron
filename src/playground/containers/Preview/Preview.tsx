@@ -5,7 +5,8 @@ import { useStore } from 'effector-react';
 
 import { NT_BREAKPOINTS as breakpoints } from '../../../constants';
 import { cx, useMediaQuery } from '../../utils';
-import { $setup, $router, $transpilation, sendReload } from '../../services';
+import { $setup, $router, $transpilation } from '../../stores';
+import { sendReload } from '../../events';
 import { StatusMessage, Loading, Slider } from '../../ui';
 import { createStyles } from './Preview.styles';
 

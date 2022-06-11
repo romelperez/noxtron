@@ -3,7 +3,7 @@ import { ThemeProvider as EmotionThemeProvider, Theme } from '@emotion/react';
 import { useStore } from 'effector-react';
 
 import { createTheme } from '../../utils';
-import { $setup, $router } from '../../services';
+import { $setup, $router } from '../../stores';
 
 interface ThemeProviderProps {
   children: ReactNode;

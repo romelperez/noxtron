@@ -3,6 +3,7 @@ const esbuild = require('esbuild');
 
 const SRC_PATH = path.join(__dirname, 'src');
 const BUILD_PATH = path.join(__dirname, 'build/umd');
+const isProduction = process.env.NODE_ENV === 'production';
 
 esbuild
   .build({
@@ -17,16 +18,23 @@ esbuild
     outdir: BUILD_PATH,
     bundle: true,
     format: 'iife',
-    minify: true,
+    minify: isProduction,
     loader: {
       '.ttf': 'file'
-    }
+    },
+    watch: isProduction
+      ? undefined
+      : {
+          onRebuild(error, result) {
+            if (error) console.error('watch build failed:', error);
+            else console.log('watch build succeeded:', result);
+          }
+        }
   })
   .then((result) => {
-    if (result.errors?.length > 0) {
-      console.error(result.errors);
-    }
-    if (result.warnings?.length > 0) {
-      console.error(result.warnings);
+    console.log(result);
+
+    if (!isProduction) {
+      console.log('UMD build is watching...');
     }
   });

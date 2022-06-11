@@ -68,9 +68,10 @@
     "test-watch": "jest --watch",
     "clean": "rm -rf ./build && rm -f .tsbuildinfo",
     "build-cjs": "tsc -p ./tsconfig.build.cjs.json",
-    "build-umd": "node ./build.umd.js",
+    "build-umd": "cross-env NODE_ENV=production node ./build.umd.js",
     "build": "npm run clean && npm run build-cjs && npm run build-umd",
-    "dev": "tsc -p ./tsconfig.build.cjs.json --watch",
+    "dev-cjs": "tsc -p ./tsconfig.build.cjs.json --watch",
+    "dev-umd": "node ./build.umd.js",
     "integration": "npm run clean && npm run build && npm run lint && npm run test",
     "prepublishOnly": "npm run integration"
   }

@@ -72,7 +72,8 @@ const Preview = (props: PreviewProps): ReactElement => {
   }, []);
 
   useEffect(() => {
-    const element = elementRef.current as HTMLDivElement;
+    const container = elementRef.current as HTMLDivElement;
+    const element = container.parentElement as HTMLDivElement;
 
     if (hasSlider) {
       const widthInitialPerc = getSliderWidthCache() ?? sliderWidths.initial;
@@ -112,7 +113,8 @@ const Preview = (props: PreviewProps): ReactElement => {
         <Slider
           position="left"
           onChange={(offset) => {
-            const element = elementRef.current as HTMLDivElement;
+            const container = elementRef.current as HTMLDivElement;
+            const element = container.parentElement as HTMLDivElement;
             const widthCurrent = element.offsetWidth;
             const widthCurrentPerc = Number(element.dataset.widthPerc);
 

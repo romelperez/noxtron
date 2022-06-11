@@ -1,3 +1,4 @@
+import { NT_BREAKPOINTS } from 'src/constants';
 import type { NTTheme, NTStyles } from '../../../types';
 import { animationAppear } from '../../utils/animations';
 
@@ -6,7 +7,13 @@ const createStyles = (theme: NTTheme): NTStyles => {
     root: {
       position: 'relative',
       display: 'flex',
-      animation: `${animationAppear} 0.2s ease-out`
+      width: '100%',
+      height: '100%',
+      animation: `${animationAppear} 0.2s ease-out`,
+
+      [NT_BREAKPOINTS.medium.up]: {
+        width: 300
+      }
     },
     container: {
       flex: 1,

@@ -6,6 +6,8 @@ const createStyles = (): NTStyles => {
     root: {
       display: 'flex',
       flexDirection: 'column',
+      width: '100%',
+      height: '100%',
       animation: `${animationAppear} 0.2s ease-out`
     },
     editor: {

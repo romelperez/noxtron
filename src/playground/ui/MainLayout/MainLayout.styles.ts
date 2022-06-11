@@ -87,14 +87,16 @@ const createStyles = (theme: NTTheme): NTStyles => {
       flexDirection: 'row',
       minHeight: 0 // Height overflow issue.
     },
-    explorer: {
+    leftView: {
       flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      display: 'flex',
       minHeight: 0, // Height overflow issue.
       backgroundColor: bg2,
 
       [breakpoints.medium.up]: {
         flex: 'none',
-        width: 300,
         borderRight: line2
       }
     },
@@ -105,7 +107,7 @@ const createStyles = (theme: NTTheme): NTStyles => {
       minWidth: 0, // Width overflow issue.
       minHeight: 0 // Height overflow issue.
     },
-    toolbar: {
+    workspaceHeader: {
       display: 'none', // Hidden on mobile.
       borderBottom: line2,
       backgroundColor: bg2,
@@ -130,19 +132,15 @@ const createStyles = (theme: NTTheme): NTStyles => {
       backgroundColor: bg3,
       transitionProperty: 'background-color',
       transitionDuration: '0.2s',
-      transitionTimingFunction: 'ease-out'
-    },
-    panelEditor: {
-      //
-    },
-    panelPreview: {
+      transitionTimingFunction: 'ease-out',
+
       [breakpoints.medium.up]: {
         '* + &': {
           borderLeft: line2
         }
       }
     },
-    links: {
+    footer: {
       borderTop: line1,
       backgroundColor: bg1,
       transitionProperty: 'background-color',

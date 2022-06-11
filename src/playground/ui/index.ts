@@ -1,3 +1,4 @@
+export * from './MainLayout';
 export * from './Button';
 export * from './Icon';
 export * from './Slider';

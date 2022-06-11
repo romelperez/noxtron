@@ -1,8 +1,8 @@
-// TODO: Refactor UI components from containers components to ui components.
+// TODO: Update loading component.
 // TODO: Document API updates.
 
 // TODO: Fix playground settings theme palette customization.
-// TODO: Update loading component.
+// TODO: Add support for headless CI sandbox code testing.
 // TODO: Allow user to configure JavaScript/TypeScript compiler.
 // TODO: Allow user to configure if sematic/type errors prevent from executing code.
 // TODO: Sandbox should process asterisk import.

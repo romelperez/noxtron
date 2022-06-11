@@ -25,7 +25,8 @@ const getMonaco = (setup: NTSetup): Promise<NTMonaco> => {
   };
 
   return Promise.all([getMonacoJS(), getMonacoCSS()]).then(() => {
-    return (window as any).noxtron.monaco as NTMonaco;
+    const win = window as any;
+    return win.noxtron.monaco as NTMonaco;
   });
 };
 

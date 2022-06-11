@@ -174,7 +174,11 @@ export interface NTSetupUI {
 
 export interface NTSetup {
   /**
-   * The URL path to the Noxtron app.
+   * Root HTML element to render playground app.
+   */
+  element: HTMLElement;
+  /**
+   * The URL path to the playground app.
    * @default '/''
    * @example '/docs/' to serve Noxtron at "website.com/docs/".
    */

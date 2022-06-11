@@ -1,9 +1,7 @@
-import {
-  renderPlayground,
-  RenderPlaygroundGetSettings
-} from '../../../../build/cjs/playground';
+import { setupPlayground } from '../../../../build/cjs/playground';
 
-const getSettings: RenderPlaygroundGetSettings = ({ React }) => ({
+setupPlayground(({ React }) => ({
+  element: document.querySelector('#root') as HTMLDivElement,
   basePath: '/noxtron/',
   assetsPath: '/noxtron/',
   playgroundPath: '/noxtron/',
@@ -70,8 +68,4 @@ const getSettings: RenderPlaygroundGetSettings = ({ React }) => ({
   getSandboxes: () => import('./sandboxes/sandboxes').then((m) => m.sandboxes),
   getTypeDefinitions: () =>
     import('./typeDefinitions/typeDefinitions').then((m) => m.typeDefinitions)
-});
-
-const rootElement = document.querySelector('#root') as HTMLDivElement;
-
-renderPlayground(getSettings, rootElement);
+}));

@@ -7,7 +7,7 @@ import * as motion from 'motion';
 
 import { setupSandbox } from '../../../../build/cjs/sandbox';
 
-setupSandbox({
+setupSandbox(() => ({
   dependencies: [
     { name: 'react', pkg: React },
     { name: 'react-dom', pkg: ReactDOM },
@@ -16,4 +16,4 @@ setupSandbox({
     { name: '@emotion/react', pkg: emotionReact },
     { name: 'motion', pkg: motion }
   ]
-});
+}));

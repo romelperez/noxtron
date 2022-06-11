@@ -24,6 +24,7 @@ import { convertLocationSearchToString, encodeURLParameter } from '../../utils';
 //
 
 export const $setup = createStore<NTStoreSetup>({
+  element: null as any,
   basePath: '/',
   assetsPath: '/',
   playgroundPath: '/',

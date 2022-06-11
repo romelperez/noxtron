@@ -1,9 +1,9 @@
 import type { NTAppPlaygroundSettings, NTMonaco } from '../types';
 import * as monaco from '../monaco';
 import {
-  renderPlayground,
-  RenderPlaygroundGetSettings
-} from '../playground/utils/renderPlayground';
+  setupPlayground,
+  SetupPlaygroundGetSettings
+} from '../playground/containers/setupPlayground';
 
 const defaultSettings: Partial<NTAppPlaygroundSettings> = {
   getMonaco: () => monaco as unknown as NTMonaco
@@ -11,16 +11,15 @@ const defaultSettings: Partial<NTAppPlaygroundSettings> = {
 
 const win = window as any;
 
-win.noxtronPlayground = win.noxtronPlayground || {};
+win.noxtron = win.noxtron || {};
 
-win.noxtronPlayground.renderPlayground = (
-  getSettingsProvided: RenderPlaygroundGetSettings,
-  element: HTMLElement
+win.noxtron.setupPlayground = (
+  getSettingsProvided: SetupPlaygroundGetSettings
 ): void => {
-  const getSettings: RenderPlaygroundGetSettings = (dependencies) => ({
+  const getSettings: SetupPlaygroundGetSettings = (dependencies) => ({
     ...defaultSettings,
     ...getSettingsProvided(dependencies)
   });
 
-  renderPlayground(getSettings, element);
+  setupPlayground(getSettings);
 };

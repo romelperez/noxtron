@@ -2,6 +2,6 @@ import { setupSandbox } from '../sandbox/index';
 
 const win = window as any;
 
-win.noxtronSandbox = win.noxtronSandbox || {};
+win.noxtron = win.noxtron || {};
 
-win.noxtronSandbox.setupSandbox = setupSandbox;
+win.noxtron.setupSandbox = setupSandbox;

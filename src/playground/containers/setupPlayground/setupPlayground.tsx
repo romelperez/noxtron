@@ -3,25 +3,22 @@ import { render } from 'react-dom';
 import * as emotion from '@emotion/react';
 
 import { NTAppPlaygroundSettings } from '../../../types';
-import { Playground } from '../../containers';
+import { Playground } from '../Playground';
 import { loadDependencies, sendSetupState } from '../../services';
 import * as UI from '../../ui';
 import * as playgroundUtils from '../../utils';
 import * as globalUtils from '../../../utils';
 
-interface RenderPlaygroundGetSettingsDependencies {
+interface SetupPlaygroundGetSettingsDependencies {
   React: typeof React;
   emotion: typeof emotion;
 }
 
-type RenderPlaygroundGetSettings = (
-  dependencies: RenderPlaygroundGetSettingsDependencies
+type SetupPlaygroundGetSettings = (
+  dependencies: SetupPlaygroundGetSettingsDependencies
 ) => NTAppPlaygroundSettings;
 
-const renderPlayground = (
-  getSettings: RenderPlaygroundGetSettings,
-  element: HTMLElement
-): void => {
+const setupPlayground = (getSettings: SetupPlaygroundGetSettings): void => {
   const settings = getSettings({
     ...UI,
     ...playgroundUtils,
@@ -34,11 +31,11 @@ const renderPlayground = (
 
   loadDependencies();
 
-  render(<Playground />, element);
+  render(<Playground />, settings.element as HTMLDivElement);
 };
 
 export type {
-  RenderPlaygroundGetSettingsDependencies,
-  RenderPlaygroundGetSettings
+  SetupPlaygroundGetSettingsDependencies,
+  SetupPlaygroundGetSettings
 };
-export { renderPlayground };
+export { setupPlayground };

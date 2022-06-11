@@ -5,4 +5,3 @@ export * from './cx';
 export * from './findSandboxByPath';
 export * from './transpile';
 export * from './useMediaQuery';
-export * from './renderPlayground';

@@ -7,8 +7,8 @@ import { convertLocationSearchToObject } from '../../../utils/convertLocationSea
 import { getCodeImportsRefsFragments } from '../getCodeImportsRefsFragments';
 import { getCodeImportsRefsCode } from '../getCodeImportsRefsCode';
 
-const setupSandbox = (settings: NTAppSandboxSettings = {}): void => {
-  const { dependencies: userDependenciesAvailable = [] } = settings;
+const setupSandbox = (getSettings: () => NTAppSandboxSettings): void => {
+  const { dependencies: userDependenciesAvailable = [] } = getSettings();
 
   try {
     const parameters = convertLocationSearchToObject(window.location.search);
@@ -20,7 +20,7 @@ const setupSandbox = (settings: NTAppSandboxSettings = {}): void => {
     const codeRaw = decodeURLParameter(parameters.code);
 
     if (!codeRaw) {
-      throw new Error('[Noxtron] No valid source code provided.');
+      throw new Error('No valid source code provided.');
     }
 
     // Dependencies available for the sandbox to use but not injected until
@@ -81,7 +81,7 @@ const setupSandbox = (settings: NTAppSandboxSettings = {}): void => {
     const errorMessage =
       error instanceof Error
         ? escape(String(error))
-        : 'ERROR: [Noxtron] Source code processing error.';
+        : 'ERROR: Source code processing error.';
 
     document.body.innerHTML = `
       <pre style="

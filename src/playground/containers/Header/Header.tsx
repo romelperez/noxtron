@@ -21,9 +21,10 @@ const Header = (props: HeaderProps): ReactElement => {
 
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
+  const isMDMediumUp = useMediaQuery(breakpoints.medium.up);
+
   const setup = useStore($setup);
   const router = useStore($router);
-  const isMDMediumUp = useMediaQuery(breakpoints.medium.up);
   const isLoading = useStoreMap($dependencies, (state) => state.isLoading);
   const error = useStoreMap($dependencies, (state) => state.error);
 
@@ -67,16 +68,18 @@ const Header = (props: HeaderProps): ReactElement => {
           <span css={styles.optionLabel}>Preview</span>
         </Button>
 
-        <Button
-          css={styles.option}
-          title="Toggle theme color scheme"
-          onClick={() => sendRoute({ dark: !optionsBooleans.dark })}
-        >
-          <Icon path={mdiInvertColors} />
-          <span css={styles.optionLabel}>
-            {optionsBooleans.dark ? 'Dark' : 'Light'}
-          </span>
-        </Button>
+        {!setup.theme.colorSchemeDisabled && (
+          <Button
+            css={styles.option}
+            title="Toggle theme color scheme"
+            onClick={() => sendRoute({ dark: !optionsBooleans.dark })}
+          >
+            <Icon path={mdiInvertColors} />
+            <span css={styles.optionLabel}>
+              {optionsBooleans.dark ? 'Dark' : 'Light'}
+            </span>
+          </Button>
+        )}
       </nav>
 
       <div className="header__content" css={styles.content}>

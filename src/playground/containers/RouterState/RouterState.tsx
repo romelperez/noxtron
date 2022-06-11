@@ -74,9 +74,9 @@ const RouterState = (): ReactElement => {
       optionsBooleans.preview = isMQMediumUp;
     }
 
-    if (options.dark === undefined) {
-      optionsBooleans.dark =
-        (setup.theme?.colorSchemeDefault ?? 'dark') === 'dark';
+    if (options.dark === undefined || setup.theme.colorSchemeDisabled) {
+      const colorSchemeDefault = setup.theme.colorSchemeDefault ?? 'dark';
+      optionsBooleans.dark = colorSchemeDefault === 'dark';
     }
 
     // Always show at least the explorer panel.

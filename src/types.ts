@@ -159,6 +159,7 @@ export type NTSetupTheme = Partial<{
     secondary: number;
   }>;
   colorSchemeDefault: NTThemeColorScheme;
+  colorSchemeDisabled: boolean;
 }>;
 
 export interface NTSetupUI {

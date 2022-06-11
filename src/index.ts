@@ -1,7 +1,10 @@
+// TODO: Should package only expose UMD and typing?
+// TODO: Playground settings theme disable color.
+// TODO: Playground settings theme palette.
 // TODO: Refactor RouterState functionalities.
 // TODO: On title redirect, the explorer sandbox selection gets stuck once.
+// TODO: Organize playground services.
 // TODO: Refactor UI components from containers components to ui components.
-// TODO: Should package only expose UMD and typing?
 // TODO: Document API updates.
 // TODO: Update loading component.
 

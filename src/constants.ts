@@ -24,8 +24,8 @@ export const NT_ROUTER_URL_OPTIONS: NTRouterURLOption[] = [
 
 export const NT_BREAKPOINTS: NTBreakpoints = {
   medium: {
-    down: '@media (max-width: 767px)',
-    up: '@media (min-width: 768px)'
+    down: '@media (max-width: 599px)',
+    up: '@media (min-width: 600px)'
   },
   large: {
     down: '@media (max-width: 1023px)',

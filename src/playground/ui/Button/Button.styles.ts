@@ -39,9 +39,12 @@ const createStyles = (theme: NTTheme, props: StyleProps): NTStyles => {
 
       svg: {
         display: 'inline-block',
-        marginRight: space(1),
         width: '1.2em',
-        height: '1.2em'
+        height: '1.2em',
+
+        '& + *': {
+          marginLeft: space(1)
+        }
       },
 
       '&::-moz-focus-inner': {
@@ -56,7 +59,9 @@ const createStyles = (theme: NTTheme, props: StyleProps): NTStyles => {
         ...theme.typography.cta(isSmall ? 2 : 1),
 
         svg: {
-          marginRight: space(2)
+          '& + *': {
+            marginLeft: space(2)
+          }
         }
       }
     }

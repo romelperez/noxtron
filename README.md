@@ -10,10 +10,10 @@
 
 Real-Time JavaScript/TypeScript UI playground.
 
-Noxtron is a web tool to explore, preview, and test JavaScript and TypeScript
-components as isolated sandboxes in realtime in browser. It is composed by two
-applications, a playground app with the interface to explore and control the
-configured sandboxes, and a sandbox app to execute the sandboxes source code.
+Noxtron is a configuble web tool to explore, preview, and test JavaScript and
+TypeScript components as isolated sandboxes in realtime in browser. It is composed
+by two applications, a playground app with the interface to explore and control
+predefined sandboxes, and a sandbox app to execute the sandboxes source code.
 
 ## Demos
 
@@ -28,7 +28,7 @@ configured sandboxes, and a sandbox app to execute the sandboxes source code.
   - Technologies: JavaScript.
   - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/basic).
 - **examples/react**
-  - Technologies: [Webpack](https://webpack.js.org), TypeScript, [React](https://reactjs.org) v17.
+  - Technologies: [Webpack](https://webpack.js.org), TypeScript, [React](https://reactjs.org).
   - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/react).
 - **examples/solid**
   - Technologies: [ESBuild](https://esbuild.github.io), JavaScript, [SolidJS](https://www.solidjs.com).
@@ -36,13 +36,43 @@ configured sandboxes, and a sandbox app to execute the sandboxes source code.
 
 ## Features
 
-- It uses the [monaco-editor](https://microsoft.github.io/monaco-editor), and it
-  requires different HTML and JavaScript files, so it needs to be configured with
-  a module bundler like [Webpack](https://webpack.js.org) or [ESBuild](https://esbuild.github.io).
-- Only the playground app requires external libraries. The sandbox app
-  does not require any library or framework so it is very small.
-- The sandboxes source code should be written in ES modules. The sandbox app can
-  be setup to allow packages to be imported via `import` in the sandboxes source code.
+- It is consumed using UMD distribution files for the browser. No bundler is needed.
+  But it is required to have two HTML entry files, one for the playground app and
+  another for the sandbox app. Each file will have to import their respective libraries.
+- It uses the [monaco-editor](https://microsoft.github.io/monaco-editor) to render,
+  edit, and transpile the source code in JavaScript and TypeScript respectively.
+- Since the editor and transpilers have a large file sizes, they are loaded dynamically.
+  Because the configured sandboxes source codes and type definitions may also take
+  a large file size, it is recommended to lazy load them using [code splitting](https://webpack.js.org/guides/code-splitting).
+- There are no provided tools to format, lint, and test sandboxes source code in
+  CI environments.
+
+### Applications
+
+- The playground app will persist in the browser URL the state of the controls
+  and the source code of the sandbox so it can be easily shared with more people.
+- The playground app can be used in two modes.
+  - In "predefined" mode, it will show an specific configured sandbox.
+    The sandbox source code can be edited but it will not be persisted in the
+    browser URL.
+  - In "custom" mode, the sandbox will use the current source code in the editor
+    and persist the code in the URL. (See [Maximum length of a URL in different browsers](https://www.geeksforgeeks.org/maximum-length-of-a-url-in-different-browsers).)
+- The JavaScript and TypeScript transpilers will only throw for syntax errors.
+  Type errors will only be shown in the interface.
+- The editor is not editable in mobile browsers. But the app can be used in mobile.
+- The toolbar controls are not available for mobile browsers.
+
+### Sandboxes
+
+A sandbox is a named code snippet which represents an independent and isolated
+functionality use case.
+
+- The sandboxes source codes should be written in ES2018 and ES modules. They
+  will be transpiled to ES2015 using the JavaScript or TypeScript transpiler respectively.
+- The sandbox app can be setup to allow certain packages to be imported via `import`
+  in the sandboxes source code. For example:
+  - External packages such as [React](https://reactjs.org) and [Solid](https://www.solidjs.com).
+  - Application packages such as design system components or business logic functionalities.
 - For TypeScript sandboxes, the packages type definitions need to be provided as
   JavaScript strings. Since the editor, JavaScript transpiler, and TypeScript transpiler
   are in browser, there is no way to access the file system. There are tools like
@@ -50,31 +80,13 @@ configured sandboxes, and a sandbox app to execute the sandboxes source code.
   [dts-bundle-generator](https://www.npmjs.com/package/dts-bundle-generator), or
   [npm-dts](https://www.npmjs.com/package/npm-dts) to generate type definitions
   in a single file so it can be imported easily.
-- The sandboxes source code will be transpiled to ES2015 using the TypeScript
-  transpiler provided by [monaco-editor](https://microsoft.github.io/monaco-editor).
-- The editor transpiler will only throw for syntax errors. Type errors will
-  only be shown in the interface.
 - The JavaScript and TypeScript transpilers are configured to use JSX or TSX
-  with React by default if needed. The directive `/** @jsx XXX */` can be used inline.
-- The playground app can be used in two modes.
-  - In "predefined" mode, it will show an specific sandbox configured in build time.
-    The sandbox source code can be edited but it will not be persisted in the
-    browser URL.
-  - In "custom" mode, the sandbox will use the current source code in the editor.
-    Since it is persisted in the browser URL, it could generate a long one.
-- The playground app will persist in the browser URL the state of the controls
-  and the source code of the sandbox so it can be easily shared with more people.
-- The editor is not editable in mobile browsers. But the app can be used in mobile.
-- The toolbar options are not available in mobile browsers.
-- The playground app final bundles can have 5MB or more due to the JavaScript
-  and TypeScript transpilers, the type definitions, and provided sandboxes source code.
-  The sandbox app will depend only on user setup.
-- There are no provided tools to format, lint, and test sandboxes source code in
-  CI environments.
+  with React by default. The directive `/** @jsx XXX */` can be used inline to
+  change this configuration.
 
 ## Example Use Case
 
-Noxtron use case with plain JavaScript and Webpack.
+Noxtron use case with plain JavaScript and [React](https://reactjs.org) v17.
 
 ### Installation
 
@@ -82,106 +94,33 @@ Using [Node.js](https://nodejs.org) v16.14 LTS, in an empty folder:
 
 ```bash
 # Create the following file structure:
-mkdir src
-touch src/playground.html
-touch src/playground.js
-touch src/sandbox.html
-touch src/sandbox.js
-touch webpack.config.js
+mkdir -f static
+touch static/index.html
+touch static/playground.js
+mkdir -f static/sandbox
+touch static/sandbox/index.html
+touch static/sandbox/sandbox.js
 
 # create package.json
 npm init -y
 
-# install peer dependencies
-npm i monaco-editor@^0.33
-
 # install noxtron
 npm i noxtron
-```
 
-### Bundler Setup
-
-The Webpack loader [monaco-editor-webpack-plugin](https://npmjs.com/package/monaco-editor-webpack-plugin)
-can be used to simplify the setup of [monaco-editor](https://microsoft.github.io/monaco-editor).
-But it can be configured otherwise. See [monaco examples](https://github.com/microsoft/monaco-editor/tree/main/samples).
-
-```bash
-# install webpack and development server
-npm i webpack@5 webpack-cli@4 webpack-dev-server@4
-
-# install webpack loaders
-npm i css-loader@6 style-loader@3 html-webpack-plugin@5 monaco-editor-webpack-plugin@7
-```
-
-```js
-// webpack.config.js
-
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
-
-const SRC_PATH = path.join(__dirname, 'src');
-const BUILD_PATH = path.join(__dirname, 'build');
-
-module.exports = {
-  mode: process.env.NODE_ENV || 'development',
-  devtool: false,
-  entry: {
-    playground: path.join(SRC_PATH, 'playground.js'),
-    sandbox: path.join(SRC_PATH, 'sandbox.js')
-  },
-  output: {
-    path: BUILD_PATH,
-    filename: '[name].js'
-  },
-  module: {
-    rules: [
-      // CSS files required for monaco-editor.
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
-      }
-    ]
-  },
-  plugins: [
-    new MonacoWebpackPlugin({
-      // Only JavaScript and TypeScript are supported in Noxtron.
-      languages: ['javascript', 'typescript']
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(SRC_PATH, 'playground.html'),
-      filename: path.join(BUILD_PATH, 'index.html'),
-      chunks: ['playground']
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(SRC_PATH, 'sandbox.html'),
-      filename: path.join(BUILD_PATH, 'sandbox.html'),
-      chunks: ['sandbox']
-    })
-  ],
-  // webpack-dev-server can be changed for a simpler server like:
-  // https://www.npmjs.com/package/http-server
-  devServer: {
-    static: {
-      directory: BUILD_PATH,
-      watch: true
-    },
-    allowedHosts: 'all',
-    compress: true,
-    host: '127.0.0.1',
-    port: 4000,
-    open: '/'
-  }
-};
+# install external libraries for the sandboxes source code
+# they are not required for Noxtron, only based on user configuration
+npm i react@17 react-dom@17
 ```
 
 ### Playground Setup
 
 The playground application shows the explorer and controls of the sandboxes configured.
-Only an HTML element with id "root" is required.
+It is required to add a HTML element to render the interface and include the
+Noxtron playground app UMD file and the user setup, in this case, in a different
+JavaScript file.
 
 ```html
-<!-- src/playground.html -->
+<!-- static/index.html -->
 
 <!DOCTYPE html>
 <html>
@@ -192,37 +131,57 @@ Only an HTML element with id "root" is required.
     <title>Noxtron Playground</title>
   </head>
   <body>
+    <!-- HTML element to render the interface -->
     <div id="root"></div>
+    <!-- Noxtron playground app UMD entry file -->
+    <script src="/umd/playground.js"></script>
+    <!-- User configuration file -->
+    <script src="/playground.js"></script>
   </body>
 </html>
 ```
 
 ```js
-// src/playground.js
+// static/playground.js
 
-import React from 'react';
-import { render } from 'react-dom';
-import { Playground } from 'noxtron/build/cjs/playground';
+window.noxtron.setupPlayground(() => ({
+  // Root HTML element to render playground app.
+  element: document.querySelector('#root'),
 
-const settings = {
-  // Where the Noxtron apps will be served.
+  // The URL path to the playground app.
   basePath: '/',
 
-  // The build "playground.html" file. In this case, the "/index.html".
+  // The URL path to the Noxtron asset files.
+  // In this case, the "node_modules/noxtron/build/umd/" files are copied to the
+  // server public folder at "/umd/".
+  assetsPath: '/umd/',
+
+  // The playground app HTML URL.
+  // In this case, it is "/" which will redirect to "/index.html"
+  // to have a clean URL.
   playgroundPath: '/',
 
-  // The build "sandbox.html" file. In this case, the "sandbox.html".
-  sandboxPath: '/sandbox.html',
+  // The sandbox app HTML URL.
+  // In this case, it is "/sandbox/" which will redirect to "/sandbox/index.html"
+  // to have a clean URL.
+  sandboxPath: '/sandbox/',
 
-  // "javascript" | "typescript"
+  // Sandboxes source code language. "javascript" | "typescript".
   codeLanguage: 'javascript',
 
-  // Sandboxes source code.
+  // Playground app title for different viewport widths.
+  title: {
+    small: 'MyOrg',
+    medium: 'My Organization'
+  },
+
+  // Get the sandboxes list. Since this list contains every sandbox source code,
+  // it may get big in filesize. It should be lazy loaded if possible.
   // They can use only packages provided by the sandbox app.
   // In this case, "react" and "react-dom" are available to use.
-  sandboxes: [
+  getSandboxes: () => [
     {
-      name: 'ComponentA',
+      name: 'MyComponent',
       children: [
         {
           name: 'sandbox1',
@@ -243,25 +202,18 @@ render(<Sandbox />, document.querySelector('#root'));
         // ...
       ]
     }
-  ],
-  title: {
-    mobile: 'MyOrg',
-    desktop: 'My Organization'
-  }
-};
-
-render(
-  React.createElement(Playground, { settings }),
-  document.querySelector('#root')
-);
+  ]
+}));
 ```
 
 ### Sandbox Setup
 
-The sandbox app executes the actual code.
+The sandbox app executes the actual sandboxes source code and custom source code.
+It is required to include the Noxtron sandbox app UMD file and the user setup,
+in this case, in a different JavaScript file.
 
 ```html
-<!-- src/sandbox.html -->
+<!-- static/sandbox/index.html -->
 
 <!DOCTYPE html>
 <html>
@@ -274,65 +226,67 @@ The sandbox app executes the actual code.
   <body>
     <!-- Since the sandboxes are going to use React, create a root element. -->
     <div id="root"></div>
+    <!-- Noxtron sandbox app UMD entry file -->
+    <script src="/umd/sandbox.js"></script>
+    <!-- User configuration file -->
+    <script src="/sandbox/sandbox.js"></script>
   </body>
 </html>
 ```
 
-Only the dependencies provided to the sandbox can be used in the sandboxes
-source code.
+Only the dependencies provided to the sandbox setup can be used in the sandboxes
+source code with ES modules.
 
 ```js
-// src/sandbox.js
+// static/sandbox/sandbox.js
 
-import { setupSandbox } from 'noxtron/build/cjs/sandbox';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-setupSandbox({
-  // Only the packages dependencies provided here can be used in the sandboxes
-  // source code as `import`s.
+window.noxtron.setupSandbox(() => ({
   dependencies: [
     { name: 'react', pkg: React },
     { name: 'react-dom', pkg: ReactDOM }
   ]
-});
+}));
 ```
 
 ### Workflow
 
-NPM scripts can be used to setup the application workflow tasks. For a production
-environment, a server like [http-server](https://www.npmjs.com/package/http-server)
-can be used.
+NPM scripts can be used to setup the application workflow tasks. To serve the
+application, a tool like [serve](https://www.npmjs.com/package/serve) can be used.
 
 ```bash
-npm i http-server
+npm i -D serve
 ```
 
-`package.json` scripts:
+Then add the scripts to setup and run the application.
 
 ```json
+// package.json
+
 {
+  // ...
   "scripts": {
     "clean": "rm -rf ./build",
-    "build": "NODE_ENV=production webpack --progress",
-    "dev": "webpack serve",
-    "start": "http-server ./build --port 4000 --gzip true -o /"
+    "copy-static": "cp -rp ./static ./build",
+    "copy-noxtron": "cp -rp ./node_modules/noxtron/build/umd/ ./build/umd",
+    "build": "npm run clean && npm run copy-static && npm run copy-noxtron",
+    "start": "serve ./build -p 4000"
   }
 }
 ```
 
-```bash
-# for development environment
-npm run dev
+To run the application:
 
-# for production environment
-npm run clean
+```bash
 npm run build
 npm run start
 ```
 
-There is a complete end-to-end example use case using TypeScript, React, and
-Webpack in [examples/webpack](https://github.com/romelperez/noxtron/tree/main/examples/webpack).
+Finally, open it at [`http://127.0.0.1:4000`](http://127.0.0.1:4000).
+
+For more, check out the [project examples](https://github.com/romelperez/noxtron/tree/main/examples).
 
 ## About
 

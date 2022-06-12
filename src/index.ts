@@ -1,5 +1,3 @@
-// TODO: Document API updates.
-
 // TODO: Fix playground settings theme palette customization.
 // TODO: Add support for headless CI sandbox code testing.
 // TODO: Allow user to configure JavaScript/TypeScript compiler.

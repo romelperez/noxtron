@@ -41,25 +41,24 @@ predefined sandboxes, and a sandbox app to execute the sandboxes source code.
   another for the sandbox app. Each file will have to import their respective libraries.
 - It uses the [monaco-editor](https://microsoft.github.io/monaco-editor) to render,
   edit, and transpile the source code in JavaScript and TypeScript respectively.
-- Since the editor and transpilers have a large file sizes, they are loaded dynamically.
+- Since the editor and transpilers have large file sizes, they are loaded dynamically.
   Because the configured sandboxes source codes and type definitions may also take
   a large file size, it is recommended to lazy load them using [code splitting](https://webpack.js.org/guides/code-splitting).
-- There are no provided tools to format, lint, and test sandboxes source code in
-  CI environments.
 
 ### Applications
 
 - The playground app will persist in the browser URL the state of the controls
   and the source code of the sandbox so it can be easily shared with more people.
 - The playground app can be used in two modes.
-  - In "predefined" mode, it will show an specific configured sandbox.
+  - In "predefined" mode, it will show a specific configured sandbox.
     The sandbox source code can be edited but it will not be persisted in the
     browser URL.
-  - In "custom" mode, the sandbox will use the current source code in the editor
-    and persist the code in the URL. (See [Maximum length of a URL in different browsers](https://www.geeksforgeeks.org/maximum-length-of-a-url-in-different-browsers).)
+  - In "custom" mode, the sandbox app will use the current editor source code
+    and it will be persisted in the URL.
+    (See [Maximum length of a URL in different browsers](https://www.geeksforgeeks.org/maximum-length-of-a-url-in-different-browsers).)
 - The JavaScript and TypeScript transpilers will only throw for syntax errors.
   Type errors will only be shown in the interface.
-- The editor is not editable in mobile browsers. But the app can be used in mobile.
+- The editor is read only for mobile browsers.
 - The toolbar controls are not available for mobile browsers.
 
 ### Sandboxes
@@ -84,6 +83,13 @@ functionality use case.
   with React by default. The directive `/** @jsx XXX */` can be used inline to
   change this configuration.
 
+## Limitations
+
+- There are no provided tools to format, lint, and test sandboxes source code in
+  CI environments.
+- There are no controls to examine the source code executed in the sandbox app,
+  such as console logging, tracking of user interactions, or type documentation.
+
 ## Example Use Case
 
 Noxtron use case with plain JavaScript and [React](https://reactjs.org) v17.
@@ -94,23 +100,54 @@ Using [Node.js](https://nodejs.org) v16.14 LTS, in an empty folder:
 
 ```bash
 # Create the following file structure:
-mkdir -f static
+mkdir -p static
 touch static/index.html
 touch static/playground.js
-mkdir -f static/sandbox
+mkdir -p static/sandbox
 touch static/sandbox/index.html
 touch static/sandbox/sandbox.js
 
-# create package.json
+# Create package.json
 npm init -y
 
-# install noxtron
+# Install noxtron
 npm i noxtron
 
-# install external libraries for the sandboxes source code
-# they are not required for Noxtron, only based on user configuration
+# Install external libraries for the sandboxes source code.
+# They are not required for Noxtron, only based on user configuration.
 npm i react@17 react-dom@17
 ```
+
+### Workflow
+
+NPM scripts can be used to setup the application workflow tasks. To serve the
+application, a tool like [serve](https://www.npmjs.com/package/serve) can be used.
+
+```bash
+npm i -D serve
+```
+
+Then add the following scripts to setup and run the application.
+
+```json
+// package.json
+
+{
+  // ...
+  "scripts": {
+    "clean": "rm -rf ./build",
+    "copy-static": "cp -rp ./static ./build",
+    "copy-noxtron": "cp -rp ./node_modules/noxtron/build/umd/ ./build/umd",
+    "build": "npm run clean && npm run copy-static && npm run copy-noxtron",
+    "start": "serve ./build -p 4000"
+  }
+}
+```
+
+The folder `./build/` will have the final public applications.
+
+The Noxtron UMD files located at `./node_modules/noxtron/build/umd/` will be copied
+to `./build/umd/` so they are accessible publicly.
 
 ### Playground Setup
 
@@ -251,31 +288,7 @@ window.noxtron.setupSandbox(() => ({
 }));
 ```
 
-### Workflow
-
-NPM scripts can be used to setup the application workflow tasks. To serve the
-application, a tool like [serve](https://www.npmjs.com/package/serve) can be used.
-
-```bash
-npm i -D serve
-```
-
-Then add the scripts to setup and run the application.
-
-```json
-// package.json
-
-{
-  // ...
-  "scripts": {
-    "clean": "rm -rf ./build",
-    "copy-static": "cp -rp ./static ./build",
-    "copy-noxtron": "cp -rp ./node_modules/noxtron/build/umd/ ./build/umd",
-    "build": "npm run clean && npm run copy-static && npm run copy-noxtron",
-    "start": "serve ./build -p 4000"
-  }
-}
-```
+### Usage
 
 To run the application:
 
@@ -287,6 +300,14 @@ npm run start
 Finally, open it at [`http://127.0.0.1:4000`](http://127.0.0.1:4000).
 
 For more, check out the [project examples](https://github.com/romelperez/noxtron/tree/main/examples).
+
+## CDN Usage
+
+The [unpkg.com](https://unpkg.com) CDN can be used to load the distribution UMD files.
+
+1. The playground app setup setting `assetsPath` should be `https://unpkg.com/noxtron/build/umd/`.
+2. The playground app should include the `https://unpkg.com/noxtron/build/umd/playground.js` script.
+3. The sandbox app should include the `https://unpkg.com/noxtron/build/umd/sandbox.js` script.
 
 ## About
 

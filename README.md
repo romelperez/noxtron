@@ -26,13 +26,13 @@ predefined sandboxes, and a sandbox app to execute the sandboxes source code.
 
 - **examples/basic**
   - Technologies: JavaScript.
-  - [Soure code](https://github.com/romelperez/noxtron/tree/v0.7.0/examples/basic).
+  - [Soure code](https://github.com/romelperez/noxtron/tree/v0.7.1/examples/basic).
 - **examples/react**
   - Technologies: [Webpack](https://webpack.js.org), TypeScript, [React](https://reactjs.org).
-  - [Soure code](https://github.com/romelperez/noxtron/tree/v0.7.0/examples/react).
+  - [Soure code](https://github.com/romelperez/noxtron/tree/v0.7.1/examples/react).
 - **examples/solid**
   - Technologies: [ESBuild](https://esbuild.github.io), JavaScript, [SolidJS](https://www.solidjs.com).
-  - [Soure code](https://github.com/romelperez/noxtron/tree/v0.7.0/examples/solid).
+  - [Soure code](https://github.com/romelperez/noxtron/tree/v0.7.1/examples/solid).
 
 ## Features
 
@@ -113,7 +113,7 @@ touch webpack.config.js
 npm init -y
 
 # Install noxtron
-npm i noxtron@0.7.0
+npm i noxtron@0.7.1
 
 # Install external libraries for the sandboxes source code.
 # They are not required for Noxtron, only based on user configuration.
@@ -352,7 +352,7 @@ npm run dev
 
 Finally, open it at [`http://127.0.0.1:4000`](http://127.0.0.1:4000).
 
-For more, check out the [project examples](https://github.com/romelperez/noxtron/tree/v0.7.0/examples).
+For more, check out the [project examples](https://github.com/romelperez/noxtron/tree/v0.7.1/examples).
 
 ## About
 

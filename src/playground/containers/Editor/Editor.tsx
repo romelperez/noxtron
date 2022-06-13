@@ -100,13 +100,13 @@ const Editor = (props: EditorProps): ReactElement => {
       scrollLeft: 0,
       scrollTop: 0
     });
-  }, [router.optionsControls.type, router.optionsControls.sandbox]);
+  }, [router.optionsControls.type, router.optionsControls.sandbox.join()]);
 
   useEffect(() => {
     editorRef.current?.updateOptions({
       theme: theme.colorScheme === 'dark' ? 'vs-dark' : 'vs'
     });
-  }, [theme]);
+  }, [theme.colorScheme]);
 
   return (
     <div

@@ -31,7 +31,7 @@ const SandboxList = (props: SandboxListProps): ReactElement => {
           block: 'center'
         });
       }
-    }, 0);
+    }, 100);
     return () => {
       clearTimeout(timeoutId);
     };

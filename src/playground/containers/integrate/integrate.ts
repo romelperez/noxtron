@@ -119,7 +119,8 @@ const integrate = (): void => {
   merge([
     loadDependencies.done,
     $router.map((state) => state.optionsControls.type),
-    $router.map((state) => state.optionsControls.sandbox)
+    // Convert to primitive value so it can be compared.
+    $router.map((state) => state.optionsControls.sandbox.join())
   ]).watch(() => {
     const { optionsControls } = $router.getState();
     const { isLoading, error, sandboxes } = $dependencies.getState();

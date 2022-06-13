@@ -26,13 +26,13 @@ predefined sandboxes, and a sandbox app to execute the sandboxes source code.
 
 - **examples/basic**
   - Technologies: JavaScript.
-  - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/basic).
+  - [Soure code](https://github.com/romelperez/noxtron/tree/v0.7.0/examples/basic).
 - **examples/react**
   - Technologies: [Webpack](https://webpack.js.org), TypeScript, [React](https://reactjs.org).
-  - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/react).
+  - [Soure code](https://github.com/romelperez/noxtron/tree/v0.7.0/examples/react).
 - **examples/solid**
   - Technologies: [ESBuild](https://esbuild.github.io), JavaScript, [SolidJS](https://www.solidjs.com).
-  - [Soure code](https://github.com/romelperez/noxtron/tree/main/examples/solid).
+  - [Soure code](https://github.com/romelperez/noxtron/tree/v0.7.0/examples/solid).
 
 ## Features
 
@@ -96,22 +96,24 @@ Noxtron use case with plain JavaScript and [React](https://reactjs.org) v17.
 
 ### Installation
 
-Using [Node.js](https://nodejs.org) v16.14 LTS, in an empty folder:
+Using [Node.js](https://nodejs.org) v16 LTS, in an empty folder:
 
 ```bash
-# Create the following file structure:
-mkdir -p static
-touch static/index.html
-touch static/playground.js
-mkdir -p static/sandbox
-touch static/sandbox/index.html
-touch static/sandbox/sandbox.js
+node -v # v16
+
+# Create the following file structure
+mkdir -p src
+touch src/playground.html
+touch src/playground.js
+touch src/sandbox.html
+touch src/sandbox.js
+touch webpack.config.js
 
 # Create package.json
 npm init -y
 
 # Install noxtron
-npm i noxtron
+npm i noxtron@0.7.0
 
 # Install external libraries for the sandboxes source code.
 # They are not required for Noxtron, only based on user configuration.
@@ -120,14 +122,80 @@ npm i react@17 react-dom@17
 
 ### Workflow
 
-NPM scripts can be used to setup the application workflow tasks. To serve the
-application, a tool like [serve](https://www.npmjs.com/package/serve) can be used.
+NPM scripts can be used to setup the application workflow tasks. To setup, bundle,
+and test the applications files and modules, [webpack](https://webpack.js.org)
+can be used.
 
 ```bash
-npm i -D serve
+npm i -D webpack@5 \
+  webpack-cli@4 \
+  webpack-dev-server@4 \
+  html-webpack-plugin@5
 ```
 
-Then add the following scripts to setup and run the application.
+Configure Webpack script.
+
+```js
+// webpack.config.js
+
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const UMD_PATH = path.join(__dirname, 'node_modules/noxtron/build/umd');
+const SRC_PATH = path.join(__dirname, 'src');
+const BUILD_PATH = path.join(__dirname, 'build');
+
+module.exports = {
+  mode: 'development',
+  devtool: false,
+  entry: {
+    playground: path.join(SRC_PATH, 'playground.js'),
+    sandbox: path.join(SRC_PATH, 'sandbox.js')
+  },
+  output: {
+    path: BUILD_PATH,
+    filename: '[name].js',
+    clean: true
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.join(SRC_PATH, 'playground.html'),
+      filename: path.join(BUILD_PATH, 'index.html'),
+      chunks: ['playground']
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(SRC_PATH, 'sandbox.html'),
+      filename: path.join(BUILD_PATH, 'sandbox/index.html'),
+      chunks: ['sandbox']
+    })
+  ],
+  devServer: {
+    static: [
+      {
+        directory: UMD_PATH,
+        publicPath: '/noxtron/',
+        watch: true
+      },
+      {
+        directory: BUILD_PATH,
+        watch: true
+      }
+    ],
+    allowedHosts: 'all',
+    compress: true,
+    host: '127.0.0.1',
+    port: 4000,
+    open: '/'
+  }
+};
+```
+
+The folder `./build/` will have the final public applications.
+
+The Noxtron UMD files located at `/node_modules/noxtron/build/umd/` will be copied
+to `/build/noxtron/` so they are accessible publicly.
+
+Then add the following script to setup and run the application.
 
 ```json
 // package.json
@@ -135,29 +203,19 @@ Then add the following scripts to setup and run the application.
 {
   // ...
   "scripts": {
-    "clean": "rm -rf ./build",
-    "copy-static": "cp -rp ./static ./build",
-    "copy-noxtron": "cp -rp ./node_modules/noxtron/build/umd/ ./build/umd",
-    "build": "npm run clean && npm run copy-static && npm run copy-noxtron",
-    "start": "serve ./build -p 4000"
+    "dev": "webpack serve"
   }
 }
 ```
-
-The folder `./build/` will have the final public applications.
-
-The Noxtron UMD files located at `./node_modules/noxtron/build/umd/` will be copied
-to `./build/umd/` so they are accessible publicly.
 
 ### Playground Setup
 
 The playground application shows the explorer and controls of the sandboxes configured.
 It is required to add a HTML element to render the interface and include the
-Noxtron playground app UMD file and the user setup, in this case, in a different
-JavaScript file.
+Noxtron playground app UMD file.
 
 ```html
-<!-- static/index.html -->
+<!-- src/playground.html -->
 
 <!DOCTYPE html>
 <html>
@@ -171,15 +229,13 @@ JavaScript file.
     <!-- HTML element to render the interface -->
     <div id="root"></div>
     <!-- Noxtron playground app UMD entry file -->
-    <script src="/umd/playground.js"></script>
-    <!-- User configuration file -->
-    <script src="/playground.js"></script>
+    <script src="/noxtron/playground.js"></script>
   </body>
 </html>
 ```
 
 ```js
-// static/playground.js
+// src/playground.js
 
 window.noxtron.setupPlayground(() => ({
   // Root HTML element to render playground app.
@@ -190,16 +246,16 @@ window.noxtron.setupPlayground(() => ({
 
   // The URL path to the Noxtron asset files.
   // In this case, the "node_modules/noxtron/build/umd/" files are copied to the
-  // server public folder at "/umd/".
-  assetsPath: '/umd/',
+  // server URL public folder at "/noxtron/".
+  assetsPath: '/noxtron/',
 
   // The playground app HTML URL.
-  // In this case, it is "/" which will redirect to "/index.html"
+  // In this case, it is "/" which will render to "/index.html"
   // to have a clean URL.
   playgroundPath: '/',
 
   // The sandbox app HTML URL.
-  // In this case, it is "/sandbox/" which will redirect to "/sandbox/index.html"
+  // In this case, it is "/sandbox/" which will render to "/sandbox/index.html"
   // to have a clean URL.
   sandboxPath: '/sandbox/',
 
@@ -250,7 +306,7 @@ It is required to include the Noxtron sandbox app UMD file and the user setup,
 in this case, in a different JavaScript file.
 
 ```html
-<!-- static/sandbox/index.html -->
+<!-- src/sandbox.html -->
 
 <!DOCTYPE html>
 <html>
@@ -264,9 +320,7 @@ in this case, in a different JavaScript file.
     <!-- Since the sandboxes are going to use React, create a root element. -->
     <div id="root"></div>
     <!-- Noxtron sandbox app UMD entry file -->
-    <script src="/umd/sandbox.js"></script>
-    <!-- User configuration file -->
-    <script src="/sandbox/sandbox.js"></script>
+    <script src="/noxtron/sandbox.js"></script>
   </body>
 </html>
 ```
@@ -275,7 +329,7 @@ Only the dependencies provided to the sandbox setup can be used in the sandboxes
 source code with ES modules.
 
 ```js
-// static/sandbox/sandbox.js
+// src/sandbox.js
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -293,21 +347,12 @@ window.noxtron.setupSandbox(() => ({
 To run the application:
 
 ```bash
-npm run build
-npm run start
+npm run dev
 ```
 
 Finally, open it at [`http://127.0.0.1:4000`](http://127.0.0.1:4000).
 
-For more, check out the [project examples](https://github.com/romelperez/noxtron/tree/main/examples).
-
-## CDN Usage
-
-The [unpkg.com](https://unpkg.com) CDN can be used to load the distribution UMD files.
-
-1. The playground app setup setting `assetsPath` should be `https://unpkg.com/noxtron/build/umd/`.
-2. The playground app should include the `https://unpkg.com/noxtron/build/umd/playground.js` script.
-3. The sandbox app should include the `https://unpkg.com/noxtron/build/umd/sandbox.js` script.
+For more, check out the [project examples](https://github.com/romelperez/noxtron/tree/v0.7.0/examples).
 
 ## About
 

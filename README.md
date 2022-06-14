@@ -1,4 +1,4 @@
-![Noxtron](https://raw.githubusercontent.com/romelperez/noxtron/main/noxtron.jpg)
+![Noxtron](https://raw.githubusercontent.com/romelperez/noxtron/v0.7.2/noxtron.jpg)
 
 # Noxtron
 
@@ -6,7 +6,7 @@
 [![ci](https://github.com/romelperez/noxtron/workflows/ci/badge.svg)](https://github.com/romelperez/noxtron/actions)
 [![downloads](https://img.shields.io/npm/dm/noxtron.svg)](https://npmjs.org/package/noxtron)
 [![github stars](https://img.shields.io/github/stars/romelperez/noxtron.svg?style=social&label=stars)](https://github.com/romelperez/noxtron)
-[![license](https://img.shields.io/github/license/romelperez/noxtron.svg?maxAge=2592000)](https://github.com/romelperez/noxtron/blob/main/LICENSE)
+[![license](https://img.shields.io/github/license/romelperez/noxtron.svg?maxAge=2592000)](https://github.com/romelperez/noxtron/blob/v0.7.2/LICENSE)
 
 Real-Time JavaScript/TypeScript UI playground.
 
@@ -26,13 +26,13 @@ predefined sandboxes, and a sandbox app to execute the sandboxes source code.
 
 - **examples/basic**
   - Technologies: JavaScript.
-  - [Soure code](https://github.com/romelperez/noxtron/tree/v0.7.1/examples/basic).
+  - [Soure code](https://github.com/romelperez/noxtron/tree/v0.7.2/examples/basic).
 - **examples/react**
   - Technologies: [Webpack](https://webpack.js.org), TypeScript, [React](https://reactjs.org).
-  - [Soure code](https://github.com/romelperez/noxtron/tree/v0.7.1/examples/react).
+  - [Soure code](https://github.com/romelperez/noxtron/tree/v0.7.2/examples/react).
 - **examples/solid**
   - Technologies: [ESBuild](https://esbuild.github.io), JavaScript, [SolidJS](https://www.solidjs.com).
-  - [Soure code](https://github.com/romelperez/noxtron/tree/v0.7.1/examples/solid).
+  - [Soure code](https://github.com/romelperez/noxtron/tree/v0.7.2/examples/solid).
 
 ## Features
 
@@ -47,6 +47,8 @@ predefined sandboxes, and a sandbox app to execute the sandboxes source code.
 
 ### Applications
 
+- Latest versions of Google, Firefox, and Safari browsers supported for mobile and
+  desktop from 360px viewport width.
 - The playground app will persist in the browser URL the state of the controls
   and the source code of the sandbox so it can be easily shared with more people.
 - The playground app can be used in two modes.
@@ -113,7 +115,7 @@ touch webpack.config.js
 npm init -y
 
 # Install noxtron
-npm i noxtron@0.7.1
+npm i noxtron@0.7.2
 
 # Install external libraries for the sandboxes source code.
 # They are not required for Noxtron, only based on user configuration.
@@ -352,7 +354,7 @@ npm run dev
 
 Finally, open it at [`http://127.0.0.1:4000`](http://127.0.0.1:4000).
 
-For more, check out the [project examples](https://github.com/romelperez/noxtron/tree/v0.7.1/examples).
+For more, check out the [project examples](https://github.com/romelperez/noxtron/tree/v0.7.2/examples).
 
 ## About
 

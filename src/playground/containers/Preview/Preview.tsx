@@ -131,7 +131,8 @@ const Preview = (props: PreviewProps): ReactElement => {
             setSliderWidthCache(widthPerc);
           }}
           onReset={() => {
-            const element = elementRef.current as HTMLDivElement;
+            const container = elementRef.current as HTMLDivElement;
+            const element = container.parentElement as HTMLDivElement;
             element.style.flex = '0 1 50%';
             element.dataset.widthPerc = String(sliderWidths.initial);
             setSliderWidthCache(null);

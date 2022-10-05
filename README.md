@@ -10,7 +10,7 @@
 
 Real-Time JavaScript/TypeScript UI playground.
 
-Noxtron is a configuble web tool to explore, preview, and test JavaScript and
+Noxtron is a configurable web tool to explore, preview, and test JavaScript and
 TypeScript components as isolated sandboxes in realtime in browser. It is composed
 by two applications, a playground app with the interface to explore and control
 predefined sandboxes, and a sandbox app to execute the sandboxes source code.

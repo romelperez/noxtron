@@ -1,10 +1,6 @@
 {
   "name": "examples-solid",
   "private": true,
-  "engines": {
-    "node": "^16.14",
-    "npm": "^8.3"
-  },
   "dependencies": {
     "solid-js": "^1.4.3"
   },

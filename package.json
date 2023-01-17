@@ -25,10 +25,6 @@
   "workspaces": [
     "examples/*"
   ],
-  "engines": {
-    "node": "^16.14",
-    "npm": "^8.3"
-  },
   "files": [
     "build"
   ],

@@ -32,8 +32,8 @@ const getCodeImportsRefsFragments = (
       }
       // Format: "a, { b, c }" and "a, { b as x, c }"
       else if (/.+\,\s*\{.+\}/.test(names)) {
-        const [nameMainRaw] = names.match(/.+\,\s*\{/) || [];
-        const [nameDes] = names.match(/\{.+\}/) || [];
+        const [nameMainRaw] = names.match(/.+\,\s*\{/) || [''];
+        const [nameDes] = names.match(/\{.+\}/) || [''];
         const nameMain = nameMainRaw.replace(/\,\s*\{/, '').trim();
 
         // Remove if it has already been declared by the function.

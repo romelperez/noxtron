@@ -1,10 +1,6 @@
 {
   "name": "examples-basic",
   "private": true,
-  "engines": {
-    "node": "^16.14",
-    "npm": "^8.3"
-  },
   "scripts": {
     "build": "sh ./build.sh",
     "start": "serve ./build -p 4000"

@@ -1,10 +1,6 @@
 {
   "name": "examples-react",
   "private": true,
-  "engines": {
-    "node": "^16.14",
-    "npm": "^8.3"
-  },
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@types/react": "^17.0.45",

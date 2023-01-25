@@ -4,7 +4,7 @@ import { render } from 'react-dom';
 const Sandbox = (): ReactElement => {
   return (
     <div
-      className='sandbox'
+      className="sandbox"
       style={{
         padding: 20,
         color: '#ee1',

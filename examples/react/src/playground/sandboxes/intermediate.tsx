@@ -6,7 +6,7 @@ const Sandbox = (): ReactElement => {
 
   useEffect(() => {
     const tid = setTimeout(() => {
-      setCount(value => value + 1);
+      setCount((value) => value + 1);
     }, 100);
     return () => {
       clearTimeout(tid);
@@ -15,7 +15,7 @@ const Sandbox = (): ReactElement => {
 
   return (
     <div
-      className='sandbox'
+      className="sandbox"
       style={{
         padding: 20,
         color: '#ee1',

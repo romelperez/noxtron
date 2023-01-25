@@ -115,7 +115,7 @@ touch webpack.config.js
 npm init -y
 
 # Install noxtron
-npm i noxtron@0.7.3
+npm i noxtron@0.7.5
 
 # Install external libraries for the sandboxes source code.
 # They are not required for Noxtron, only based on user configuration.

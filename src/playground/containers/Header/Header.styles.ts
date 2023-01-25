@@ -32,7 +32,12 @@ const createStyles = (theme: NTTheme): NTStyles => {
     logo: {
       marginLeft: theme.space(2),
       ...theme.typography.heading(2),
-
+      a: {
+        outline: 'none',
+        '&:hover, &:focus': {
+          outline: 'none'
+        }
+      },
       [breakpoints.medium.up]: {
         ...theme.typography.heading(0)
       }

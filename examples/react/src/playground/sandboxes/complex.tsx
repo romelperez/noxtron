@@ -12,7 +12,7 @@ const Sandbox = (): ReactElement => {
 
   useEffect(() => {
     animate(
-      elementRef.current,
+      elementRef.current!,
       { x: [0, 50] },
       { repeat: Infinity, direction: 'alternate', duration: 1 }
     );
@@ -21,7 +21,7 @@ const Sandbox = (): ReactElement => {
   return (
     <div
       ref={elementRef}
-      className='sandbox'
+      className="sandbox"
       css={{
         padding: 20,
         width: '60%',
@@ -30,11 +30,7 @@ const Sandbox = (): ReactElement => {
       }}
     >
       <h1>Complex Sandbox</h1>
-      <p
-        css={{ fontSize: '24px' }}
-      >
-        Random Words: {words}
-      </p>
+      <p css={{ fontSize: '24px' }}>Random Words: {words}</p>
     </div>
   );
 };

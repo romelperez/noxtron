@@ -4,15 +4,15 @@ export const sandboxes = [
     children: [
       {
         name: 'basic',
-        code: require('!raw-loader?esModule=false!./basic.txt')
+        code: require('!raw-loader?esModule=false!./basic.tsx')
       },
       {
         name: 'intermediate',
-        code: require('!raw-loader?esModule=false!./intermediate.txt')
+        code: require('!raw-loader?esModule=false!./intermediate.tsx')
       },
       {
         name: 'complex',
-        code: require('!raw-loader?esModule=false!./complex.txt')
+        code: require('!raw-loader?esModule=false!./complex.tsx')
       }
     ]
   }
